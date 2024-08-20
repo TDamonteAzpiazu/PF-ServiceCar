@@ -1,0 +1,19 @@
+main {
+  min-height: 190vh;
+}
+
+@media (max-width: 768px) {
+  nav.visible {
+    transform: translateX(0);
+    background-color: #2b2b2b;
+    visibility: visible;
+    transition: 0.6s;
+    height: 100vh;
+  }
+
+  header nav a {
+    margin: 12px 0;
+    display: block;
+    width: auto !important;
+  }
+}
