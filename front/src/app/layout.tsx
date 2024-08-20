@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import "../styles/index.css";
+import Navbar from "@/components/navbar/Navbar";
+import Chat from "@/components/Chat";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +20,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body
+        className={`${inter.className} bg-cover`}
+        style={{ backgroundImage: "url(/fondo2.png)" }}
+      >
+        <Navbar />
+        {children}
+        <Chat />
+        <Footer/>
+      </body>
     </html>
   );
 }
