@@ -1,9 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { auth } from 'express-openid-connect';
+import {config as auth0Config} from "./config/auth0.config"
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.use(auth(auth0Config))
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('ServiceCar')
