@@ -24,9 +24,7 @@ const GarageHome = () => {
             <button className="custom-button">
               Buscar
             </button>
-            {/* <Link href={PATHROUTES.LANDING}>
-              <button className="custom-button">Reservar</button>
-            </Link> */}
+
           </div>
         </div>
 
