@@ -1,5 +1,17 @@
 main {
-  min-height: 190vh;
+  padding-top: 100px;
+  height: 100%;
+  min-height: 70vh;
+}
+
+.container-proyect .proyecto-banner {
+  min-width: 100%;
+  transition: 2s ease all;
+}
+
+.flecha-izquierda:hover,
+.flecha-derecha:hover {
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.863) !important;
 }
 
 @media (max-width: 768px) {

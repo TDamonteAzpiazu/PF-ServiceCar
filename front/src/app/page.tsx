@@ -1,9 +1,11 @@
 import HomeContainer from "@/components/home/HomeContainer";
 
-export default function Home() {
+const Landing = () => {
   return (
   <main>
     <HomeContainer/>
   </main>
   );
-}
+};
+
+export default Landing;
