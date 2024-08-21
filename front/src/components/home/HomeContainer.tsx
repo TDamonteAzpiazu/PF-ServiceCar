@@ -1,10 +1,10 @@
 import HomeAbout from "./HomeAbout"
-import HomeBanner from "./HomeBanner"
+import GarageHome from "./GarageHome"
 
 
 const HomeContainer = () => {
     return <div>
-        <HomeBanner/>
+        <GarageHome/>
         <HomeAbout/>
     </div>
 }
