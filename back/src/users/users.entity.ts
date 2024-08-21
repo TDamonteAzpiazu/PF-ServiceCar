@@ -1,6 +1,8 @@
 import { IsEmail, IsEnum, IsNotEmpty, IsNumber, IsString, IsUUID } from "class-validator";
+import { Appointment } from "src/appointments/appointments.entity";
 import { Role } from "src/auth/roles.enum";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Status } from "src/enum/status.enum";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { v4 as uuid } from 'uuid';
 
 @Entity({ name: 'users' })
@@ -13,12 +15,7 @@ export class User {
     @IsString()
     @IsNotEmpty()
     name: string;
-
-    @Column()
-    @IsString()
-    @IsNotEmpty()
-    date: string; //Revisar este formato según qué sea la fecha y como la querramos mandar
-
+    
     @Column({unique: true})
     @IsEmail()
     @IsNotEmpty()
@@ -27,37 +24,26 @@ export class User {
     @Column()
     @IsString()
     @IsNotEmpty()
-    password: string; //va a ser la pass hasheada
-
-    @Column()
-    @IsString()
-    @IsNotEmpty()
-    phone: string;
-
-    @Column()
-    @IsString()
-    @IsNotEmpty()
-    country: string;
-
+    password: string;
+    
     @Column()
     @IsString()
     @IsNotEmpty()
     address: string;
 
-    @Column()
+    @Column() // agregar el default con un link a cloudinary de sin imagen
     @IsString()
     @IsNotEmpty()
-    city: string;
+    image: string;
 
     @Column({default: Role.User})
     @IsEnum(Role)
     role: Role;
 
-    
-}
+    @OneToMany(() => Appointment, (appointments) => appointments.user)
+    appointments: Appointment[]
 
-//  password: hashedPassword,
-//  phone,
-//  country,
-//  address,
-//  city,
+    @Column({default: Status.Active})
+    @IsEnum(Status)
+    status: Status;
+}
