@@ -1,8 +1,8 @@
 const ContactoForm: React.FC = () => {
     return (
-      <section className="p-6 bg-black mr-10 rounded-xl text-white">
+      <section className="p-6 bg-black rounded-xl text-white">
         <div>
-          <h4 className="text-sm text-gray-600 mb-4">
+          <h4 className="text-sm text-gray-500 mb-4">
             Comparte tus sugerencias o inquietudes para que podamos mejorar nuestros servicios.
           </h4>
           <h2 className="text-xl font-bold mb-4">Déjanos tu comentario</h2>

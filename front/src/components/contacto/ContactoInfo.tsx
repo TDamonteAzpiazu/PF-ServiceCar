@@ -3,7 +3,7 @@ import { FaPhone, FaEnvelope, FaWhatsapp, FaMapMarkerAlt } from 'react-icons/fa'
 const ContactoInfo = () => {
   return (
     <section className="p-6 bg-black rounded-xl text-white">
-      <p className="text-sm text-gray-600 mb-8">
+      <p className="text-sm text-gray-500 mb-8">
         In tempus nisl turpis, at ultricies dui eleifend a. Quisque et quam vel nunc consectetur pharetra euismod et elit. 
       </p>
 
