@@ -19,7 +19,7 @@ const GarageHome = () => {
             <input
               type="text"
               placeholder="Ingresa tu ubicación"
-              className="p-3 text-black rounded-lg border-2 border-red-600 w-64"
+              className="p-3 text-black rounded-lg border-2 outline-none bg-transparent border-red-600 w-64"
             />
             <button className="custom-button">
               Buscar
