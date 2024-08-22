@@ -3,16 +3,19 @@ import { UsersController } from "./users.controller";
 import { UsersService } from "./users.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { User } from "./users.entity";
+import { AuthModule } from "../auth/auth.module";  
 import { requiresAuth } from "express-openid-connect";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([User])],
+    imports: [
+        TypeOrmModule.forFeature([User]),
+        AuthModule,  
+    ],
     controllers: [UsersController],
-    providers: [UsersService]
+    providers: [UsersService],
 })
-
-export class UsersModule implements NestModule{
+export class UsersModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
-        consumer.apply(requiresAuth).forRoutes("users/auth0/protected")}
+        consumer.apply(requiresAuth).forRoutes("users/auth0/protected");
     }
- 
+}
