@@ -31,7 +31,7 @@ const HomeOpiniones: React.FC = () => {
                 <FaStar key={starIndex} className="text-white mr-1" />
               ))}
             </div>
-            <h3 className="text-xl font-bold text-center">{opinion.nombre}</h3>
+            <h3 className="text-xl font-bold text-center">{opinion.nombre}</h3> 
             <h4 className="text-gray-400 text-center mb-4">{opinion.ocupacion}</h4>
             <div className="flex justify-center mb-4">
               <FaQuoteLeft className="text-white text-3xl" />
