@@ -1,4 +1,5 @@
 import { FormikValues } from "formik";
+import { FormValues } from "./types/types";
 
 export const validarLogin = (input: FormikValues): Partial<FormikValues> => {
   const errors: Partial<FormikValues> = {};
@@ -52,4 +53,33 @@ export const validarRegister = (input: FormikValues): Partial<FormikValues> => {
   }
 
   return errors;
+};
+
+export const validateForm = (formValues: FormValues)  => {
+  const errors: Partial<FormValues> = {};
+  let isValid = true;
+  const emailRegex: RegExp = /^[\w-]+(?:\.[\w-]+)*@(?:[\w-]+\.)+[a-zA-Z]{2,7}$/;
+
+  if (!formValues.name) {
+    errors.name = "Nombre es obligatorio";
+    isValid = false;
+  }
+  if (!formValues.email) {
+    errors.email = "Email es obligatorio";
+    isValid = false;
+  } 
+  if (formValues.email && !emailRegex.test(formValues.email)) {
+    errors.email = "El email es inválido";
+    isValid = false;
+  }
+  if (!formValues.asunto) {
+    errors.asunto = "Asunto es obligatorio";
+    isValid = false;
+  }
+  if (!formValues.message) {
+    errors.message = "Mensaje es obligatorio";
+    isValid = false;
+  }
+
+  return { isValid, errors };
 };
