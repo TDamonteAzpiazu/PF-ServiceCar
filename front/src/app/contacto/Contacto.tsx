@@ -6,8 +6,10 @@ const Contacto: React.FC = () => {
   return (
     <div className="flex flex-col mx-10">
       {/* Encabezado centrado */}
-      <h1 className="text-white text-5xl font-bold text-center mb-10 mt-[115px]">CONTACTATE</h1>
-      
+      <h1 className="text-white text-5xl font-bold text-center mb-10 mt-[115px]">
+        CONTACTANOS
+      </h1>
+
       {/* Sección superior con ContactoForm y ContactoInfo */}
       <div className="flex flex-col md:flex-row w-full justify-center space-y-4 md:space-y-0 md:space-x-4">
         <div className="w-full md:max-w-[550px] flex-grow flex items-stretch">
@@ -19,7 +21,7 @@ const Contacto: React.FC = () => {
       </div>
 
       {/* Sección inferior con ContactoImg */}
-      <div className="w-full mt-8 mb-8">
+      <div className="w-full my-8">
         <ContactoImg />
       </div>
     </div>

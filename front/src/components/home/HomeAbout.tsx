@@ -7,15 +7,16 @@ const HomeAbout: React.FC = () => {
     <div className="mx-2 my-20 text-white">
       {/* Encabezado */}
       <h1 className="text-3xl font-bold text-center mb-6">
-        ¿Por qué nosotros?
+        ¿Por qué escoger <span className="text-custom-red">GarageJS</span>?
       </h1>
 
       <p className="text-m text-center mb-8 mx-auto">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-        laoreet, ligula vel aliquam fermentum, erat libero tempus sapien, ut
-        scelerisque arcu dolor eget dui. Integer imperdiet, nisl et ultrices
-        tempor, sapien lacus vulputate tortor, ac facilisis odio augue a eros.
-        Suspendisse potenti. Nam ut ipsum sit amet dolor varius scelerisque.
+        En un mundo donde la excelencia en el servicio automotriz es más que una
+        promesa, somos la fuerza que impulsa la innovación y la eficiencia en la
+        gestión de talleres. Elegirnos significa optar por un socio que entiende
+        que cada vehículo cuenta una historia y cada cliente, una necesidad
+        única. En nuestra empresa, no solo gestionamos talleres; transformamos
+        la experiencia automotriz.
       </p>
 
       <div className="flex sm:flex-row flex-col justify-center gap-6">

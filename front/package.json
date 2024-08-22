@@ -10,7 +10,10 @@
   },
   "dependencies": {
     "emailjs": "^4.0.3",
+    "emailjs-com": "^3.2.0",
     "formik": "^2.4.6",
+    "js-cookie": "^3.0.5",
+    "jsonc-parser": "^3.3.1",
     "next": "14.2.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -19,6 +22,7 @@
     "sweetalert2": "^11.12.4"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
