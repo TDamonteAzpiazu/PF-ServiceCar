@@ -10,7 +10,7 @@ const HomeAbout: React.FC = () => {
         ¿Por qué escoger <span className="text-custom-red">GarageJS</span>?
       </h1>
 
-      <p className="text-m text-center mb-8 mx-auto">
+      <p className="text-m text-center mx-10 mb-8">
         En un mundo donde la excelencia en el servicio automotriz es más que una
         promesa, somos la fuerza que impulsa la innovación y la eficiencia en la
         gestión de talleres. Elegirnos significa optar por un socio que entiende
