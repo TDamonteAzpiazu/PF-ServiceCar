@@ -8,20 +8,20 @@ const Register: React.FC = () => {
   return (
     <main className=" text-custom-white">
       <section className=" w-full flex">
-        <div className="w-1/2 bg-black bg-opacity-85 flex flex-col py-4">
+        <div className="md:w-1/2 bg-black w-2/3 min-w-72 mx-auto my-3 bg-opacity-85 flex flex-col py-4">
           <div className="w-3/4 mx-auto">
-            <h3 className="text-center text-custom-red text-3xl font-semibold">
+            <h3 className="text-center text-custom-red sm:text-3xl text-2xl font-semibold">
               Registrate
             </h3>
-            <p className="text-center text-custom-grey pt-3 pb-1.5">
+            <p className="text-center text-custom-grey sm:text-base text-xs pt-3 pb-1.5">
               Para nosotros es un placer que te unas a nuestra
               comunidad.¡Tenemos muchos beneficios y recomendaciones esperando!.
             </p>
-            <p className="text-center italic font-light pb-3">
+            <p className="text-center italic font-light pb-3 sm:text-base text-xs">
               ¡Gracias por elegirnos!
             </p>
             <RegisterForm />
-            <p className="text-center">
+            <p className="text-center sm:text-base text-xs">
               ¿Ya tienes una cuenta?
               <Link
                 href={PATHROUTES.LOGIN}

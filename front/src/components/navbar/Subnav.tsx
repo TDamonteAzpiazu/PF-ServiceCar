@@ -16,7 +16,7 @@ const SubNav: React.FC<SubNavProps> = ({
   handleLogout,
 }) => {
   const classHeader: string =
-    "flex flex-col md:gap-8 gap-4 md:visible invisible md:flex-row text-custom-grey justify-start fixed md:relative top-0 right-0 text-right md:justify-between md:w-1/3 w-1/2 min-w-80 z-50 md:py-0 md:px-0 px-5 pt-14 translate-x-full md:translate-x-0 md:h-6";
+    "flex flex-col md:gap-6 gap-4 md:visible invisible md:flex-row text-custom-grey justify-start fixed md:relative top-0 right-0 text-right md:justify-between md:w-1/3 w-1/2 min-w-80 z-50 md:py-0 md:px-0 px-5 pt-14 translate-x-full md:translate-x-0 md:h-6";
   const classFooter: string =
     "md:flex flex-col gap-4 hidden text-custom-grey justify-between items-start w-auto text-base";
   const pathName = usePathname();
