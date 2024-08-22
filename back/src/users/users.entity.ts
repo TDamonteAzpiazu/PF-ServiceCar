@@ -1,49 +1,32 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsNumber, IsString, IsUUID } from "class-validator";
 import { Appointment } from "src/appointments/appointments.entity";
-import { Role } from "src/auth/roles.enum";
-import { Status } from "src/enum/status.enum";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { v4 as uuid } from 'uuid';
 
 @Entity({ name: 'users' })
 export class User {
     @PrimaryGeneratedColumn('uuid')
-    @IsUUID()
-    id: string = uuid();
+    id: string;
 
     @Column()
-    @IsString()
-    @IsNotEmpty()
     name: string;
     
-    @Column({unique: true})
-    @IsEmail()
-    @IsNotEmpty()
+    @Column({ unique: true })
     email: string;
 
     @Column()
-    @IsString()
-    @IsNotEmpty()
     password: string;
     
     @Column()
-    @IsString()
-    @IsNotEmpty()
     address: string;
 
-    @Column() // agregar el default con un link a cloudinary de sin imagen
-    @IsString()
-    @IsNotEmpty()
+    @Column({ default: 'default-image-url' }) // URL predeterminada para la imagen
     image: string;
 
-    @Column({default: Role.User})
-    @IsEnum(Role)
-    role: Role;
+    @Column()
+    role: string; // Asumiendo que los valores del enum serán manejados como strings
 
-    @OneToMany(() => Appointment, (appointments) => appointments.user)
-    appointments: Appointment[]
+    @OneToMany(() => Appointment, (appointment) => appointment.user)
+    appointments: Appointment[];
 
-    @Column({default: Status.Active})
-    @IsEnum(Status)
-    status: Status;
+    @Column()
+    status: string; // Asumiendo que los valores del enum serán manejados como strings
 }
