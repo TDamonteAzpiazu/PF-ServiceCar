@@ -8,7 +8,7 @@ const Login: React.FC = () => {
   return (
     <main className=" text-custom-white">
       <section className=" w-full flex">
-        <div className="w-1/2 bg-black bg-opacity-85 flex flex-col pt-4">
+        <div className="w-1/2 bg-black mt-3 bg-opacity-85 flex flex-col pt-4">
           <div className="w-3/4 mx-auto">
             <h3 className="text-center text-custom-red text-3xl font-semibold">
               ¡Bienvenido otra vez!
@@ -19,11 +19,8 @@ const Login: React.FC = () => {
             <p className="text-center pb-3">
               Inicia sesión con
               <span className="text-custom-red font-semibold"> Email </span> y
-              <span className="text-custom-red font-semibold">
-                
-                Contraseña
-              </span>
-              , o con tu cuenta de Google.
+              <span className="text-custom-red font-semibold"> Contraseña</span>,
+              o con tu cuenta de Google.
             </p>
             <LoginForm />
             <p className="text-center">

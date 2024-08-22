@@ -6,13 +6,7 @@ const Opinion:React.FC = () => {
   return (
     <section className="w-1/2 py-2 px-5">
     <div className='flex items-center gap-2 pb-2'>
-      <Image
-        alt="Garagejs"
-        src="/Garagejs.png"
-        height={100}
-        width={100}
-      />
-      <p className='text-3xl mt-3 font-semibold'>GARAGEJS</p>
+      <p className='text-3xl mt-3 font-semibold'>GARAGE<span className='text-black'>JS</span> </p>
     </div>
     <h2 className='text-xl font-light py-4'>¡Te invitamos a formar parte de esta gran comunidad aqui!</h2>
 
