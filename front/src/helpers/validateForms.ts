@@ -41,6 +41,12 @@ export const validarRegister = (input: FormikValues): Partial<FormikValues> => {
   if (!input.password) {
     errors.password = "La contraseña es requerida";
   }
+  if (!input.password2) {
+    errors.password2 = "Debe repetir la contraseña";
+  }
+  if (input.password !== input.password2) {
+    errors.password2 = "Las contraseña no coinciden";
+  }
   if (input.email && !emailRegex.test(input.email)) {
     errors.email = "El email es inválido";
   }
@@ -55,7 +61,7 @@ export const validarRegister = (input: FormikValues): Partial<FormikValues> => {
   return errors;
 };
 
-export const validateForm = (formValues: FormValues)  => {
+export const validateForm = (formValues: FormValues) => {
   const errors: Partial<FormValues> = {};
   let isValid = true;
   const emailRegex: RegExp = /^[\w-]+(?:\.[\w-]+)*@(?:[\w-]+\.)+[a-zA-Z]{2,7}$/;
@@ -67,7 +73,7 @@ export const validateForm = (formValues: FormValues)  => {
   if (!formValues.email) {
     errors.email = "Email es obligatorio";
     isValid = false;
-  } 
+  }
   if (formValues.email && !emailRegex.test(formValues.email)) {
     errors.email = "El email es inválido";
     isValid = false;
