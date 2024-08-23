@@ -26,12 +26,14 @@ export class UsersController {
     }
 
     @Put(':id')
+    @UseGuards(AuthGuard)
     async updateUser(@Param('id', ParseUUIDPipe) id: string, @Body() data: Partial<CreateUserDto>): Promise<User> {
         return await this.userService.updateUser(id, data);
     }
 
     @Put('delete/:id')
-    async deleteUser(@Param('id', ParseUUIDPipe) id: string): Promise<string> {
+    @UseGuards(AuthGuard)
+    async deleteUser(@Param('id', ParseUUIDPipe) id: string): Promise<{message: string, user: User}> {
         return await this.userService.deleteUser(id);
     }
 }
