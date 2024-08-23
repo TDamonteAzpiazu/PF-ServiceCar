@@ -4,12 +4,13 @@ import { AuthController } from './auth.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../users/users.entity'; 
 
+
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]), // Registra User como una entidad de TypeORM disponible en AuthModule
+    TypeOrmModule.forFeature([User]),
+
   ],
-  providers: [AuthService], // Registra AuthService como el proveedor principal del módulo
-  controllers: [AuthController], // Registra AuthController como el controlador del módulo
+  providers: [AuthService],
+  controllers: [AuthController],
 })
 export class AuthModule {}
-
