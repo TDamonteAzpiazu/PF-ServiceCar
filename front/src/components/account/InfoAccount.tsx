@@ -6,7 +6,7 @@ import { MdEdit } from 'react-icons/md'
 const InfoAccount:React.FC = () => {
   return (
     <section>
-    <div>
+    <div className='bg-black bg-opacity-80 flex'>
       <div className="relative">
         <Image alt="" src="/user2.png" height={100} width={100} />
         <button className="absolute">
