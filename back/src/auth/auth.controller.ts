@@ -15,8 +15,8 @@ export class AuthController {
         const { email, password } = credentials;
 
         try {
-            const user = await this.authService.signIn(email,password);
-            return { message: "User authenticated successfully", user };
+            const response = await this.authService.signIn(email,password);
+            return response;
         } catch (error) {
             throw new BadRequestException(error.message);
         }

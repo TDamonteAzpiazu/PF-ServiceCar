@@ -5,6 +5,7 @@ import * as bcrypt from 'bcryptjs';
 import { User } from "../users/users.entity";
 import { CreateUserDto } from "../dto/create-user.dto";
 import { JwtService } from "@nestjs/jwt";
+import { Role } from "./roles.enum";
 
 @Injectable()
 export class AuthService {
@@ -34,7 +35,7 @@ export class AuthService {
     }
 
     async signUp(createUserDto: CreateUserDto): Promise<Omit<User, 'password'>> {
-        const { name, email, password, address, image, role } = createUserDto;
+        const { name, email, password, address } = createUserDto;
 
         const existingUser = await this.usersRepository.findOne({ where: { email } });
 
@@ -48,10 +49,7 @@ export class AuthService {
             name,
             email,
             password: hashedPassword,
-            address,
-            image,
-            role,
-            status: 'Active',  // El status inicial es 'Active'
+            address
         });
 
         const savedUser = await this.usersRepository.save(user);

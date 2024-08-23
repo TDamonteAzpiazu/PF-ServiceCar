@@ -15,7 +15,8 @@ const config: DataSourceOptions = {
   database: process.env.DB_NAME,
 
   synchronize: true,
-  logging: true,
+  // dropSchema: true,
+  logging: ['error'],
   entities: [__dirname + '/../**/*.entity.{js,ts}'],
   migrations: [__dirname + '/../migrations/*.{js,ts}'],
 };
