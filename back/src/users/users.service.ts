@@ -91,4 +91,13 @@ export class UsersService implements OnModuleInit{
             }
         }
     }
+
+    async updateImage(id: string, url: string) {
+        const userFound = await this.userRepository.findOne({ where : { id: id }, relations: { appointments: true }});
+        if(!userFound) {
+            throw new NotFoundException('User not found');
+        }
+        userFound.image = url;
+        return await this.userRepository.save(userFound);
+    }
 }

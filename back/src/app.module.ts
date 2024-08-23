@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module'; 
 import { UsersModule } from './users/users.module'; 
 import { JwtModule } from '@nestjs/jwt';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { JwtModule } from '@nestjs/jwt';
     }),
     AuthModule, 
     UsersModule, 
+    CloudinaryModule,
     JwtModule.register({
       global:true,
       signOptions: { expiresIn: '1h' },
