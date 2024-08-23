@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import dbConfig from './config/typeorm';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthModule } from './auth/auth.module'; 
-import { UsersModule } from './users/users.module'; 
 import { JwtModule } from '@nestjs/jwt';
+
+import dbConfig from './config/typeorm';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { AppointmentsModule } from './appointments/appointments.module'; 
 
 @Module({
   imports: [
@@ -20,16 +20,16 @@ import { JwtModule } from '@nestjs/jwt';
         return configService.get('typeorm');
       },
     }),
-    AuthModule, 
-    UsersModule, 
+    AuthModule,
+    UsersModule,
+    AppointmentsModule, 
     JwtModule.register({
-      global:true,
+      global: true,
       signOptions: { expiresIn: '1h' },
-      secret: process.env.JWT_SECRET || 'defaultSecret', 
-       
+      secret: process.env.JWT_SECRET || 'defaultSecret',
     }),
   ],
-  controllers: [ ],
-  providers: [ ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

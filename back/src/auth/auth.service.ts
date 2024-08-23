@@ -5,9 +5,16 @@ import * as bcrypt from 'bcryptjs';
 import { User } from "../users/users.entity";
 import { CreateUserDto } from "../dto/create-user.dto";
 import { JwtService } from "@nestjs/jwt";
+import * as jwt from 'jsonwebtoken';
+import axios from 'axios';
 
 @Injectable()
 export class AuthService {
+    private readonly auth0BaseUrl = process.env.AUTH0_BASE_URL;
+    private readonly auth0ClientId = process.env.AUTH0_CLIENT_ID;
+    private readonly auth0Audience = process.env.AUTH0_AUDIENCE;
+    private readonly auth0Secret = process.env.AUTH0_SECRET;
+
     constructor(
         @InjectRepository(User)
         private readonly usersRepository: Repository<User>,
@@ -25,7 +32,7 @@ export class AuthService {
             sub: user.id,
             id: user.id,
             email: user.email,
-            roles: [user.role],  // Utiliza el campo `role` directamente
+            roles: [user.role],
         };
 
         const token = this.jwtService.sign(userPayload);
@@ -51,7 +58,7 @@ export class AuthService {
             address,
             image,
             role,
-            status: 'Active',  // El status inicial es 'Active'
+            status: 'Active',
         });
 
         const savedUser = await this.usersRepository.save(user);
@@ -59,5 +66,32 @@ export class AuthService {
         const { password: _, ...result } = savedUser;
 
         return result;
+    }
+
+    async validateAuth0Token(idToken: string): Promise<any> {
+        try {
+            
+            const decoded = jwt.verify(idToken, this.auth0Secret, {
+                algorithms: ['RS256'],
+                audience: this.auth0Audience,
+                issuer: `${this.auth0BaseUrl}/`
+            });
+            return decoded;
+        } catch (error) {
+            throw new BadRequestException('Token inválido');
+        }
+    }
+
+    async getAuth0UserInfo(accessToken: string): Promise<any> {
+        try {
+            const response = await axios.get(`${this.auth0BaseUrl}/userinfo`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+            return response.data;
+        } catch (error) {
+            throw new BadRequestException('No se pudo obtener la información del usuario de Auth0');
+        }
     }
 }
