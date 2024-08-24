@@ -1,6 +1,8 @@
-import { IsString, IsEmail, IsNotEmpty, MinLength, MaxLength, Matches } from "class-validator";
+import { IsString, IsEmail, IsNotEmpty, MinLength, MaxLength, Matches, IsEnum } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
 import { Match } from "../custom-decorators/match.decorator";
+import { Role } from "src/auth/roles.enum";
+import { Status } from "src/enum/status.enum";
 
 export class CreateUserDto {
   @ApiProperty({ example: 'John Doe', description: 'The name of the user' })
@@ -33,16 +35,5 @@ export class CreateUserDto {
   @MinLength(3)
   @MaxLength(80)
   address: string;
-
-  @ApiProperty({ example: 'default-image-url', description: 'The image URL of the user' })
-  @IsString()
-  image: string;
-
-  @ApiProperty({ example: 'User', description: 'The role of the user' })
-  @IsString()
-  role: string;
-
-  @ApiProperty({ example: 'Active', description: 'The status of the user' })
-  @IsString()
-  status: string;
+  
 }
