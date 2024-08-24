@@ -60,3 +60,13 @@ export interface IUserLogin {
   email: string;
   password: string;
 }
+
+export interface IService {
+  id: string;
+  type: string;
+  description: string;
+  location: string;
+  image: string;
+  price: number;
+  
+}
