@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module'; 
 import { UsersModule } from './users/users.module'; 
 import { JwtModule } from '@nestjs/jwt';
+import { ServicesModule } from './services/services.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 
 @Module({
@@ -23,6 +24,7 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module';
     }),
     AuthModule, 
     UsersModule, 
+    ServicesModule,
     CloudinaryModule,
     JwtModule.register({
       global:true,
