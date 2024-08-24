@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { handleSubmit } from "@/helpers/fetchForms";
 import PATHROUTES from "@/helpers/PathRoutes";
 import { FcGoogle } from "react-icons/fc";
-import { IUserRegister } from "@/helpers/types/types";
+import { IUserRegister, IUserSend } from "@/helpers/types/types";
 
 const RegisterForm: React.FC = () => {
   const router = useRouter();
@@ -16,13 +16,12 @@ const RegisterForm: React.FC = () => {
   const url = process.env.NEXT_PUBLIC_URL;
 
   const handleSubmitRegister = async (values: IUserRegister) => {
-    const valuesSend = {
+    const valuesSend: IUserSend = {
       name: values.name + values.surname,
       email: values.email,
       address: values.address,
       password: values.password,
       repeatPassword: values.repeatPassword,
-      image: values.image,
     };
     const response = await handleSubmit({
       setError: setError,
@@ -48,13 +47,11 @@ const RegisterForm: React.FC = () => {
           password: "",
           repeatPassword: "",
           address: "",
-          image: "",
         }}
         validate={validarRegister}
         onSubmit={async (values) => {
           try {
             await handleSubmitRegister(values);
-            // console.log(values);
           } catch (error) {
             console.log(error);
           }
@@ -108,23 +105,6 @@ const RegisterForm: React.FC = () => {
               title="Repita la contraseña"
               type="password"
             />
-            <div className="cont-input pb-5 flex flex-col">
-              <label htmlFor="image" className="font-extralight pb-1">
-                Imagen de perfil: (opcional)
-              </label>
-              <input
-                type="file"
-                name="image"
-                accept="image/*"
-                id="image"
-                onChange={(event) => {
-                  formikProps.setFieldValue(
-                    "image",
-                    event.target.files && event.target.files[0]
-                  );
-                }}
-              />
-            </div>
 
             {error && (
               <p className="text-red-600 text-center mb-2 w-full">¡{error}!</p>

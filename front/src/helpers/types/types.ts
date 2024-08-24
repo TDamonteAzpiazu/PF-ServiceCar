@@ -12,11 +12,11 @@ export interface FormValues {
 }
 
 export interface UserSessionProps {
-  id: number;
-  name: string;
-  email: string;
-  address: string;
-  phone: string;
+  // id: number;
+  // name: string;
+  // email: string;
+  // address: string;
+
   token: string;
 }
 
@@ -37,25 +37,26 @@ export interface IUserRegister {
   surname: string;
   email: string;
   address: string;
-
   password: string;
   repeatPassword: string;
-  image: any;
 }
 export interface IUserSend {
   name: string;
   email: string;
   address: string;
-
   password: string;
   repeatPassword: string;
-  image: any;
 }
 export interface handleProp {
-  values: IUserSend;
+  values: IUserSend | IUserLogin;
   setError: React.Dispatch<React.SetStateAction<string | null>>;
   url: string;
   titleSwal: string;
   textSwal: string;
   textError: string;
+}
+
+export interface IUserLogin {
+  email: string;
+  password: string;
 }

@@ -4,7 +4,6 @@ import { ContextProps, UserSessionProps } from "@/helpers/types/types";
 import Cookies from "js-cookie";
 import { parse } from "jsonc-parser";
 
-
 const AuthContext = createContext<ContextProps>({
   dataUser: null,
   setDataUser: () => {},
@@ -19,12 +18,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   useEffect(() => {
     if (dataUser) {
-      Cookies.set("userData", JSON.stringify(dataUser), { expires: 3 });
+      Cookies.set("token", JSON.stringify(dataUser), { expires: 3 });
     }
   }, [dataUser]);
 
   useEffect(() => {
-    const data = parse(Cookies.get("userData")?.toString() || "{}");
+    const data = parse(Cookies.get("token")?.toString() || "{}");
     setDataUser(data);
   }, []);
 
