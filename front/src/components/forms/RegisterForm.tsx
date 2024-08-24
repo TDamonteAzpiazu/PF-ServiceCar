@@ -16,13 +16,21 @@ const RegisterForm: React.FC = () => {
   const url = process.env.NEXT_PUBLIC_URL;
 
   const handleSubmitRegister = async (values: IUserRegister) => {
+    const valuesSend = {
+      name: values.name + values.surname,
+      email: values.email,
+      address: values.address,
+      password: values.password,
+      repeatPassword: values.repeatPassword,
+      image: values.image,
+    };
     const response = await handleSubmit({
       setError: setError,
       textError: "Error al registrar un usuario. Intentelo nuevamente.",
       textSwal: "Haz completado el registro correctamente!",
       titleSwal: "Registro exitoso",
       url: `${url}/auth/signup`,
-      values: values,
+      values: valuesSend,
     });
     if (response?.response.ok) {
       router.push(PATHROUTES.LOGIN);
@@ -38,16 +46,15 @@ const RegisterForm: React.FC = () => {
           surname: "",
           email: "",
           password: "",
-          password2: "",
+          repeatPassword: "",
           address: "",
-          phone: "",
-          profileImg: "",
+          image: "",
         }}
         validate={validarRegister}
         onSubmit={async (values) => {
           try {
             await handleSubmitRegister(values);
-            
+            // console.log(values);
           } catch (error) {
             console.log(error);
           }
@@ -79,13 +86,7 @@ const RegisterForm: React.FC = () => {
               title="Email"
               type="email"
             />
-            <ContainerInput
-              error={error}
-              formikProps={formikProps}
-              nombre="phone"
-              title="Teléfono"
-              type="text"
-            />
+
             <ContainerInput
               error={error}
               formikProps={formikProps}
@@ -103,22 +104,22 @@ const RegisterForm: React.FC = () => {
             <ContainerInput
               error={error}
               formikProps={formikProps}
-              nombre="password2"
+              nombre="repeatPassword"
               title="Repita la contraseña"
               type="password"
             />
             <div className="cont-input pb-5 flex flex-col">
-              <label htmlFor="profileImg" className="font-extralight pb-1">
+              <label htmlFor="image" className="font-extralight pb-1">
                 Imagen de perfil: (opcional)
               </label>
               <input
                 type="file"
-                name="profileImg"
+                name="image"
                 accept="image/*"
-                id="profileImg"
+                id="image"
                 onChange={(event) => {
                   formikProps.setFieldValue(
-                    "profileImg",
+                    "image",
                     event.target.files && event.target.files[0]
                   );
                 }}

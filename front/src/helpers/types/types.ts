@@ -1,15 +1,14 @@
-
 export interface BannerProps {
-    img: string;
-    text: string;
-    title: string;
-  }
+  img: string;
+  text: string;
+  title: string;
+}
 
 export interface FormValues {
-  name: string,
-  email: string,
-  asunto: string,
-  message: string,
+  name: string;
+  email: string;
+  asunto: string;
+  message: string;
 }
 
 export interface UserSessionProps {
@@ -31,20 +30,29 @@ export interface IUser {
   name: string;
   email: string;
   address: string;
-  phone: string;
 }
 
 export interface IUserRegister {
   name: string;
+  surname: string;
   email: string;
   address: string;
-  phone: string;
-  password: string
-  password2: string
-  profileImg: any
+
+  password: string;
+  repeatPassword: string;
+  image: any;
+}
+export interface IUserSend {
+  name: string;
+  email: string;
+  address: string;
+
+  password: string;
+  repeatPassword: string;
+  image: any;
 }
 export interface handleProp {
-  values: IUserRegister;
+  values: IUserSend;
   setError: React.Dispatch<React.SetStateAction<string | null>>;
   url: string;
   titleSwal: string;

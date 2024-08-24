@@ -19,7 +19,8 @@ export const validarLogin = (input: FormikValues): Partial<FormikValues> => {
 export const validarRegister = (input: FormikValues): Partial<FormikValues> => {
   const errors: Partial<FormikValues> = {};
   const emailRegex: RegExp = /^[\w-]+(?:\.[\w-]+)*@(?:[\w-]+\.)+[a-zA-Z]{2,7}$/;
-  const passwordRegex: RegExp = /^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]+$/;
+  const passwordRegex: RegExp =
+    /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;"'<>,.?/\\|-]).+$/;
   const phoneRegex: RegExp =
     /^\+?\d{1,3}[\s-]?\(?\d{3}\)?[\s-]?\d{3}[\s-]?\d{4}$/;
 
@@ -32,32 +33,25 @@ export const validarRegister = (input: FormikValues): Partial<FormikValues> => {
   if (!input.email) {
     errors.email = "El email es requerido";
   }
-  if (!input.phone) {
-    errors.phone = "El teléfono es requerido";
-  }
   if (!input.address) {
     errors.address = "La dirección es requerida";
   }
   if (!input.password) {
     errors.password = "La contraseña es requerida";
   }
-  if (!input.password2) {
-    errors.password2 = "Debe repetir la contraseña";
+  if (!input.repeatPassword) {
+    errors.repeatPassword = "Debe repetir la contraseña";
   }
-  if (input.password !== input.password2) {
-    errors.password2 = "Las contraseña no coinciden";
+  if (input.password !== input.repeatPassword) {
+    errors.repeatPassword = "Las contraseña no coinciden";
   }
   if (input.email && !emailRegex.test(input.email)) {
     errors.email = "El email es inválido";
   }
   if (input.password && !passwordRegex.test(input.password)) {
     errors.password =
-      "La contraseña debe contener al menos una mayúscula, una minúscula y un número";
+      "La contraseña debe contener al menos una mayúscula, una minúscula, un número y un caractér especial";
   }
-  if (input.phone && !phoneRegex.test(input.phone)) {
-    errors.phone = "El número ingresado es inválido";
-  }
-
   return errors;
 };
 
