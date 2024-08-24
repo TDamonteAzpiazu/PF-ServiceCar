@@ -10,3 +10,5 @@ const Cards: React.FC<{servicios: IService[]}> = ({ servicios }) => {
         </div>
     )
 }
+
+export default Cards
