@@ -7,7 +7,7 @@ import {
 
 const ContactoInfo = () => {
   return (
-    <section className="p-6 bg-black rounded-xl text-white">
+    <section className="p-6 bg-black rounded-xl text-white min-w-[400px]">
       <p className="text-sm text-gray-500 mb-8">
         Te acercamos algunos de nuestros medios de comunicación alternativa, te
         invitamos a comunicarte también por aqui.
@@ -23,15 +23,15 @@ const ContactoInfo = () => {
         </div>
 
         <div className="flex items-center transform transition-transform duration-300 hover:scale-105 hover:translate-y-1">
-          <FaEnvelope size={30} className="mr-4 text-red-600" />
+          <FaEnvelope size={30} className="mr-4 text-red-600 min-w-6" />
           <div>
             <h4 className="font-bold">Email Address</h4>
-            <p>Example@Email.com</p>
+            <p className="text-sm">Example@Email.com</p>
           </div>
         </div>
 
         <div className="flex items-center transform transition-transform duration-300 hover:scale-105 hover:translate-y-1">
-          <FaWhatsapp size={30} className="mr-4 text-red-600" />
+          <FaWhatsapp size={30} className="mr-4 text-red-600 " />
           <div>
             <h4 className="font-bold">Whatsapp</h4>
             <p>082 245-7253</p>

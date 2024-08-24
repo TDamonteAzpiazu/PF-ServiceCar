@@ -12,6 +12,7 @@
     "emailjs": "^4.0.3",
     "emailjs-com": "^3.2.0",
     "formik": "^2.4.6",
+    "jose": "^5.7.0",
     "js-cookie": "^3.0.5",
     "jsonc-parser": "^3.3.1",
     "next": "14.2.5",

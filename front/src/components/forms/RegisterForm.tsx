@@ -5,31 +5,38 @@ import { validarRegister } from "@/helpers/validateForms";
 import "../../styles/forms.css";
 import ContainerInput from "./ContainerInput";
 import { useRouter } from "next/navigation";
-// import { handleSubmit } from "@/helpers/fetchForms";
+import { handleSubmit } from "@/helpers/fetchForms";
 import PATHROUTES from "@/helpers/PathRoutes";
 import { FcGoogle } from "react-icons/fc";
-// import { IUser } from "@/helpers/types";
+import { IUserRegister, IUserSend } from "@/helpers/types/types";
 
 const RegisterForm: React.FC = () => {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const url = process.env.NEXT_PUBLIC_URL;
 
-  //   const handleSubmitRegister = async (values: IUser) => {
-  //     const response = await handleSubmit({
-  //       setError: setError,
-  //       textError: "Error al registrar un usuario. Intentelo nuevamente.",
-  //       textSwal: "Haz completado el registro correctamente!",
-  //       titleSwal: "Registro exitoso",
-  //       url: `${url}/users/register`,
-  //       values: values,
-  //     });
-  //     if (response?.response.ok) {
-  //       router.push(PATHROUTES.LOGIN);
-  //     } else {
-  //       throw new Error("Error al crear un usuario");
-  //     }
-  //   };
+  const handleSubmitRegister = async (values: IUserRegister) => {
+    const valuesSend: IUserSend = {
+      name: values.name + values.surname,
+      email: values.email,
+      address: values.address,
+      password: values.password,
+      repeatPassword: values.repeatPassword,
+    };
+    const response = await handleSubmit({
+      setError: setError,
+      textError: "Error al registrar un usuario. Intentelo nuevamente.",
+      textSwal: "Haz completado el registro correctamente!",
+      titleSwal: "Registro exitoso",
+      url: `${url}/auth/signup`,
+      values: valuesSend,
+    });
+    if (response?.response.ok) {
+      router.push(PATHROUTES.LOGIN);
+    } else {
+      throw new Error("Error al crear un usuario");
+    }
+  };
   return (
     <div className="cont-form ">
       <Formik
@@ -38,13 +45,13 @@ const RegisterForm: React.FC = () => {
           surname: "",
           email: "",
           password: "",
+          repeatPassword: "",
           address: "",
-          phone: "",
         }}
         validate={validarRegister}
         onSubmit={async (values) => {
           try {
-            // await handleSubmitRegister(values);
+            await handleSubmitRegister(values);
           } catch (error) {
             console.log(error);
           }
@@ -76,13 +83,7 @@ const RegisterForm: React.FC = () => {
               title="Email"
               type="email"
             />
-            <ContainerInput
-              error={error}
-              formikProps={formikProps}
-              nombre="phone"
-              title="Teléfono"
-              type="text"
-            />
+
             <ContainerInput
               error={error}
               formikProps={formikProps}
@@ -97,26 +98,18 @@ const RegisterForm: React.FC = () => {
               title="Contraseña"
               type="password"
             />
-            <div className="cont-input pb-5 flex flex-col">
-              <label htmlFor="profileImg" className="font-extralight pb-1">Imagen de perfil: (opcional)</label>
-              <input
-                type="file"
-                name="profileImg"
-                accept="image/*"
-                id="profileImg"
-                onChange={(event) => {
-                  formikProps.setFieldValue(
-                    "profileImg",
-                    event.target.files && event.target.files[0]
-                  );
-                }}
-              />
-            </div>
+            <ContainerInput
+              error={error}
+              formikProps={formikProps}
+              nombre="repeatPassword"
+              title="Repita la contraseña"
+              type="password"
+            />
 
             {error && (
               <p className="text-red-600 text-center mb-2 w-full">¡{error}!</p>
             )}
-             <div className="cont-btn flex flex-col w-full justify-center mb-5">
+            <div className="cont-btn flex flex-col w-full justify-center mb-5">
               <button
                 type="submit"
                 className=" bg-custom-red  text-custom-white  rounded-md md:text-base md:py-2 md:px-5 hover:cursor-pointer hover:bg-red-600 hover:text-custom-white text-sm py-1.5 px-4"
