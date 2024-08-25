@@ -2,18 +2,28 @@ import {
   BadRequestException,
   Injectable,
   NotFoundException,
+  OnModuleInit,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Service } from './services.entity';
 import { Repository } from 'typeorm';
 import { Status } from '../enum/status.enum'
+import { predefinedServices } from '../helpers/services';
 
 @Injectable()
-export class ServicesService {
+export class ServicesService implements OnModuleInit {
   constructor(
     @InjectRepository(Service)
     private readonly servicesRepository: Repository<Service>,
   ) {}
+
+  async onModuleInit() {
+    if ((await this.getServices()).length === 0) {
+      for (const service of predefinedServices) {
+        await this.addService(service);
+      }
+    }
+  }
 
   async getServices() {
     return this.servicesRepository.find();

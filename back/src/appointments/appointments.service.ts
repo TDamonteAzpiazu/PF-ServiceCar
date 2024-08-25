@@ -5,6 +5,7 @@ import { Appointment } from './appointments.entity';
 import { CreateAppointmentDto } from '../dto/create-appointment.dto';
 import { User } from '../users/users.entity';
 import { Service } from '../services/services.entity';
+import { Status } from '../enum/status.enum';
 
 @Injectable()
 export class AppointmentsService {
@@ -35,7 +36,7 @@ export class AppointmentsService {
   }
 
   async create(createAppointmentDto: CreateAppointmentDto): Promise<Appointment> {
-    const { user: userId, service: serviceId, date, time, status } = createAppointmentDto;
+    const { user: userId, service: serviceId, date, time } = createAppointmentDto;
 
     // Verificar existencia de User
     const user = await this.userRepository.findOne({ where: { id: userId } });
@@ -55,7 +56,6 @@ export class AppointmentsService {
       service,
       date,
       time,
-      status,
     });
 
     try {
@@ -100,9 +100,6 @@ export class AppointmentsService {
     if (updateAppointmentDto.time) {
       appointment.time = updateAppointmentDto.time;
     }
-    if (updateAppointmentDto.status) {
-      appointment.status = updateAppointmentDto.status;
-    }
 
     try {
       return await this.appointmentRepository.save(appointment);
@@ -119,7 +116,8 @@ export class AppointmentsService {
     }
 
     try {
-      await this.appointmentRepository.remove(appointment);
+      appointment.status = Status.Inactive;
+      await this.appointmentRepository.save(appointment);
     } catch (error) {
       throw new InternalServerErrorException('Failed to delete appointment');
     }

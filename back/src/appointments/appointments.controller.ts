@@ -12,7 +12,7 @@ export class AppointmentsController {
   constructor(private readonly appointmentsService: AppointmentsService) {}
 
   @Get()
-  //@UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Obtener todas las citas' })
   @ApiResponse({ status: 200, description: 'Devuelve todas las citas.', type: [Appointment] })
   @ApiResponse({ status: 401, description: 'No autorizado.' })
@@ -21,7 +21,7 @@ export class AppointmentsController {
   }
 
   @Get(':id')
-  //@UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Obtener una cita por ID' })
   @ApiResponse({ status: 200, description: 'Devuelve la cita correspondiente al ID.', type: Appointment })
   @ApiResponse({ status: 401, description: 'No autorizado.' })
@@ -31,7 +31,7 @@ export class AppointmentsController {
   }
 
   @Post()
-  //@UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Crear una nueva cita' })
   @ApiResponse({ status: 201, description: 'La cita ha sido creada exitosamente.', type: Appointment })
   @ApiResponse({ status: 401, description: 'No autorizado.' })

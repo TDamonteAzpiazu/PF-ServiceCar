@@ -9,6 +9,7 @@ export class CreateAppointmentDto {
   @IsUUID()
   @IsNotEmpty()
   service: string;
+  
   @Type(() => Date)
   @IsDate()
   @IsNotEmpty()
@@ -17,8 +18,4 @@ export class CreateAppointmentDto {
   @IsString()
   @IsNotEmpty()
   time: string;
-
-  @IsEnum(Status)
-  @IsNotEmpty()
-  status: Status;
 }

@@ -8,6 +8,8 @@ import { JwtService } from "@nestjs/jwt";
 import * as jwt from 'jsonwebtoken';
 import axios from 'axios';
 import { Role } from "./roles.enum";
+import { config as dotenvConfig } from 'dotenv';
+dotenvConfig({ path: '.env.development' });
 
 @Injectable()
 export class AuthService {
@@ -36,7 +38,7 @@ export class AuthService {
             roles: [user.role],
         };
 
-        const token = this.jwtService.sign(userPayload);
+        const token = this.jwtService.sign(userPayload, {secret: process.env.JWT_SECRET});
 
         return { success: 'Autenticación exitosa', token };
     }
