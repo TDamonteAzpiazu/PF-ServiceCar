@@ -9,7 +9,7 @@ import { FaRegCircleUser } from "react-icons/fa6";
 
 const Navbar: React.FC = () => {
   const headerRef = useRef<HTMLDivElement>(null);
-  const dataUser = true;
+  const dataUser = false;
 
   useEffect(() => {
     const menu: HTMLElement | null = document.getElementById("menu");
@@ -55,9 +55,9 @@ const Navbar: React.FC = () => {
   return (
     <header
       ref={headerRef}
-      className={`flex bg-zinc-800 bg-opacity-30 backdrop-blur shadow-lg justify-around items-center fixed w-full py-3 px-14 z-50 transition-colors duration-300 `}
+      className={`flex bg-zinc-800 bg-opacity-30 backdrop-blur shadow-lg justify-around items-center fixed w-full py-3 px-6 z-50 transition-colors duration-300 `}
     >
-      <div className=" flex w-3/5 gap-8">
+      <div className="pl-3 flex w-3/5 gap-4">
         <Image src={"/Garagejs.png"} alt="Garagejs" width={110} height={10} />
 
         <div className="flex items-center">
@@ -82,18 +82,19 @@ const Navbar: React.FC = () => {
             </span>
           </Link>
         ) : (
-          <div className="flex sm:gap-4 sm:text-lg text-sm gap-2 sm:flex-row flex-col text-custom-white">
-            <Link
-              href={PATHROUTES.REGISTER}
-              className={`text-custom-red border border-custom-red py-1 px-2 rounded-md bg-none`}
-            >
-              Registro
-            </Link>
+          <div className="md:flex hidden sm:gap-4 sm:text-lg text-sm gap-2 sm:flex-row flex-col text-custom-white">
+          
             <Link
               href={PATHROUTES.LOGIN}
-              className="text-custom-white bg-custom-red py-1 px-2 rounded"
+              className="text-custom-white bg-custom-red py-1 px-3 rounded w-24 text-center hover:bg-red-600"
             >
               Login
+            </Link>
+            <Link
+              href={PATHROUTES.REGISTER}
+              className={`text-black  bg-white  py-1 px-3 w-24 rounded-md bg-none hover:text-custom-white hover:bg-red-600`}
+            >
+              Registro
             </Link>
           </div>
         )}

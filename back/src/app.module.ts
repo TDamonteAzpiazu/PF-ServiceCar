@@ -6,7 +6,9 @@ import { JwtModule } from '@nestjs/jwt';
 import dbConfig from './config/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
-import { AppointmentsModule } from './appointments/appointments.module'; 
+import { AppointmentsModule } from './appointments/appointments.module';
+import { ServicesModule } from './services/services.module';
+
 
 @Module({
   imports: [
@@ -22,7 +24,8 @@ import { AppointmentsModule } from './appointments/appointments.module';
     }),
     AuthModule,
     UsersModule,
-    AppointmentsModule, 
+    AppointmentsModule,
+    ServicesModule,
     JwtModule.register({
       global: true,
       signOptions: { expiresIn: '1h' },

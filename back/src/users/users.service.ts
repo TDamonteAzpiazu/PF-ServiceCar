@@ -1,16 +1,31 @@
-import { Injectable, InternalServerErrorException, NotFoundException } from "@nestjs/common";
+import { Injectable, InternalServerErrorException, NotFoundException, OnModuleInit } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "./users.entity";
 import * as bcrypt from 'bcryptjs';
-import { Status } from "src/enum/status.enum";
+import { Status } from "../enum/status.enum";
+import { Role } from "../auth/roles.enum";
 
 
 @Injectable()
-export class UsersService {
+export class UsersService implements OnModuleInit{
     constructor(
         @InjectRepository(User) private readonly userRepository: Repository<User>
     ) {}
+
+    async onModuleInit() {
+        const user = await this.userRepository.findOne({ where : { email: 'admin@example.com' }});
+        if(!user) {
+            const newUser = this.userRepository.create({
+                name: 'Admin',
+                email: 'admin@example.com',
+                password: await bcrypt.hash('Password1!', 10),
+                address: 'Calle falsa 123',
+                role: Role.Admin,
+            });
+            await this.userRepository.save(newUser);
+        }
+    }
 
     async getAllUsers() {
         try {
@@ -59,7 +74,7 @@ export class UsersService {
         }
     }
 
-    async deleteUser(id: string): Promise<string> {
+    async deleteUser(id: string) : Promise<{message: string, user: User}> {
         try {
             const userFound = await this.userRepository.findOne({ where : { id: id }, relations: { appointments: true }});
             if(!userFound) {
@@ -67,7 +82,7 @@ export class UsersService {
             }
             userFound.status = Status.Inactive;
             await this.userRepository.save(userFound);
-            return 'User deleted successfully';
+            return {message:'User deleted successfully', user: userFound};
         } catch (error) {
             if(error instanceof NotFoundException) {
                 throw error;
@@ -75,5 +90,14 @@ export class UsersService {
                 throw new InternalServerErrorException();
             }
         }
+    }
+
+    async updateImage(id: string, url: string) {
+        const userFound = await this.userRepository.findOne({ where : { id: id }, relations: { appointments: true }});
+        if(!userFound) {
+            throw new NotFoundException('User not found');
+        }
+        userFound.image = url;
+        return await this.userRepository.save(userFound);
     }
 }

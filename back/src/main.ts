@@ -7,6 +7,10 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // Configuración global de CORS
+  app.enableCors();
+
     // Configuración global del ValidationPipe con transformación
     app.useGlobalPipes(new ValidationPipe({
       transform: true,  // Habilita la transformación automática

@@ -1,6 +1,6 @@
 import { IsDate, IsEnum, IsNotEmpty, IsString, IsUUID } from 'class-validator';
 import { Status } from '../enum/status.enum'; 
-
+import { Type } from 'class-transformer';
 export class CreateAppointmentDto {
   @IsUUID()
   @IsNotEmpty()
@@ -9,7 +9,7 @@ export class CreateAppointmentDto {
   @IsUUID()
   @IsNotEmpty()
   service: string;
-
+  @Type(() => Date)
   @IsDate()
   @IsNotEmpty()
   date: Date;
