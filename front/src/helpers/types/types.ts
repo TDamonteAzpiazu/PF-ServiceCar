@@ -1,14 +1,14 @@
 export interface BannerProps {
-  img: string;
-  text: string;
-  title: string;
-}
+    img: string;
+    text: string;
+    title: string;
+  }
 
 export interface FormValues {
-  name: string;
-  email: string;
-  asunto: string;
-  message: string;
+  name: string,
+  email: string,
+  asunto: string,
+  message: string,
 }
 
 export interface TokenProps {

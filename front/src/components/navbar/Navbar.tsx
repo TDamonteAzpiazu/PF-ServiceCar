@@ -14,8 +14,7 @@ const Navbar: React.FC = () => {
   const headerRef = useRef<HTMLDivElement>(null);
   const dataUser = useSelector((state: any) => state.user.user);
   const token = parse(Cookies.get("token")?.toString() || "{}");
-  // const token =  JSON.parse(Cookies.get("token")!) || " ";
-  // const token = useSelector((state: any) => state.user.token);
+
   useEffect(() => {
     const menu: HTMLElement | null = document.getElementById("menu");
     const mostrar: HTMLElement | null = document.getElementById("mostrar");
