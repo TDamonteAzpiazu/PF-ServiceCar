@@ -6,8 +6,11 @@ import { MdEmail } from "react-icons/md";
 import SubNav from "./navbar/Subnav";
 import Image from "next/image";
 import { FaSquareXTwitter, FaWhatsapp, FaYoutube } from "react-icons/fa6";
+import { useSelector } from "react-redux";
+import { IUser } from "@/helpers/types/types";
 
 const Footer: React.FC = () => {
+  const dataUser:IUser = useSelector((state: any) => state.user.user);
   return (
     <footer className="bg-zinc-800 bg-opacity-30 backdrop-blur shadow-lg w-full h-full pb-1">
       <div className="flex sm:pr-24 sm:pl-16 pr-5 pl-5 justify-between h-4/5 py-5">
@@ -22,7 +25,7 @@ const Footer: React.FC = () => {
           />
         </div>
         <div className="flex justify-around w-1/5">
-          <SubNav typeClass={false} />
+          <SubNav typeClass={false} dataUser={dataUser}/>
         </div>
         <div className="sm:flex hidden flex-col text-custom-grey pr-2">
           <h3 className="text-custom-white text-lg pb-3">Contáctenos:</h3>

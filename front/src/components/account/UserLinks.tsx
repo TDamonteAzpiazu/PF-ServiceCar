@@ -3,17 +3,16 @@ import React from "react";
 import Cookies from "js-cookie";
 import { FaCalendarCheck, FaRegCircleUser } from "react-icons/fa6";
 import { MdLogout } from "react-icons/md";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import PATHROUTES from "@/helpers/PathRoutes";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { logout, setToken } from "@/redux/userSlice";
 
-
 const UserLinks: React.FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
- 
+  const pathName = usePathname();
 
   const handleLogout = () => {
     Cookies.remove("token");
@@ -23,21 +22,31 @@ const UserLinks: React.FC = () => {
   };
   return (
     <section className="flex md:flex-col flex-row md:w-1/4 w-full justify-between md:items-start items-end h-full md:min-h-96 py-3">
-      <div className="flex flex-col  gap-4 text-custom-white">
+      <div className="flex flex-col  gap-4 text-custom-grey">
         <div className="flex gap-2 items-center">
           <span className="text-xl">
             <FaRegCircleUser />
           </span>
-          <Link href={PATHROUTES.DASHBOARD}>Mi cuenta</Link>
+          <Link
+            href={`${PATHROUTES.DASHBOARD}/user`}
+            className={`hover:text-custom-white ${
+              pathName === `${PATHROUTES.DASHBOARD}/user`
+                ? "text-custom-white"
+                : ""
+            }`}
+          >
+            Mi cuenta
+          </Link>
         </div>
         <div className="flex gap-2 items-center">
           <span className="text-xl">
             <FaCalendarCheck />
           </span>
-          <Link
-            href={PATHROUTES.QUOTES}
-            className="hover:text-custom-white text-custom-grey"
-          >
+          <Link href={`${PATHROUTES.DASHBOARD}/reservations`} className={`hover:text-custom-white ${
+              pathName === `${PATHROUTES.DASHBOARD}/reservations`
+                ? "text-custom-white"
+                : ""
+            }`}>
             Mis reservas
           </Link>
         </div>

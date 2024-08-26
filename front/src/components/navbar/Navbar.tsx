@@ -9,13 +9,13 @@ import { FaRegCircleUser } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import { parse } from "jsonc-parser";
 import Cookies from "js-cookie";
+import { IUser } from "@/helpers/types/types";
 
 const Navbar: React.FC = () => {
   const headerRef = useRef<HTMLDivElement>(null);
-  const dataUser = useSelector((state: any) => state.user.user);
+  const dataUser:IUser = useSelector((state: any) => state.user.user);
   const token = parse(Cookies.get("token")?.toString() || "{}");
-  // const token =  JSON.parse(Cookies.get("token")!) || " ";
-  // const token = useSelector((state: any) => state.user.token);
+ 
   useEffect(() => {
     const menu: HTMLElement | null = document.getElementById("menu");
     const mostrar: HTMLElement | null = document.getElementById("mostrar");
@@ -66,7 +66,7 @@ const Navbar: React.FC = () => {
         <Image src={"/Garagejs.png"} alt="Garagejs" width={110} height={10} />
 
         <div className="flex items-center">
-          <SubNav typeClass={true} />
+          <SubNav typeClass={true} dataUser={dataUser}/>
         </div>
       </div>
       <div className="w-2/5 flex justify-end">
@@ -78,7 +78,7 @@ const Navbar: React.FC = () => {
         </span>
         {token && dataUser ? (
           <Link
-            href={PATHROUTES.DASHBOARD}
+            href={`${PATHROUTES.DASHBOARD}/user`}
             className="md:flex hidden items-center gap-2 text-custom-white"
           >
             <p className="text-xl font-medium overflow-hidden max-w-52 max-h-8">

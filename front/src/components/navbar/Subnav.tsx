@@ -3,18 +3,14 @@ import Link from "next/link";
 import { IoCloseSharp } from "react-icons/io5";
 import PATHROUTES from "@/helpers/PathRoutes";
 import { usePathname } from "next/navigation";
+import { IUser } from "@/helpers/types/types";
 
 interface SubNavProps {
   typeClass: boolean;
-  scrollDirection?: string;
-  handleLogout?: () => void | undefined;
+  dataUser: IUser;
 }
 
-const SubNav: React.FC<SubNavProps> = ({
-  typeClass,
-  scrollDirection,
-  handleLogout,
-}) => {
+const SubNav: React.FC<SubNavProps> = ({ typeClass, dataUser }) => {
   const classHeader: string =
     "flex flex-col md:gap-6 gap-4 md:visible invisible md:flex-row text-custom-grey justify-start fixed md:relative top-0 right-0 text-right md:justify-between md:w-1/3 w-1/2 min-w-80 z-50 md:py-0 md:px-0 px-5 pt-14 translate-x-full md:translate-x-0 md:h-6";
   const classFooter: string =
@@ -24,9 +20,8 @@ const SubNav: React.FC<SubNavProps> = ({
   return (
     <nav
       id="menu"
-      className={`${typeClass ? classHeader : classFooter} ${
-        scrollDirection === "down" ? "bg-transparent" : ""
-      }`}
+      className={`${typeClass ? classHeader : classFooter} 
+      `}
     >
       <Link
         href={PATHROUTES.LANDING}
@@ -54,9 +49,11 @@ const SubNav: React.FC<SubNavProps> = ({
       </Link>
 
       <Link
-        href={PATHROUTES.QUOTES}
-        className={`enlaces hover:text-custom-white font-semibold ${
-          pathName === PATHROUTES.QUOTES ? "text-custom-white" : ""
+        href={`${PATHROUTES.DASHBOARD}/reservations`}
+        className={`enlaces ${
+          dataUser ? "flex" : "hidden"
+        } hover:text-custom-white font-semibold ${
+          pathName === `${PATHROUTES.DASHBOARD}/reservations` ? "text-custom-white" : ""
         } `}
       >
         Reservas

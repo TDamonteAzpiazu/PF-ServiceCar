@@ -48,5 +48,5 @@ export const middleware = async (request: NextRequest) => {
 };
 
 export const config = {
-  matcher: ["/account"], //rutas protegidas
+  matcher: ["/account", "/account/user", "/account/reservations"], //rutas protegidas
 };
