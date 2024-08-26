@@ -9,8 +9,4 @@ import { ServicesService } from './services.service';
   controllers: [ServicesController],
   providers: [ServicesService],
 })
-<<<<<<< HEAD
 export class ServicesModule {}
-=======
-export class ServicesModule {}
->>>>>>> 5f782a3549ce3ef059f1b60b3dc39f00024feebb

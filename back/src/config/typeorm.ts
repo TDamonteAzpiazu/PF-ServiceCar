@@ -6,6 +6,13 @@ import { registerAs } from '@nestjs/config';
 // Cargar variables de entorno
 dotenvConfig({ path: '.env.development' });
 
+// Verificar las variables de entorno
+console.log('DB_HOST:', process.env.DB_HOST);
+console.log('DB_PORT:', process.env.DB_PORT);
+console.log('DB_USERNAME:', process.env.DB_USERNAME);
+console.log('DB_PASSWORD:', process.env.DB_PASSWORD);
+console.log('DB_NAME:', process.env.DB_NAME);
+
 // Configuración de TypeORM
 const config: DataSourceOptions = {
   type: 'postgres',
@@ -15,16 +22,9 @@ const config: DataSourceOptions = {
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   synchronize: true,
-<<<<<<< HEAD
   logging: true,
   entities: [join(__dirname, '/../**/*.entity.{js,ts}')],
   migrations: [join(__dirname, '/../migrations/*.{js,ts}')],
-=======
-  // dropSchema: true,
-  logging: ['error'],
-  entities: [__dirname + '/../**/*.entity.{js,ts}'],
-  migrations: [__dirname + '/../migrations/*.{js,ts}'],
->>>>>>> 5f782a3549ce3ef059f1b60b3dc39f00024feebb
 };
 
 export default registerAs('typeorm', () => config);

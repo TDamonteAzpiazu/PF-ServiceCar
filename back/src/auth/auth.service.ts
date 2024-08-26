@@ -5,15 +5,11 @@ import * as bcrypt from 'bcryptjs';
 import { User } from "../users/users.entity";
 import { CreateUserDto } from "../dto/create-user.dto";
 import { JwtService } from "@nestjs/jwt";
-<<<<<<< HEAD
 import * as jwt from 'jsonwebtoken';
 import axios from 'axios';
 import { Role } from "./roles.enum";
 import { config as dotenvConfig } from 'dotenv';
 dotenvConfig({ path: '.env.development' });
-=======
-import { Role } from "./roles.enum";
->>>>>>> 5f782a3549ce3ef059f1b60b3dc39f00024feebb
 
 @Injectable()
 export class AuthService {
