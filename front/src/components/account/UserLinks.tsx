@@ -4,16 +4,21 @@ import Cookies from "js-cookie";
 import { FaCalendarCheck, FaRegCircleUser } from "react-icons/fa6";
 import { MdLogout } from "react-icons/md";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/context/AuthContext";
 import PATHROUTES from "@/helpers/PathRoutes";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { logout, setToken } from "@/redux/userSlice";
+
 
 const UserLinks: React.FC = () => {
   const router = useRouter();
-  const { dataUser, setDataUser } = useAuth();
+  const dispatch = useDispatch();
+ 
+
   const handleLogout = () => {
-    setDataUser(null);
     Cookies.remove("token");
+    dispatch(setToken(null));
+    dispatch(logout());
     router.push(PATHROUTES.LANDING);
   };
   return (

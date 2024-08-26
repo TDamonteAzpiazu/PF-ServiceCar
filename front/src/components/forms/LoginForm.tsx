@@ -8,15 +8,18 @@ import { useRouter } from "next/navigation";
 import { handleSubmit } from "@/helpers/fetchForms";
 import PATHROUTES from "@/helpers/PathRoutes";
 import { FcGoogle } from "react-icons/fc";
-import { IUserLogin, UserSessionProps } from "@/helpers/types/types";
-import { useAuth } from "@/context/AuthContext";
+import { IUserLogin, TokenProps } from "@/helpers/types/types";
 import ButtonLogin from "./ButtonLogin";
+import { useDispatch } from "react-redux";
+import { setToken, setUserData } from "@/redux/userSlice";
+import { fetchDataUser } from "@/helpers/fetchDataUser";
 
 const LoginForm: React.FC = () => {
   const router = useRouter();
-  const { dataUser, setDataUser } = useAuth();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const secret = process.env.NEXT_PUBLIC_SECRET;
   const url = process.env.NEXT_PUBLIC_URL;
 
   const handleSubmitLogin = async (values: IUserLogin) => {
@@ -33,15 +36,15 @@ const LoginForm: React.FC = () => {
       });
 
       if (response?.data.success === "Autenticación exitosa") {
-        const userData: UserSessionProps = {
-          // id: response.data.user.id,
-          // name: response.data.user.name,
-          // email: response.data.user.email,
-          // address: response.data.user.address,
+        const userData: TokenProps = {
           token: response.data.token,
         };
 
-        await setDataUser(userData);
+        dispatch(setToken(userData.token));
+        fetchDataUser(userData.token, secret, url)
+        .then((res) => {
+          dispatch(setUserData(res));
+        })
         router.push(PATHROUTES.LANDING);
       } else {
         throw new Error("Error al loguear un usuario");
@@ -50,7 +53,7 @@ const LoginForm: React.FC = () => {
       console.log(error);
       setError("Error al iniciar sesión. Inténtelo nuevamente.");
     } finally {
-      setLoading(false); // Oculta el spinner
+      setLoading(false);
     }
   };
 
