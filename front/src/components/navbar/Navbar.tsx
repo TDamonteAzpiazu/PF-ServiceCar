@@ -6,12 +6,16 @@ import React, { useEffect, useRef } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import SubNav from "./Subnav";
 import { FaRegCircleUser } from "react-icons/fa6";
-import { useAuth } from "@/context/AuthContext";
+import { useSelector } from "react-redux";
+import { parse } from "jsonc-parser";
+import Cookies from "js-cookie";
 
 const Navbar: React.FC = () => {
   const headerRef = useRef<HTMLDivElement>(null);
-  const { dataUser, setDataUser } = useAuth();
-
+  const dataUser = useSelector((state: any) => state.user.user);
+  const token = parse(Cookies.get("token")?.toString() || "{}");
+  // const token =  JSON.parse(Cookies.get("token")!) || " ";
+  // const token = useSelector((state: any) => state.user.token);
   useEffect(() => {
     const menu: HTMLElement | null = document.getElementById("menu");
     const mostrar: HTMLElement | null = document.getElementById("mostrar");
@@ -51,7 +55,7 @@ const Navbar: React.FC = () => {
         enlace.removeEventListener("click", () => {});
       });
     };
-  }, [dataUser]);
+  }, [token]);
 
   return (
     <header
@@ -72,13 +76,15 @@ const Navbar: React.FC = () => {
         >
           <RxHamburgerMenu />
         </span>
-        {dataUser?.token ? (
+        {token && dataUser ? (
           <Link
             href={PATHROUTES.DASHBOARD}
             className="md:flex hidden items-center gap-2 text-custom-white"
           >
-            <p className="text-xl font-medium">Agustin Haag</p>
-            <span className="text-4xl">
+            <p className="text-xl font-medium overflow-hidden max-w-52 max-h-8">
+              {dataUser?.name}
+            </p>
+            <span className="text-5xl">
               <FaRegCircleUser />
             </span>
           </Link>

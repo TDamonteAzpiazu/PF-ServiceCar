@@ -17,7 +17,7 @@ const RegisterForm: React.FC = () => {
 
   const handleSubmitRegister = async (values: IUserRegister) => {
     const valuesSend: IUserSend = {
-      name: values.name + values.surname,
+      name: values.name + " " + values.surname,
       email: values.email,
       address: values.address,
       password: values.password,
