@@ -21,6 +21,27 @@ export class AuthController {
             throw new BadRequestException(error.message);
         }
     }
+
+    @Post("signin/auth0")
+    async signInWithAuth0(@Body('idToken') idToken: string) {
+        try {
+            const user = await this.authService.validateAuth0Token(idToken);
+            return { message: "User authenticated with Auth0", user };
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+    }
+
+    @Post("userinfo")
+    async getUserInfo(@Body('accessToken') accessToken: string) {
+        try {
+            const userInfo = await this.authService.getAuth0UserInfo(accessToken);
+            return userInfo;
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+    }
+
     @HttpCode(201)
     @Post("signup")
     async createUser(@Body() user: CreateUserDto) {

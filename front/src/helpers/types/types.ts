@@ -1,35 +1,35 @@
 export interface BannerProps {
-  img: string;
-  text: string;
-  title: string;
-}
+    img: string;
+    text: string;
+    title: string;
+  }
 
 export interface FormValues {
-  name: string;
-  email: string;
-  asunto: string;
-  message: string;
+  name: string,
+  email: string,
+  asunto: string,
+  message: string,
 }
 
-export interface UserSessionProps {
-  // id: number;
-  // name: string;
-  // email: string;
-  // address: string;
-
+export interface TokenProps {
   token: string;
 }
 
 export interface ContextProps {
-  dataUser: UserSessionProps | null;
-  setDataUser: (dataUser: UserSessionProps | null) => void;
+  token: TokenProps | null;
+  setToken: (token: TokenProps | null) => void;
 }
 
 export interface IUser {
   id: number;
   name: string;
   email: string;
+  password: string;
   address: string;
+  image: string;
+  role: string;
+  status: string;
+  appointments: [];
 }
 
 export interface IUserRegister {

@@ -1,13 +1,14 @@
 import { Body, Controller, Get, Param, ParseUUIDPipe, Put, UseGuards} from "@nestjs/common";
 import { UsersService } from "./users.service";
-import { RolesGuard } from "src/auth/roles.guard";
-import { Roles } from "src/custom-decorators/roles.decorator";
-import { Role } from "src/auth/roles.enum";
-import { AuthGuard } from "src/auth/auth.guard";
+import { RolesGuard } from "../auth/roles.guard"
+import { Roles } from "../custom-decorators/roles.decorator";
+import { Role } from "../auth/roles.enum";
+import { AuthGuard } from "../auth/auth.guard"
 import { User } from "./users.entity";
-import { CreateUserDto } from "src/dto/create-user.dto";
+import { CreateUserDto } from "../dto/create-user.dto"
+import { ApiTags } from "@nestjs/swagger";
 
-
+@ApiTags('users')
 @Controller('users')
 export class UsersController {
     constructor(private readonly userService: UsersService) {}
