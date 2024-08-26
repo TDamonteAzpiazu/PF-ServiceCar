@@ -1,5 +1,4 @@
 export interface BannerProps {
-<<<<<<< HEAD
     img: string;
     text: string;
     title: string;
@@ -12,63 +11,11 @@ export interface FormValues {
   message: string,
 }
 
-export interface UserSessionProps {
-  id: number;
-  name: string;
-  email: string;
-  address: string;
-  phone: string;
-=======
-  img: string;
-  text: string;
-  title: string;
-}
-
-export interface FormValues {
-  name: string;
-  email: string;
-  asunto: string;
-  message: string;
-}
-
-<<<<<<< HEAD
 export interface TokenProps {
->>>>>>> dev
-=======
-export interface UserSessionProps {
-  // id: number;
-  // name: string;
-  // email: string;
-  // address: string;
-
->>>>>>> 5f782a3549ce3ef059f1b60b3dc39f00024feebb
->>>>>>> 0829a5bda4e07b282541de1bb7324ddb0211c786
   token: string;
 }
 
 export interface ContextProps {
-<<<<<<< HEAD
-  dataUser: UserSessionProps | null;
-  setDataUser: (dataUser: UserSessionProps | null) => void;
-}
-
-<<<<<<< HEAD
-export interface User {
-=======
-<<<<<<< HEAD
-export interface User {
-=======
-export interface IUser {
->>>>>>> 5f782a3549ce3ef059f1b60b3dc39f00024feebb
->>>>>>> 0829a5bda4e07b282541de1bb7324ddb0211c786
-  id: number;
-  name: string;
-  email: string;
-  address: string;
-<<<<<<< HEAD
-  phone: string;
-}
-=======
   token: TokenProps | null;
   setToken: (token: TokenProps | null) => void;
 }
@@ -83,12 +30,6 @@ export interface IUser {
   role: string;
   status: string;
   appointments: [];
-=======
-<<<<<<< HEAD
-  phone: string;
-}
-=======
->>>>>>> 0829a5bda4e07b282541de1bb7324ddb0211c786
 }
 
 export interface IUserRegister {
@@ -119,8 +60,3 @@ export interface IUserLogin {
   email: string;
   password: string;
 }
-<<<<<<< HEAD
->>>>>>> dev
-=======
->>>>>>> 5f782a3549ce3ef059f1b60b3dc39f00024feebb
->>>>>>> 0829a5bda4e07b282541de1bb7324ddb0211c786

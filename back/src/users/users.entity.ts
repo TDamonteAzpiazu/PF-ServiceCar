@@ -1,19 +1,7 @@
 import { IsEmail, IsEnum, IsNotEmpty, IsString, IsStrongPassword, IsUUID } from "class-validator";
-<<<<<<< HEAD
-<<<<<<< HEAD
 import { Appointment } from "../appointments/appointments.entity"
 import { Role } from "../auth/roles.enum"
 import { Status } from "../enum/status.enum";
-=======
-import { Appointment } from "src/appointments/appointments.entity";
-import { Role } from "src/auth/roles.enum";
-import { Status } from "src/enum/status.enum";
->>>>>>> dev
-=======
-import { Appointment } from "src/appointments/appointments.entity";
-import { Role } from "src/auth/roles.enum";
-import { Status } from "src/enum/status.enum";
->>>>>>> 0829a5bda4e07b282541de1bb7324ddb0211c786
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { v4 as uuid } from 'uuid';
 

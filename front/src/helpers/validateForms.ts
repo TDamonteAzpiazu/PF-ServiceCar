@@ -55,15 +55,7 @@ export const validarRegister = (input: FormikValues): Partial<FormikValues> => {
   return errors;
 };
 
-<<<<<<< HEAD
-export const validateForm = (formValues: FormValues)  => {
-=======
 export const validateForm = (formValues: FormValues) => {
-<<<<<<< HEAD
->>>>>>> dev
-=======
->>>>>>> 5f782a3549ce3ef059f1b60b3dc39f00024feebb
->>>>>>> 0829a5bda4e07b282541de1bb7324ddb0211c786
   const errors: Partial<FormValues> = {};
   let isValid = true;
   const emailRegex: RegExp = /^[\w-]+(?:\.[\w-]+)*@(?:[\w-]+\.)+[a-zA-Z]{2,7}$/;
@@ -75,15 +67,7 @@ export const validateForm = (formValues: FormValues) => {
   if (!formValues.email) {
     errors.email = "Email es obligatorio";
     isValid = false;
-<<<<<<< HEAD
-  } 
-=======
   }
-<<<<<<< HEAD
->>>>>>> dev
-=======
->>>>>>> 5f782a3549ce3ef059f1b60b3dc39f00024feebb
->>>>>>> 0829a5bda4e07b282541de1bb7324ddb0211c786
   if (formValues.email && !emailRegex.test(formValues.email)) {
     errors.email = "El email es inválido";
     isValid = false;

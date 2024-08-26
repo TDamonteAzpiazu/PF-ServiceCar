@@ -5,18 +5,8 @@ import Image from "next/image";
 
 const GarageHome = () => {
   return (
-<<<<<<< HEAD
-    <section className="flex flex-col md:flex-row items-center justify-between text-white pb-8">
-      
-      <div className="flex flex-col mx-10 md:flex-row w-full items-center mt-[69px]  md:space-x-8 ">
-=======
     <section className="flex flex-col md:gap-4 md:flex-row items-center justify-between text-white pb-8">
       <div className="flex flex-col mx-10 md:flex-row w-full items-center mt-[69px] md:space-x-10 ">
-<<<<<<< HEAD
->>>>>>> dev
-=======
->>>>>>> 5f782a3549ce3ef059f1b60b3dc39f00024feebb
->>>>>>> 0829a5bda4e07b282541de1bb7324ddb0211c786
         <div className="md:w-1/2 space-y-4 text-center md:text-left mb-8 md:mb-0 lg:ml-12 xl:ml-20 2xl:ml-32">
           <h3 className="text-xl font-light">Work efficient</h3>
           <h1 className="text-6xl font-bold text-red-600 ">GARAGEJS</h1>

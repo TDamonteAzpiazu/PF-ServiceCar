@@ -12,21 +12,9 @@ import Cookies from "js-cookie";
 
 const Navbar: React.FC = () => {
   const headerRef = useRef<HTMLDivElement>(null);
-<<<<<<< HEAD
-  const dataUser = false;
-<<<<<<< HEAD
-=======
-=======
-  const { dataUser, setDataUser } = useAuth();
->>>>>>> 5f782a3549ce3ef059f1b60b3dc39f00024feebb
->>>>>>> 0829a5bda4e07b282541de1bb7324ddb0211c786
-
-=======
   const dataUser = useSelector((state: any) => state.user.user);
   const token = parse(Cookies.get("token")?.toString() || "{}");
-  // const token =  JSON.parse(Cookies.get("token")!) || " ";
-  // const token = useSelector((state: any) => state.user.token);
->>>>>>> dev
+
   useEffect(() => {
     const menu: HTMLElement | null = document.getElementById("menu");
     const mostrar: HTMLElement | null = document.getElementById("mostrar");
@@ -101,14 +89,6 @@ const Navbar: React.FC = () => {
           </Link>
         ) : (
           <div className="md:flex hidden sm:gap-4 sm:text-lg text-sm gap-2 sm:flex-row flex-col text-custom-white">
-<<<<<<< HEAD
-          
-=======
-<<<<<<< HEAD
->>>>>>> dev
-=======
->>>>>>> 5f782a3549ce3ef059f1b60b3dc39f00024feebb
->>>>>>> 0829a5bda4e07b282541de1bb7324ddb0211c786
             <Link
               href={PATHROUTES.LOGIN}
               className="text-custom-white bg-custom-red py-1 px-3 rounded w-24 text-center hover:bg-red-600"
@@ -117,15 +97,7 @@ const Navbar: React.FC = () => {
             </Link>
             <Link
               href={PATHROUTES.REGISTER}
-<<<<<<< HEAD
-              className={`text-black  bg-white  py-1 px-3 w-24 rounded-md bg-none hover:text-custom-white hover:bg-red-600`}
-=======
               className={`text-custom-red  bg-custom-white  py-1 px-3 w-24 rounded-md border hover:text-custom-white hover:bg-transparent hover:border-custom-white`}
-<<<<<<< HEAD
->>>>>>> dev
-=======
->>>>>>> 5f782a3549ce3ef059f1b60b3dc39f00024feebb
->>>>>>> 0829a5bda4e07b282541de1bb7324ddb0211c786
             >
               Registro
             </Link>
