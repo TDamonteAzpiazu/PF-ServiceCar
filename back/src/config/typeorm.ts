@@ -15,9 +15,16 @@ const config: DataSourceOptions = {
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   synchronize: true,
+<<<<<<< HEAD
   logging: true,
   entities: [join(__dirname, '/../**/*.entity.{js,ts}')],
   migrations: [join(__dirname, '/../migrations/*.{js,ts}')],
+=======
+  // dropSchema: true,
+  logging: ['error'],
+  entities: [__dirname + '/../**/*.entity.{js,ts}'],
+  migrations: [__dirname + '/../migrations/*.{js,ts}'],
+>>>>>>> 5f782a3549ce3ef059f1b60b3dc39f00024feebb
 };
 
 export default registerAs('typeorm', () => config);

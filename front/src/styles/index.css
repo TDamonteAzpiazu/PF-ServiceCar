@@ -14,6 +14,7 @@ main {
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.863) !important;
 }
 
+
 @media (max-width: 768px) {
   nav.visible {
     transform: translateX(0);

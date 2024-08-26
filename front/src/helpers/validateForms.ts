@@ -19,7 +19,8 @@ export const validarLogin = (input: FormikValues): Partial<FormikValues> => {
 export const validarRegister = (input: FormikValues): Partial<FormikValues> => {
   const errors: Partial<FormikValues> = {};
   const emailRegex: RegExp = /^[\w-]+(?:\.[\w-]+)*@(?:[\w-]+\.)+[a-zA-Z]{2,7}$/;
-  const passwordRegex: RegExp = /^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]+$/;
+  const passwordRegex: RegExp =
+    /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;"'<>,.?/\\|-]).+$/;
   const phoneRegex: RegExp =
     /^\+?\d{1,3}[\s-]?\(?\d{3}\)?[\s-]?\d{3}[\s-]?\d{4}$/;
 
@@ -32,30 +33,33 @@ export const validarRegister = (input: FormikValues): Partial<FormikValues> => {
   if (!input.email) {
     errors.email = "El email es requerido";
   }
-  if (!input.phone) {
-    errors.phone = "El teléfono es requerido";
-  }
   if (!input.address) {
     errors.address = "La dirección es requerida";
   }
   if (!input.password) {
     errors.password = "La contraseña es requerida";
   }
+  if (!input.repeatPassword) {
+    errors.repeatPassword = "Debe repetir la contraseña";
+  }
+  if (input.password !== input.repeatPassword) {
+    errors.repeatPassword = "Las contraseña no coinciden";
+  }
   if (input.email && !emailRegex.test(input.email)) {
     errors.email = "El email es inválido";
   }
   if (input.password && !passwordRegex.test(input.password)) {
     errors.password =
-      "La contraseña debe contener al menos una mayúscula, una minúscula y un número";
+      "La contraseña debe contener al menos una mayúscula, una minúscula, un número y un caractér especial";
   }
-  if (input.phone && !phoneRegex.test(input.phone)) {
-    errors.phone = "El número ingresado es inválido";
-  }
-
   return errors;
 };
 
+<<<<<<< HEAD
 export const validateForm = (formValues: FormValues)  => {
+=======
+export const validateForm = (formValues: FormValues) => {
+>>>>>>> 5f782a3549ce3ef059f1b60b3dc39f00024feebb
   const errors: Partial<FormValues> = {};
   let isValid = true;
   const emailRegex: RegExp = /^[\w-]+(?:\.[\w-]+)*@(?:[\w-]+\.)+[a-zA-Z]{2,7}$/;
@@ -67,7 +71,11 @@ export const validateForm = (formValues: FormValues)  => {
   if (!formValues.email) {
     errors.email = "Email es obligatorio";
     isValid = false;
+<<<<<<< HEAD
   } 
+=======
+  }
+>>>>>>> 5f782a3549ce3ef059f1b60b3dc39f00024feebb
   if (formValues.email && !emailRegex.test(formValues.email)) {
     errors.email = "El email es inválido";
     isValid = false;
