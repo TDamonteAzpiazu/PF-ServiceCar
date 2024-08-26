@@ -28,7 +28,11 @@ const HomeOpiniones: React.FC = () => {
             </div>
             <div className="flex justify-center mb-2">
               {Array.from({ length: opinion.estrellas }).map((_, starIndex) => (
+<<<<<<< HEAD
                 <FaStar key={starIndex} className="text-white mr-1" />
+=======
+                <FaStar key={starIndex} className="text-yellow-500 mr-1" />
+>>>>>>> dev
               ))}
             </div>
             <h3 className="text-xl font-bold text-center">{opinion.nombre}</h3> 

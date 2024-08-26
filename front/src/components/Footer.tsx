@@ -10,7 +10,7 @@ import { FaSquareXTwitter, FaWhatsapp, FaYoutube } from "react-icons/fa6";
 const Footer: React.FC = () => {
   return (
     <footer className="bg-zinc-800 bg-opacity-30 backdrop-blur shadow-lg w-full h-full pb-1">
-      <div className="flex px-24 justify-between h-4/5 pt-5">
+      <div className="flex sm:pr-24 sm:pl-16 pr-5 pl-5 justify-between h-4/5 py-5">
         <div className="">
           <Image
             loading="lazy"
@@ -18,12 +18,13 @@ const Footer: React.FC = () => {
             alt="Garagejs"
             width={150}
             height={100}
+            className="sm:w-36 w-28"
           />
         </div>
         <div className="flex justify-around w-1/5">
           <SubNav typeClass={false} />
         </div>
-        <div className="flex flex-col text-custom-grey">
+        <div className="sm:flex hidden flex-col text-custom-grey pr-2">
           <h3 className="text-custom-white text-lg pb-3">Contáctenos:</h3>
           <div className="flex flex-col gap-5">
             <p className="flex gap-1 items-center">
