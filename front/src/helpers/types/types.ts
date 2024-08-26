@@ -31,8 +31,18 @@ export interface FormValues {
   message: string;
 }
 
+<<<<<<< HEAD
 export interface TokenProps {
 >>>>>>> dev
+=======
+export interface UserSessionProps {
+  // id: number;
+  // name: string;
+  // email: string;
+  // address: string;
+
+>>>>>>> 5f782a3549ce3ef059f1b60b3dc39f00024feebb
+>>>>>>> 0829a5bda4e07b282541de1bb7324ddb0211c786
   token: string;
 }
 
@@ -42,11 +52,20 @@ export interface ContextProps {
   setDataUser: (dataUser: UserSessionProps | null) => void;
 }
 
+<<<<<<< HEAD
 export interface User {
+=======
+<<<<<<< HEAD
+export interface User {
+=======
+export interface IUser {
+>>>>>>> 5f782a3549ce3ef059f1b60b3dc39f00024feebb
+>>>>>>> 0829a5bda4e07b282541de1bb7324ddb0211c786
   id: number;
   name: string;
   email: string;
   address: string;
+<<<<<<< HEAD
   phone: string;
 }
 =======
@@ -64,6 +83,12 @@ export interface IUser {
   role: string;
   status: string;
   appointments: [];
+=======
+<<<<<<< HEAD
+  phone: string;
+}
+=======
+>>>>>>> 0829a5bda4e07b282541de1bb7324ddb0211c786
 }
 
 export interface IUserRegister {
@@ -94,4 +119,8 @@ export interface IUserLogin {
   email: string;
   password: string;
 }
+<<<<<<< HEAD
 >>>>>>> dev
+=======
+>>>>>>> 5f782a3549ce3ef059f1b60b3dc39f00024feebb
+>>>>>>> 0829a5bda4e07b282541de1bb7324ddb0211c786

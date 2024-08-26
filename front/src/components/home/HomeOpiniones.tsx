@@ -32,7 +32,11 @@ const HomeOpiniones: React.FC = () => {
                 <FaStar key={starIndex} className="text-white mr-1" />
 =======
                 <FaStar key={starIndex} className="text-yellow-500 mr-1" />
+<<<<<<< HEAD
 >>>>>>> dev
+=======
+>>>>>>> 5f782a3549ce3ef059f1b60b3dc39f00024feebb
+>>>>>>> 0829a5bda4e07b282541de1bb7324ddb0211c786
               ))}
             </div>
             <h3 className="text-xl font-bold text-center">{opinion.nombre}</h3> 

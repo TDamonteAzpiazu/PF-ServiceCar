@@ -14,6 +14,12 @@ const Navbar: React.FC = () => {
   const headerRef = useRef<HTMLDivElement>(null);
 <<<<<<< HEAD
   const dataUser = false;
+<<<<<<< HEAD
+=======
+=======
+  const { dataUser, setDataUser } = useAuth();
+>>>>>>> 5f782a3549ce3ef059f1b60b3dc39f00024feebb
+>>>>>>> 0829a5bda4e07b282541de1bb7324ddb0211c786
 
 =======
   const dataUser = useSelector((state: any) => state.user.user);
@@ -98,7 +104,11 @@ const Navbar: React.FC = () => {
 <<<<<<< HEAD
           
 =======
+<<<<<<< HEAD
 >>>>>>> dev
+=======
+>>>>>>> 5f782a3549ce3ef059f1b60b3dc39f00024feebb
+>>>>>>> 0829a5bda4e07b282541de1bb7324ddb0211c786
             <Link
               href={PATHROUTES.LOGIN}
               className="text-custom-white bg-custom-red py-1 px-3 rounded w-24 text-center hover:bg-red-600"
@@ -111,7 +121,11 @@ const Navbar: React.FC = () => {
               className={`text-black  bg-white  py-1 px-3 w-24 rounded-md bg-none hover:text-custom-white hover:bg-red-600`}
 =======
               className={`text-custom-red  bg-custom-white  py-1 px-3 w-24 rounded-md border hover:text-custom-white hover:bg-transparent hover:border-custom-white`}
+<<<<<<< HEAD
 >>>>>>> dev
+=======
+>>>>>>> 5f782a3549ce3ef059f1b60b3dc39f00024feebb
+>>>>>>> 0829a5bda4e07b282541de1bb7324ddb0211c786
             >
               Registro
             </Link>

@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -128,3 +129,5 @@ const InfoAccount: React.FC = () => {
 
 export default InfoAccount;
 >>>>>>> dev
+=======
+>>>>>>> 0829a5bda4e07b282541de1bb7324ddb0211c786
