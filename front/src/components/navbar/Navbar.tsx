@@ -60,7 +60,7 @@ const Navbar: React.FC = () => {
   return (
     <header
       ref={headerRef}
-      className={`flex bg-zinc-800 bg-opacity-30 backdrop-blur shadow-lg justify-around items-center fixed w-full py-3 px-6 z-50 transition-colors duration-300 `}
+      className={`flex bg-black bg-opacity-20 backdrop-blur-xl shadow-lg justify-around items-center fixed w-full py-3 px-6 z-50 transition-colors duration-300 `}
     >
       <div className="pl-3 flex w-3/5 gap-4">
         <Image src={"/Garagejs.png"} alt="Garagejs" width={110} height={10} />

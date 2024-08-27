@@ -53,7 +53,7 @@ const ContactoInfo = () => {
           width="300"
           height="350"
           loading="lazy"
-          className="border-0 w-full"
+          className="border-0 w-full rounded"
         ></iframe>
       </div>
     </section>

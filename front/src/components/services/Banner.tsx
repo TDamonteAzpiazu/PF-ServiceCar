@@ -8,7 +8,7 @@ const Banner: React.FC = () => {
   const { containerRef, scrollRight, scrollLeft } = useHorizontalScroll();
 
   return (
-    <div className="flex items-center w-11/12 mx-auto relative">
+    <div className="flex items-center w-full relative">
       <button
         onClick={scrollLeft}
         className="flecha-izquierda text-black absolute left-1 bg-neutral-300 bg-opacity-50 hover:bg-custom-white p-2 rounded-full text-lg"

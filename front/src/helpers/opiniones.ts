@@ -1,4 +1,6 @@
-export const opiniones = [
+import { IOpinion } from "./types/types";
+
+export const opiniones:IOpinion[] = [
     {
       estrellas: 5,
       nombre: 'Lorenzo Peralta',
