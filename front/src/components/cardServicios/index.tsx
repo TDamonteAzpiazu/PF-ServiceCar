@@ -17,7 +17,7 @@ const ServiceCard: React.FC<IService> = ({
         <Image
           src={image}
           alt={type}
-          layout="fill"
+          layout="fill" //cambiar propiedad
           objectFit="cover"
           className="absolute inset-0"
         />
