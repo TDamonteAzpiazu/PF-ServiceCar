@@ -52,7 +52,7 @@ const Footer: React.FC = () => {
         </div>
         <div className="flex flex-col  items-center gap-5">
           <Link href={"https://x.com/"} className="text-2xl">
-            <FaSquareXTwitter className="text-black" />
+            <FaSquareXTwitter className="text-custom-red" />
           </Link>
           <Link
             href={
@@ -60,16 +60,16 @@ const Footer: React.FC = () => {
             }
             className="text-2xl"
           >
-            <FaLinkedin className="text-blue-700" />
+            <FaLinkedin className="text-custom-red" />
           </Link>
           <Link href={"https://www.youtube.com/"} className="text-2xl">
-            <FaYoutube className="text-red-700" />
+            <FaYoutube className="text-custom-red" />
           </Link>
           <Link
             href={"https://www.instagram.com/agushaag22/"}
             className="text-2xl"
           >
-            <FaInstagram className="text-red-500" />
+            <FaInstagram className="text-custom-red" />
           </Link>
         </div>
       </div>

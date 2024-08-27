@@ -70,3 +70,11 @@ export interface IService {
   price: number;
   
 }
+export interface IOpinion{
+  estrellas: number,
+  nombre: string,
+  ocupacion: string,
+  opinion:
+  string,
+  icono: string,
+}

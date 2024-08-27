@@ -15,7 +15,7 @@ const CardBanner: React.FC<BannerProps> = ({ img, text, title }) => {
         <div>
           <Link
             href={PATHROUTES.SERVICES}
-            className="border-2 transition duration-500 ease-in-out  border-custom-red font-bold py-4 px-7 bg-none text-custom-red text-xs sm:text-base hover:bg-custom-red hover:text-custom-white"
+            className=" transition duration-500 ease-in-out  font-bold py-3 rounded px-7 bg-custom-red text-custom-white text-xs sm:text-base hover:bg-custom-white hover:text-custom-red"
           >
             Ver más
           </Link>
