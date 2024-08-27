@@ -1,7 +1,5 @@
 import { jwtVerify } from "jose";
 import { IUser } from "./types/types";
-import { parse } from "jsonc-parser";
-import Cookies from "js-cookie";
 
 export const fetchDataUser = async (
   token: string,
@@ -33,16 +31,3 @@ export const fetchDataUser = async (
   }
 };
 
-export const getToken = () => {
-  const tokenString = Cookies.get("token");
-  if (tokenString) {
-    try {
-      const parsedToken = parse(tokenString);
-      return parsedToken ? parsedToken.toString() : null;
-    } catch (error) {
-      console.error("Error parsing token:", error);
-      return null;
-    }
-  }
-  return null;
-};
