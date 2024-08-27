@@ -3,9 +3,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "./users.entity";
 import * as bcrypt from 'bcryptjs';
-import { Status } from "src/enum/status.enum";
-import { Role } from "src/auth/roles.enum";
-
+import { Status } from "../enum/status.enum";
+import { Role } from "../auth/roles.enum";
 
 @Injectable()
 export class UsersService implements OnModuleInit{
@@ -90,5 +89,14 @@ export class UsersService implements OnModuleInit{
                 throw new InternalServerErrorException();
             }
         }
+    }
+
+    async updateImage(id: string, url: string) {
+        const userFound = await this.userRepository.findOne({ where : { id: id }, relations: { appointments: true }});
+        if(!userFound) {
+            throw new NotFoundException('User not found');
+        }
+        userFound.image = url;
+        return await this.userRepository.save(userFound);
     }
 }
