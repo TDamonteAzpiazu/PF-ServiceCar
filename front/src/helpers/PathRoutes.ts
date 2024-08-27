@@ -5,6 +5,7 @@ enum PATHROUTES {
   LANDING = "/",
   LOGIN = "/login",
   REGISTER = "/register",
+  QUOTES = "/questes",
   CONTACT = "/contacto",
   ADMIN = "/admin",
 }
