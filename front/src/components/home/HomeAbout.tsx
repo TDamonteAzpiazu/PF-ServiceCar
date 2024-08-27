@@ -50,7 +50,7 @@ const HomeAbout: React.FC = () => {
       </div>
 
       <div className="text-center mt-8">
-        <Link href={PATHROUTES.SERVICES}>
+        <Link href={PATHROUTES.SUCURSALES}>
           <button className="custom-button">Ver sucursales</button>
         </Link>
       </div>
