@@ -17,7 +17,7 @@ const ContactoInfo = () => {
         <div className="flex items-center transform transition-transform duration-300 hover:scale-105 hover:translate-y-1">
           <FaPhone size={30} className="mr-4 text-red-600" />
           <div>
-            <h4 className="font-bold">Phone Number</h4>
+            <h4 className="font-bold">Numero Telefónico</h4>
             <p>+62 82 4032 567</p>
           </div>
         </div>
@@ -25,7 +25,7 @@ const ContactoInfo = () => {
         <div className="flex items-center transform transition-transform duration-300 hover:scale-105 hover:translate-y-1">
           <FaEnvelope size={30} className="mr-4 text-red-600 min-w-6" />
           <div>
-            <h4 className="font-bold">Email Address</h4>
+            <h4 className="font-bold">Correo Electrónico</h4>
             <p className="text-sm">Example@Email.com</p>
           </div>
         </div>
@@ -41,8 +41,8 @@ const ContactoInfo = () => {
         <div className="flex items-center transform transition-transform duration-300 hover:scale-105 hover:translate-y-1">
           <FaMapMarkerAlt size={30} className="mr-4 text-red-600" />
           <div>
-            <h4 className="font-bold">Our Office</h4>
-            <p>2443 Oak Ridge Omaha, CA 45065</p>
+            <h4 className="font-bold">Nustra Oficina</h4>
+            <p>Calle 123, Bs As, Arg </p>
           </div>
         </div>
       </div>

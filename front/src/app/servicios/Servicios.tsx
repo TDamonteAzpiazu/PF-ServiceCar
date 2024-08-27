@@ -1,22 +1,48 @@
-import React from "react";
+"use client";
+import { useState, useEffect } from "react";
 import Cards from "@/components/services/cardsServicios";
 import { FetchServicio } from "@/helpers/serviciosFetch";
 import Filters from "@/components/services/Filters";
 import Banner from "@/components/services/Banner";
+import { IService } from "@/helpers/types/types";
+import { ordenarPrecioAsc, ordernarPrecioDesc } from "@/helpers/ordenamientoService";
 
-const Servicios = async () => {
-  const servicios = await FetchServicio();
+const Servicios = () => {
+  const [servicios, setServicios] = useState<IService[]>([]);
+  const [serviciosOrdenados, setServiciosOrdenados] = useState<IService[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const fetchedServicios = await FetchServicio();
+      setServicios(fetchedServicios);
+      setServiciosOrdenados(fetchedServicios);
+    };
+    
+    fetchData();
+  }, []);
+
+  const handleOrdenarPrecioAsc = () => {
+    setServiciosOrdenados(ordenarPrecioAsc(serviciosOrdenados));
+  };
+
+  const handleOrdenarPrecioDesc = () => {
+    setServiciosOrdenados(ordernarPrecioDesc(serviciosOrdenados));
+  };
+
   return (
-    <main >
-      <Banner/>
-      <div className="flex sm:flex-row flex-col sm:justify-between mx-8  sm:items-center">
+    <main>
+      <Banner />
+      <div className="flex sm:flex-row flex-col sm:justify-between mx-8 sm:items-center">
         <h2 className="text-start sm:w-1/2 w-full text-white text-xl font-semibold sm:my-12 my-7">
-          Encontra el servicio que buscas
+          Encuentra el servicio que buscas
         </h2>
-        <Filters/>
+        <Filters 
+          ordenPrecioAsc={handleOrdenarPrecioAsc} 
+          ordenPrecioDesc={handleOrdenarPrecioDesc} 
+        />
       </div>
       <section className="mx-8">
-        <Cards servicios={servicios} />
+        <Cards servicios={serviciosOrdenados} />
       </section>
     </main>
   );
