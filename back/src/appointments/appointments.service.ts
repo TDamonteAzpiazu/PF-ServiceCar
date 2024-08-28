@@ -52,12 +52,12 @@ export class AppointmentsService {
     const activeAppointmentsCount = await this.appointmentRepository.count({
       where: {
         user: { id: userId },
-        status: Status.Active, 
+        status: Status.Active,
       },
     });
 
     if (activeAppointmentsCount >= 4) {
-      throw new BadRequestException('No puedes tener mas de 4 turnos activos');
+      throw new BadRequestException('No puedes tener más de 4 turnos activos');
     }
 
     // Validar que al menos haya un servicio
@@ -81,12 +81,12 @@ export class AppointmentsService {
       throw new NotFoundException(`Los siguientes servicios no fueron encontrados: ${notFoundIds.join(', ')}`);
     }
 
-    // Validación no más de dos servicios por cita
+    // Validación de no más de dos servicios por cita
     if (serviceIds.length > 2) {
       throw new BadRequestException('Solo puedes agregar hasta 2 servicios por cita');
     }
 
-    // Crear nueva cita sin validación de fecha y hora
+    // Crear nueva cita
     const appointment = this.appointmentRepository.create({
       user,
       service: services,
@@ -117,7 +117,7 @@ export class AppointmentsService {
     const activeAppointmentsCount = await this.appointmentRepository.count({
       where: {
         user: { id: userId },
-        status: Status.Active, // Asumiendo que "Active" es el estado que indica que el turno está activo
+        status: Status.Active,
         id: Not(id), // Excluir el turno actual en caso de que se esté actualizando
       },
     });
@@ -145,12 +145,12 @@ export class AppointmentsService {
       const services = await this.serviceRepository.findBy({ id: In(updateAppointmentDto.service) });
       // Verificar si todos los servicios fueron encontrados
       if (services.length !== updateAppointmentDto.service.length) {
-        throw new NotFoundException('One or more services not found');
+        throw new NotFoundException('Uno o más servicios no fueron encontrados');
       }
       appointment.service = services;
     }
 
-    // Asignar otros campos sin validación de fecha y hora
+    // Asignar otros campos
     if (updateAppointmentDto.date) {
       appointment.date = updateAppointmentDto.date;
     }
