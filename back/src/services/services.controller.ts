@@ -36,6 +36,7 @@ import {
         location,
         image,
         price,
+        appointments: []
       });
   
       return {

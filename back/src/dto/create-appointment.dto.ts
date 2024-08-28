@@ -1,4 +1,4 @@
-import { IsDate, IsEnum, IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import { IsArray, IsDate, IsEnum, IsNotEmpty, IsString, IsUUID } from 'class-validator';
 import { Status } from '../enum/status.enum'; 
 import { Type } from 'class-transformer';
 export class CreateAppointmentDto {
@@ -6,9 +6,10 @@ export class CreateAppointmentDto {
   @IsNotEmpty()
   user: string;
 
-  @IsUUID()
+  @IsArray()
+  @IsUUID('all', { each: true })
   @IsNotEmpty()
-  service: string;
+  service: string[];
   
   @Type(() => Date)
   @IsDate()
