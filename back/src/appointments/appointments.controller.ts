@@ -20,6 +20,15 @@ export class AppointmentsController {
     return this.appointmentsService.findAll();
   }
 
+  @Get('user/:id')
+  @UseGuards(AuthGuard)
+  @ApiOperation({ summary: 'Obtener todas las citas de un usuario' })
+  @ApiResponse({ status: 200, description: 'Devuelve todas las citas de un usuario.', type: [Appointment] })
+  @ApiResponse({ status: 401, description: 'No autorizado.' })
+  async findAllByUser(@Param('id') id: string): Promise<Appointment[]> {
+    return this.appointmentsService.findAllByUser(id);
+  }
+
   @Get(':id')
   @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Obtener una cita por ID' })

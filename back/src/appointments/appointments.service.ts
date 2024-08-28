@@ -22,6 +22,10 @@ export class AppointmentsService {
     return this.appointmentRepository.find({ relations: ['user', 'service'] });
   }
 
+  async findAllByUser(id: string): Promise<Appointment[]> {
+    return this.appointmentRepository.find({ where: { user: { id } }, relations: ['user', 'service'] });
+  }
+
   async findOne(id: string): Promise<Appointment> {
     const appointment = await this.appointmentRepository.findOne({
       where: { id },
