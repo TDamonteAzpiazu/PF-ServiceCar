@@ -9,24 +9,24 @@ import { ordenarPrecioAsc, ordernarPrecioDesc } from "@/helpers/ordenamientoServ
 
 const Servicios = () => {
   const [servicios, setServicios] = useState<IService[]>([]);
-  const [serviciosOrdenados, setServiciosOrdenados] = useState<IService[]>([]);
+  const [serviciosFiltrados, setServiciosFiltrados] = useState<IService[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const fetchedServicios = await FetchServicio();
       setServicios(fetchedServicios);
-      setServiciosOrdenados(fetchedServicios);
+      setServiciosFiltrados(fetchedServicios);
     };
-    
+
     fetchData();
   }, []);
 
   const handleOrdenarPrecioAsc = () => {
-    setServiciosOrdenados(ordenarPrecioAsc(serviciosOrdenados));
+    setServiciosFiltrados(ordenarPrecioAsc(serviciosFiltrados));
   };
 
   const handleOrdenarPrecioDesc = () => {
-    setServiciosOrdenados(ordernarPrecioDesc(serviciosOrdenados));
+    setServiciosFiltrados(ordernarPrecioDesc(serviciosFiltrados));
   };
 
   return (
@@ -37,12 +37,14 @@ const Servicios = () => {
           Encuentra el servicio que buscas
         </h2>
         <Filters 
+          servicios={servicios}
+          setServiciosFiltrados={setServiciosFiltrados}
           ordenPrecioAsc={handleOrdenarPrecioAsc} 
           ordenPrecioDesc={handleOrdenarPrecioDesc} 
         />
       </div>
       <section className="mx-8">
-        <Cards servicios={serviciosOrdenados} />
+        <Cards servicios={serviciosFiltrados} />
       </section>
     </main>
   );
