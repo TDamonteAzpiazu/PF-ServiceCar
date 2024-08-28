@@ -1,20 +1,18 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-  OnModuleInit,
-} from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Between } from 'typeorm';
 import { Service } from './services.entity';
 import { Status } from '../enum/status.enum';
 import { predefinedServices } from '../helpers/services';
+import { Appointment } from '../appointments/appointments.entity'; 
 
 @Injectable()
-export class ServicesService implements OnModuleInit {
+export class ServicesService {
   constructor(
     @InjectRepository(Service)
     private readonly servicesRepository: Repository<Service>,
+    @InjectRepository(Appointment)
+    private readonly appointmentsRepository: Repository<Appointment>, 
   ) {}
 
   async onModuleInit() {
@@ -40,10 +38,9 @@ export class ServicesService implements OnModuleInit {
   }
 
   async addService(serviceData: Partial<Omit<Service, 'id' | 'status'>>) {
-    // Crea una nueva entidad de servicio con los datos proporcionados
     const service = this.servicesRepository.create({
       ...serviceData,
-      status: Status.Active, // Asigna el estado como activo por defecto
+      status: Status.Active,
     });
 
     await this.servicesRepository.save(service);
@@ -60,7 +57,6 @@ export class ServicesService implements OnModuleInit {
       throw new BadRequestException(`El servicio con id '${id}' está inactivo`);
     }
 
-    // Actualiza solo los campos proporcionados
     await this.servicesRepository.update(id, serviceData);
     return id;
   }
@@ -72,10 +68,42 @@ export class ServicesService implements OnModuleInit {
       throw new NotFoundException(`No se encontró el servicio con id '${id}'`);
     }
 
-    // Marca el servicio como inactivo
     service.status = Status.Inactive;
     await this.servicesRepository.save(service);
 
     return id;
+  }
+
+  async getActiveReservationsForService(
+    serviceId: string,
+  ): Promise<{ reservations: { id: string; userId: string }[]; total: number }> {
+    const service = await this.servicesRepository.findOne({
+      where: { id: serviceId },
+    });
+
+    if (!service) {
+      throw new NotFoundException(`No se encontró el servicio con id '${serviceId}'`);
+    }
+
+    // Obtener todas las citas activas asociadas al servicio
+    const appointments = await this.appointmentsRepository.find({
+      where: {
+        service: { id: serviceId },
+        status: Status.Active,
+      },
+      select: ['id', 'user'], // Seleccionamos el ID y el ID de usuario
+      relations: ['user'], // Aseguramos que la relación con el usuario esté cargada
+    });
+
+    // Extraer los IDs de las citas y los IDs de usuario
+    const reservations = appointments.map(app => ({
+      id: app.id,
+      userId: app.user.id,
+    }));
+
+    // Total de reservas
+    const total = reservations.length;
+
+    return { reservations, total };
   }
 }

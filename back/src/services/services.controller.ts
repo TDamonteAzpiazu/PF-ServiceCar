@@ -25,6 +25,13 @@ import {
     async getById(@Param('id', ParseUUIDPipe) id: string) {
       return this.servicesService.getServiceById(id);
     }
+
+    @Get('reservations/:id')
+    async getActiveReservations(
+      @Param('id', ParseUUIDPipe) id: string,
+    ) {
+      return this.servicesService.getActiveReservationsForService(id);
+    }
   
     @Post()
     async create(@Body() body) {
