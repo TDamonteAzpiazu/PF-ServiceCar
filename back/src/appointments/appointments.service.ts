@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, InternalServerErrorException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { In, Repository } from 'typeorm';
+import { In, Not, Repository } from 'typeorm';
 import { Appointment } from './appointments.entity';
 import { CreateAppointmentDto } from '../dto/create-appointment.dto';
 import { User } from '../users/users.entity';
@@ -46,6 +46,18 @@ export class AppointmentsService {
     const user = await this.userRepository.findOne({ where: { id: userId } });
     if (!user) {
       throw new NotFoundException(`User with ID ${userId} not found`);
+    }
+
+    // Verificar cantidad de turnos activos del usuario
+    const activeAppointmentsCount = await this.appointmentRepository.count({
+      where: {
+        user: { id: userId },
+        status: Status.Active, 
+      },
+    });
+
+    if (activeAppointmentsCount >= 4) {
+      throw new BadRequestException('No puedes tener mas de 4 turnos activos');
     }
 
     // Validar que al menos haya un servicio
@@ -97,6 +109,21 @@ export class AppointmentsService {
 
     if (!appointment) {
       throw new NotFoundException(`Appointment with ID ${id} not found`);
+    }
+
+    const userId = updateAppointmentDto.user || appointment.user.id;
+
+    // Verificar cantidad de turnos activos del usuario
+    const activeAppointmentsCount = await this.appointmentRepository.count({
+      where: {
+        user: { id: userId },
+        status: Status.Active, // Asumiendo que "Active" es el estado que indica que el turno está activo
+        id: Not(id), // Excluir el turno actual en caso de que se esté actualizando
+      },
+    });
+
+    if (activeAppointmentsCount >= 4) {
+      throw new BadRequestException('El usuario ya tiene 4 turnos activos, no se pueden agregar más');
     }
 
     // Asignar User si se proporciona el ID del usuario
