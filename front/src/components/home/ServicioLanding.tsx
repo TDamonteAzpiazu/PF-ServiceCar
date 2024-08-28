@@ -20,7 +20,7 @@ const ServiciosLanding: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center mt-14 mb-10">
-      <h2 className="text-3xl font-semibold mb-10 text-white">Algunos de Nuetsros Servicios</h2>
+      <h2 className="text-3xl font-semibold mb-10 text-white">Algunos de Nuestros Servicios</h2>
       <section className="w-full flex justify-center">
         <Cards servicios={servicios} />
       </section>
