@@ -9,6 +9,7 @@ import { handleSubmit } from "@/helpers/fetchForms";
 import PATHROUTES from "@/helpers/PathRoutes";
 import { FcGoogle } from "react-icons/fc";
 import { IUserRegister, IUserSend } from "@/helpers/types/types";
+import ButtonGoogle from "./ButtonGoogle";
 
 const RegisterForm: React.FC = () => {
   const router = useRouter();
@@ -116,12 +117,7 @@ const RegisterForm: React.FC = () => {
               >
                 Registrar
               </button>
-              <button className="border flex items-center mt-2 gap-1 justify-center border-custom-red rounded-md md:text-base md:py-2 md:px-5 hover:cursor-pointer hover:bg-custom-red hover:text-custom-white text-xs py-1.5 px-4">
-                <span>
-                  <FcGoogle />
-                </span>
-                Registrarme con Google
-              </button>
+              <ButtonGoogle setError={setError} url={url} />
             </div>
           </Form>
         )}
