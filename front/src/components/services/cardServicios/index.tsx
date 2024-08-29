@@ -50,7 +50,7 @@ const ServiceCard: React.FC<IService> = ({
         </div>
         <div className="flex justify-center">
           <Link
-            href={`${PATHROUTES.SERVICEDETAIL}/${id}`}
+            href={`${PATHROUTES.SERVICES}/${id}`}
             className="border border-custom-red py-1.5 px-2 rounded-md text-custom-white bg-transparent hover:bg-custom-red mt-3 w-2/5 min-w-24 text-center"
           >
             Ver más

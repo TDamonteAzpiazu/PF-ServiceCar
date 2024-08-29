@@ -3,6 +3,7 @@ import { IOpinion } from "@/helpers/types/types";
 import OpinionCard from "./OpinionCard";
 
 const HomeOpiniones: React.FC = () => {
+
   return (
     <section className="text-white pt-14 pb-24 px-8">
       <h2 className="text-center text-3xl font-bold mb-6">
@@ -14,7 +15,7 @@ const HomeOpiniones: React.FC = () => {
       </p>
       <div className="flex flex-col md:flex-row justify-center items-center space-y-8 md:space-y-0 md:space-x-8">
         {opiniones.map((opinion: IOpinion, index: number) => (
-          <OpinionCard index={index} opinion={opinion} />
+          <OpinionCard index={index} opinion={opinion} key={index} />
         ))}
       </div>
     </section>
