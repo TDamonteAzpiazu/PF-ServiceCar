@@ -15,7 +15,7 @@ export class AuthController {
         const { email, password } = credentials;
 
         try {
-            const response = await this.authService.signIn(email,password);
+            const response = await this.authService.signIn(email, password);
             return response;
         } catch (error) {
             throw new BadRequestException(error.message);
@@ -25,8 +25,8 @@ export class AuthController {
     @Post("signin/auth0")
     async signInWithAuth0(@Body('idToken') idToken: string) {
         try {
-            const user = await this.authService.validateAuth0Token(idToken);
-            return { message: "User authenticated with Auth0", user };
+            const response = await this.authService.signInWithAuth0(idToken);
+            return response;
         } catch (error) {
             throw new BadRequestException(error.message);
         }
@@ -44,12 +44,13 @@ export class AuthController {
 
     @HttpCode(201)
     @Post("signup")
+    @UsePipes(new ValidationPipe())
     async createUser(@Body() user: CreateUserDto) {
         try {
             const createdUser = await this.authService.signUp(user);
             return createdUser;
         } catch (error) {
-            return { message: error.message };
+            throw new BadRequestException(error.message);
         }
     }
 }
