@@ -13,6 +13,7 @@ import ButtonLogin from "./ButtonLogin";
 import { useDispatch } from "react-redux";
 import { setToken, setUserData } from "@/redux/userSlice";
 import { fetchDataUser } from "@/helpers/fetchDataUser";
+import Link from "next/link";
 
 const LoginForm: React.FC = () => {
   const router = useRouter();
@@ -41,10 +42,9 @@ const LoginForm: React.FC = () => {
         };
 
         dispatch(setToken(userData.token));
-        fetchDataUser(userData.token, secret, url)
-        .then((res) => {
+        fetchDataUser(userData.token, secret, url).then((res) => {
           dispatch(setUserData(res));
-        })
+        });
         router.push(PATHROUTES.LANDING);
       } else {
         throw new Error("Error al loguear un usuario");
@@ -96,12 +96,15 @@ const LoginForm: React.FC = () => {
             )}
             <div className="cont-btn flex flex-col w-full justify-center mb-5">
               <ButtonLogin loading={loading} />
-              <button className="border flex items-center mt-2 gap-1 justify-center border-custom-red rounded-md md:text-base md:py-2 md:px-5 hover:cursor-pointer hover:bg-custom-red hover:text-custom-white text-xs py-1.5 px-4">
+              <Link
+                href="/api/auth/login"
+                className="border flex items-center mt-2 gap-1 justify-center border-custom-red rounded-md md:text-base md:py-2 md:px-5 hover:cursor-pointer hover:bg-custom-red hover:text-custom-white text-xs py-1.5 px-4"
+              >
                 <span>
                   <FcGoogle />
                 </span>
                 Iniciar sesión con Google
-              </button>
+              </Link>
             </div>
           </Form>
         )}

@@ -15,7 +15,6 @@ const Navbar: React.FC = () => {
   const headerRef = useRef<HTMLDivElement>(null);
   const dataUser:IUser = useSelector((state: any) => state.user.user);
   const token = parse(Cookies.get("token")?.toString() || "{}");
-
   useEffect(() => {
     const menu: HTMLElement | null = document.getElementById("menu");
     const mostrar: HTMLElement | null = document.getElementById("mostrar");
@@ -81,7 +80,7 @@ const Navbar: React.FC = () => {
             href={`${PATHROUTES.DASHBOARD}/user`}
             className="md:flex hidden items-center gap-2 text-custom-white"
           >
-            <p className="text-xl font-medium overflow-hidden max-w-52 max-h-8">
+            <p className="text-xl font-medium overflow-hidden max-w-40 max-h-8">
               {dataUser?.name}
             </p>
             <span className="text-5xl">

@@ -1,14 +1,14 @@
 export interface BannerProps {
-    img: string;
-    text: string;
-    title: string;
-  }
+  img: string;
+  text: string;
+  title: string;
+}
 
 export interface FormValues {
-  name: string,
-  email: string,
-  asunto: string,
-  message: string,
+  name: string;
+  email: string;
+  asunto: string;
+  message: string;
 }
 
 export interface TokenProps {
@@ -21,7 +21,7 @@ export interface ContextProps {
 }
 
 export interface IUser {
-  id: number;
+  id: string;
   name: string;
   email: string;
   password: string;
@@ -56,6 +56,29 @@ export interface handleProp {
   textError: string;
 }
 
+export interface IAppointment {
+  user: string;
+  service: string;
+  date: string;
+  time: string;
+}
+
+export interface IAppointmentUser {
+  id: string;
+  date: string;
+  time: string;
+  status: string;
+  user: IUser;
+  service: IService;
+}
+
+export interface handlePropAppointment {
+  values: IAppointment;
+  setError: React.Dispatch<React.SetStateAction<string | null>>;
+  url: string;
+  token: string;
+}
+
 export interface IUserLogin {
   email: string;
   password: string;
@@ -68,13 +91,11 @@ export interface IService {
   location: string;
   image: string;
   price: number;
-  
 }
-export interface IOpinion{
-  estrellas: number,
-  nombre: string,
-  ocupacion: string,
-  opinion:
-  string,
-  icono: string,
+export interface IOpinion {
+  estrellas: number;
+  nombre: string;
+  ocupacion: string;
+  opinion: string;
+  icono: string;
 }
