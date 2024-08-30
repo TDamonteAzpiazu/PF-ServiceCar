@@ -18,10 +18,10 @@ const CardReservations: React.FC<{ appointment: IAppointmentUser }> = ({
   return (
     <div className="flex items-center px-3 py-6 bg-black bg-opacity-40 rounded justify-between">
       <div className=" flex sm:flex-row flex-col gap-4">
-        <h2 className="lg:text-base sm:text-sm text-base">{appointment.service.type}</h2>
+        <h2 className="lg:text-base sm:text-sm text-base">{appointment.service[0].type}</h2>
         <p className="text-custom-grey lg:text-base sm:text-sm text-base">{formatDate(appointment.date)}</p>
         <p className="lg:text-base sm:text-sm text-base">{appointment.time}Hr.</p>
-        <p className="text-custom-grey lg:text-base sm:text-sm text-base">US ${appointment.service.price}</p>
+        <p className="text-custom-grey lg:text-base sm:text-sm text-base">US ${appointment.service[0].price}</p>
         <Link href="" className="hover:text-custom-red">
           <FaLocationDot />
         </Link>

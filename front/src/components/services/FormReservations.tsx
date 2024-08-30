@@ -41,17 +41,18 @@ const FormReservations: React.FC<{
       } else {
         const data: IAppointment = {
           date: values.date,
-          service: service.id,
+          service: [service.id],
           time: values.time,
           user: dataUser.id,
         };
+
         const response = await handleSubmitApppoint({
           values: data,
           url: `${url}/appointments`,
           setError: setError,
           token: token,
         });
-      
+
         if (response?.response.ok) {
           setIsMenuOpen(false);
         }
@@ -86,10 +87,10 @@ const FormReservations: React.FC<{
                     : ""
                 }
               `}
-              onChange={(e:any) => {
-                formikProps.handleChange(e);
-                setSelectedDate(e.target.value); 
-              }}
+                  onChange={(e: any) => {
+                    formikProps.handleChange(e);
+                    setSelectedDate(e.target.value);
+                  }}
                 />
                 <span style={{ color: "red" }}>
                   <ErrorMessage name="date" />
@@ -126,7 +127,6 @@ const FormReservations: React.FC<{
                 className="bg-custom-red rounded text-base py-2 sm:px-3 w-full font-semibold hover:bg-custom-white hover:text-custom-red"
               >
                 {selectedDate ? `Reservar para ${selectedDate}` : "Reservar"}
-              
               </button>
             </div>
           </Form>

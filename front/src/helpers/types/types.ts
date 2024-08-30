@@ -58,7 +58,7 @@ export interface handleProp {
 
 export interface IAppointment {
   user: string;
-  service: string;
+  service: string[];
   date: string;
   time: string;
 }
@@ -69,7 +69,7 @@ export interface IAppointmentUser {
   time: string;
   status: string;
   user: IUser;
-  service: IService;
+  service: IService[];
 }
 
 export interface handlePropAppointment {

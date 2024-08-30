@@ -47,6 +47,8 @@ const Reservations: React.FC = () => {
     }
   }, [dataUser]);
 
+  console.log(reservations);
+
   return (
     <section className="py-3 w-full text-custom-white">
       <h1 className="text-3xl ">Mis reservas</h1>

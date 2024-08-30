@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 import { setToken, setUserData } from "@/redux/userSlice";
 import { fetchDataUser } from "@/helpers/fetchDataUser";
 import Link from "next/link";
+import ButtonGoogle from "./ButtonGoogle";
 
 const LoginForm: React.FC = () => {
   const router = useRouter();
@@ -95,16 +96,8 @@ const LoginForm: React.FC = () => {
               <p className="text-red-600 text-center mb-2 w-full">¡{error}!</p>
             )}
             <div className="cont-btn flex flex-col w-full justify-center mb-5">
-              <ButtonLogin loading={loading} />
-              <Link
-                href="/api/auth/login"
-                className="border flex items-center mt-2 gap-1 justify-center border-custom-red rounded-md md:text-base md:py-2 md:px-5 hover:cursor-pointer hover:bg-custom-red hover:text-custom-white text-xs py-1.5 px-4"
-              >
-                <span>
-                  <FcGoogle />
-                </span>
-                Iniciar sesión con Google
-              </Link>
+              <ButtonLogin loading={loading} name="Ingresar" />
+              <ButtonGoogle setError={setError} url={url} />
             </div>
           </Form>
         )}

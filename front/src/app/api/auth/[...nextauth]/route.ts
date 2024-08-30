@@ -9,37 +9,37 @@ const handler = NextAuth({
     }),
   ],
   callbacks: {
-    async signIn({ user }) {
-      const url = process.env.NEXT_PUBLIC_URL;
+    async signIn({ user, account }) {
+      const url = process.env.NEXT_PUBLIC_URL; 
 
       try {
-        const res = await fetch(`${url}/auth/signup`, {
+        const token = account?.access_token;
+
+        const res = await fetch(`${url}/auth/authGoogle`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             name: user.name,
             email: user.email,
-            address: "AV. 9 de Julio 123",
-            password: "Usuario1234!",
-            repeatPassword: "Usuario1234!",
+            token: token, 
           }),
         });
-        const data = await res.json();
-        if (res) {
 
+        const data = await res.json();
+
+        if (res.ok && data.token) {
+          console.log(data);
           return true;
         } else {
+          console.error("Error al enviar datos a authGoogle:", data);
           return false;
         }
       } catch (error) {
-        console.error("Error en signIn callback", error);
+        console.error("Error en signIn callback:", error);
         return false;
       }
     },
-
   },
 });
 
 export { handler as GET, handler as POST };
-
-
