@@ -1,5 +1,6 @@
 import { jwtVerify } from "jose";
 import { IUser } from "./types/types";
+import Cookies from 'js-cookie';
 
 export const fetchDataUserByID = async (
   token: string,
@@ -41,4 +42,3 @@ export const fetchDataUser = async (
     throw error;
   }
 };
-

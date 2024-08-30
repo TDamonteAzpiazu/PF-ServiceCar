@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useState } from "react";
 import { Formik, Form } from "formik";
 import { validarRegister } from "@/helpers/validateForms";

@@ -4,8 +4,6 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 
 const GarageHome = () => {
-  const {data:session} = useSession()
-console.log(session)
   return (
     <section className="flex flex-col md:gap-4 md:flex-row items-center justify-between text-white pb-8">
       <div className="flex flex-col mx-10 md:flex-row w-full items-center mt-[69px] md:space-x-10 ">

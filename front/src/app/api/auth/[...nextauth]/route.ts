@@ -10,7 +10,8 @@ const handler = NextAuth({
   ],
   callbacks: {
     async signIn({ user }) {
-      const url = process.env.NEXT_PUBLIC_URL || "http://localhost:3001";
+      const url = process.env.NEXT_PUBLIC_URL;
+
       try {
         const res = await fetch(`${url}/auth/signup`, {
           method: "POST",
@@ -18,18 +19,14 @@ const handler = NextAuth({
           body: JSON.stringify({
             name: user.name,
             email: user.email,
-            address:null,
-            password:null,
-            repeatPassword:null,
+            address: "AV. 9 de Julio 123",
+            password: "Usuario1234!",
+            repeatPassword: "Usuario1234!",
           }),
         });
-        console.log(res);
-        // if (!res.ok) {
-        //   throw new Error("Error al autenticar el usuario en el backend");
-        // }
-
         const data = await res.json();
         if (res) {
+
           return true;
         } else {
           return false;
@@ -39,7 +36,10 @@ const handler = NextAuth({
         return false;
       }
     },
+
   },
 });
 
 export { handler as GET, handler as POST };
+
+
