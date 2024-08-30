@@ -28,6 +28,7 @@ dotenvConfig({ path: '.env.development' });
     AppointmentsModule,
     ServicesModule,
     CloudinaryModule,
+   
     JwtModule.register({
       global: true,
       signOptions: { expiresIn: '1h' },

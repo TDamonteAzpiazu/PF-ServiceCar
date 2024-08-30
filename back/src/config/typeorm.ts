@@ -15,7 +15,7 @@ const config: DataSourceOptions = {
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   synchronize: true,
-  // dropSchema: true,
+  //dropSchema: true,
   logging: ['error'],
   entities: [join(__dirname, '/../**/*.entity.{js,ts}')],
   migrations: [join(__dirname, '/../migrations/*.{js,ts}')],

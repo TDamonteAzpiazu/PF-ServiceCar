@@ -21,27 +21,6 @@ export class AuthController {
             throw new BadRequestException(error.message);
         }
     }
-
-    @Post("signin/auth0")
-    async signInWithAuth0(@Body('idToken') idToken: string) {
-        try {
-            const response = await this.authService.signInWithAuth0(idToken);
-            return response;
-        } catch (error) {
-            throw new BadRequestException(error.message);
-        }
-    }
-
-    @Post("userinfo")
-    async getUserInfo(@Body('accessToken') accessToken: string) {
-        try {
-            const userInfo = await this.authService.getAuth0UserInfo(accessToken);
-            return userInfo;
-        } catch (error) {
-            throw new BadRequestException(error.message);
-        }
-    }
-
     @HttpCode(201)
     @Post("signup")
     @UsePipes(new ValidationPipe())
