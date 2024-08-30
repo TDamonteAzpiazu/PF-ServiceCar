@@ -10,4 +10,15 @@ export class MercadoPagoController {
         return this.mercadoPagoService.createPreference(body);
     }
 
+    @Get('success')
+    success(@Res() res) {
+        console.log('success');
+        res.redirect('http://localhost:3000/');
+    }
+
+    @Get('failure')
+    failure(@Res() res) {
+        console.log('failure');
+        res.redirect('http://localhost:3000/servicios');
+    }
 }

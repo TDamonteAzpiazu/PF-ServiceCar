@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mercadopago/sdk-react": "^0.0.19",
     "@reduxjs/toolkit": "^2.2.7",
     "emailjs": "^4.0.3",
     "emailjs-com": "^3.2.0",

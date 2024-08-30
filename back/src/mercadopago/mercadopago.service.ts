@@ -9,12 +9,13 @@ export class MercadoPagoService {
         const preferenceData = {
         items: body.items.map(item => ({
             id: item.id,
-            service: item.service,
-            price: item.price,
+            title: item.service,
+            quantity: 1,
+            unit_price: item.price,
         })),
         back_urls: {
-            success: "",
-            failure: "",
+            success: "http://localhost:3001/mercadopago/success",
+            failure: "http://localhost:3001/mercadopago/failure",
         },
         auto_return: 'approved',
         };
