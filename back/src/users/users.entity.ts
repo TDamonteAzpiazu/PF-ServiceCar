@@ -1,6 +1,6 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsString, IsStrongPassword, IsUUID } from "class-validator";
-import { Appointment } from "../appointments/appointments.entity"
-import { Role } from "../auth/roles.enum"
+import { IsEmail, IsEnum, IsNotEmpty, IsString, IsOptional, IsStrongPassword, IsUUID } from "class-validator";
+import { Appointment } from "../appointments/appointments.entity";
+import { Role } from "../auth/roles.enum";
 import { Status } from "../enum/status.enum";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { v4 as uuid } from 'uuid';
@@ -13,33 +13,40 @@ export class User {
 
     @Column({ length: 50, nullable: true })
     @IsString()
-    name: string;
+    @IsOptional()
+    name?: string;
 
-    @Column({ unique: true })
+    @Column({ unique: true, nullable: true })
     @IsEmail()
     @IsNotEmpty()
-    email: string;
+    @IsOptional()
+    email?: string;
 
     @Column({ nullable: true })
     @IsStrongPassword()
-    password: string;
-    
+    @IsOptional()
+    password?: string;
+
     @Column({ nullable: true })
     @IsString()
-    address: string;
+    @IsOptional()
+    address?: string;
 
-    @Column({ default: 'https://res.cloudinary.com/dc8tneepi/image/upload/ztbuutsulfhoarq63xsh.jpg' }) 
+    @Column({ default: 'https://res.cloudinary.com/dc8tneepi/image/upload/ztbuutsulfhoarq63xsh.jpg', nullable: true })
     @IsString()
-    image: string;
+    @IsOptional()
+    image?: string;
 
-    @Column({ default: Role.User })
+    @Column({ default: Role.User, nullable: true })
     @IsEnum(Role)
-    role: Role;
+    @IsOptional()
+    role?: Role;
 
     @OneToMany(() => Appointment, (appointment) => appointment.user)
-    appointments: Appointment[];
+    appointments?: Appointment[];
 
-    @Column({ default: Status.Active })
+    @Column({ default: Status.Active, nullable: true })
     @IsEnum(Status)
-    status: Status; 
+    @IsOptional()
+    status?: Status;
 }
