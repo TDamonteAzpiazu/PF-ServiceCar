@@ -18,9 +18,9 @@ const handler = NextAuth({
           body: JSON.stringify({
             name: user.name,
             email: user.email,
-            address: "jhdggdjdhhdjdhfhchvfjf ",
-            password: "Agus1234$",
-            repeatPassword: "Agus1234$",
+            address:null,
+            password:null,
+            repeatPassword:null,
           }),
         });
         console.log(res);
