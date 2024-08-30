@@ -16,3 +16,25 @@ export const FetchServicio = async () => {
         throw new Error(error)
     }
   };
+
+  export const fetchDataService = async (
+    url: string | undefined,
+    id: string | unknown
+  ) => {
+    try {
+      const response = await fetch(`${url}/services/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`Error al hacer la peticion: ${response.status}`);
+      }
+      const data: IService = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error al recuperar la informaciòn del servicio:", error);
+      throw error;
+    }
+  };
+  

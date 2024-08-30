@@ -1,6 +1,6 @@
 import { Service } from "../services/services.entity";
 
-export const predefinedServices: Omit<Service, 'id' | 'status'>[] = [
+export const predefinedServices: Partial<Service>[] = [
     {
         type: 'Cambio de Aceite',
         description: 'Cambio completo de aceite y filtro.',
