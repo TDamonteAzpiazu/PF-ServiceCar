@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { AppointmentsModule } from './appointments/appointments.module';
 import { config as dotenvConfig } from 'dotenv';
+import { MercadopagoModule } from './mercadopago/mercadopago.module';
 
 dotenvConfig({ path: '.env.development' });
 @Module({
@@ -28,6 +29,7 @@ dotenvConfig({ path: '.env.development' });
     AppointmentsModule,
     ServicesModule,
     CloudinaryModule,
+    MercadopagoModule,
     JwtModule.register({
       global: true,
       signOptions: { expiresIn: '1h' },
