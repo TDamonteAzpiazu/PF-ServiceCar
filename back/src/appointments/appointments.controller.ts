@@ -43,6 +43,7 @@ export class AppointmentsController {
   @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Crear una nueva cita' })
   @ApiResponse({ status: 201, description: 'La cita ha sido creada exitosamente.', type: Appointment })
+  @ApiResponse({status:400, description:'Datos invalidos o la cita no cumple con las restricciones.'})
   @ApiResponse({ status: 401, description: 'No autorizado.' })
   async create(@Body() createAppointmentDto: CreateAppointmentDto): Promise<Appointment> {
     return this.appointmentsService.create(createAppointmentDto);

@@ -11,41 +11,35 @@ export class User {
     @IsUUID()
     id: string = uuid();
 
-    @Column({length : 50})
+    @Column({ length: 50, nullable: true })
     @IsString()
-    @IsNotEmpty()
     name: string;
-    
+
     @Column({ unique: true })
     @IsEmail()
     @IsNotEmpty()
     email: string;
 
-    @Column()
+    @Column({ nullable: true })
     @IsStrongPassword()
-    @IsNotEmpty()
     password: string;
     
-    @Column()
+    @Column({ nullable: true })
     @IsString()
-    @IsNotEmpty()
     address: string;
 
     @Column({ default: 'https://res.cloudinary.com/dc8tneepi/image/upload/ztbuutsulfhoarq63xsh.jpg' }) 
     @IsString()
-    @IsNotEmpty()
     image: string;
 
-    @Column({default: Role.User})
+    @Column({ default: Role.User })
     @IsEnum(Role)
-    @IsNotEmpty()
     role: Role;
 
     @OneToMany(() => Appointment, (appointment) => appointment.user)
     appointments: Appointment[];
 
-    @Column({default: Status.Active})
+    @Column({ default: Status.Active })
     @IsEnum(Status)
-    @IsNotEmpty()
     status: Status; 
 }

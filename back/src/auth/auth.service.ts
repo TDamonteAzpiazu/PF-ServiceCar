@@ -9,6 +9,7 @@ import * as jwt from 'jsonwebtoken';
 import axios from 'axios';
 import { Role } from "./roles.enum";
 import { config as dotenvConfig } from 'dotenv';
+import { Status } from "src/enum/status.enum";
 dotenvConfig({ path: '.env.development' });
 
 @Injectable()
@@ -38,7 +39,7 @@ export class AuthService {
             roles: [user.role],
         };
 
-        const token = this.jwtService.sign(userPayload, {secret: process.env.JWT_SECRET});
+        const token = this.jwtService.sign(userPayload, { secret: process.env.JWT_SECRET });
 
         return { success: 'Autenticación exitosa', token };
     }
@@ -70,7 +71,6 @@ export class AuthService {
 
     async validateAuth0Token(idToken: string): Promise<any> {
         try {
-            
             const decoded = jwt.verify(idToken, this.auth0Secret, {
                 algorithms: ['RS256'],
                 audience: this.auth0Audience,
@@ -92,6 +92,34 @@ export class AuthService {
             return response.data;
         } catch (error) {
             throw new BadRequestException('No se pudo obtener la información del usuario de Auth0');
+        }
+    }
+
+    // Método modificado para usar userRepository
+    async signInWithAuth0(idToken: string) {
+        try {
+            const userData = await this.validateAuth0Token(idToken);
+            
+            // Busca si el usuario ya existe en la base de datos
+            let user = await this.usersRepository.findOne({ where: { email: userData.email } });
+
+            // Si el usuario no existe, lo crea
+            if (!user) {
+                user = this.usersRepository.create({
+                    name: userData.name,
+                    email: userData.email,
+                    role: Role.User, // Establece un rol predeterminado
+                    address: '', // Si no hay dirección en el token, se deja vacío
+                    status: Status.Active, // Establece el estado activo por defecto
+                    image: userData.picture || 'default_image_url' // Usa una imagen predeterminada o la proporcionada por Auth0
+                });
+
+                user = await this.usersRepository.save(user);
+            }
+
+            return { message: "User authenticated with Auth0", user };
+        } catch (error) {
+            throw new BadRequestException(error.message);
         }
     }
 }
