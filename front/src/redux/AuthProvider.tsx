@@ -6,6 +6,7 @@ import { setUserData, logout } from "./userSlice";
 import { fetchDataUser } from "@/helpers/fetchDataUser";
 import { parse } from "jsonc-parser";
 
+
 interface AuthProviderProps {
   children: React.ReactNode;
 }
@@ -14,8 +15,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const dispatch = useDispatch();
   const secret = process.env.NEXT_PUBLIC_SECRET;
   const url = process.env.NEXT_PUBLIC_URL;
+ 
 
   useEffect(() => {
+  
     const tokenString = Cookies.get("token");
     const token = (tokenString && parse(tokenString)?.toString());
     if (token) {

@@ -7,7 +7,9 @@ import { usePathname, useRouter } from "next/navigation";
 import PATHROUTES from "@/helpers/PathRoutes";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
 import { logout, setToken } from "@/redux/userSlice";
+import { signOut } from "next-auth/react";
 
 const UserLinks: React.FC = () => {
   const router = useRouter();
@@ -15,13 +17,33 @@ const UserLinks: React.FC = () => {
   const pathName = usePathname();
 
   const handleLogout = () => {
-    Cookies.remove("token");
-    dispatch(setToken(null));
-    dispatch(logout());
-    router.push(PATHROUTES.LANDING);
+    Swal.fire({
+      title: "¿Está seguro/a de cerrar sesión?",
+      text: "Debera volver a ingresar para acceder a nuestros servicios",
+      icon: "error",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, cerrar sesión.",
+      cancelButtonText: "Cancelar",
+    }).then(async (result: any) => {
+      if (result.isConfirmed) {
+        Cookies.remove("token");
+        dispatch(setToken(null));
+        signOut();
+        dispatch(logout());
+        router.push(PATHROUTES.LANDING);
+      } else {
+        Swal.fire({
+          title: "Operación cancelada",
+          text: "¡Aún sigue con sesión activa!.",
+          icon: "info",
+        });
+      }
+    });
   };
   return (
-    <section className="flex md:flex-col flex-row md:w-1/4 w-full justify-between md:items-start items-end h-full md:min-h-96 py-3">
+    <section className="flex md:flex-col mr-1 flex-row md:w-1/4 w-full justify-between md:items-start items-end h-full md:min-h-96 py-3">
       <div className="flex flex-col  gap-4 text-custom-grey">
         <div className="flex gap-2 items-center">
           <span className="text-xl">
@@ -42,11 +64,14 @@ const UserLinks: React.FC = () => {
           <span className="text-xl">
             <FaCalendarCheck />
           </span>
-          <Link href={`${PATHROUTES.DASHBOARD}/reservations`} className={`hover:text-custom-white ${
+          <Link
+            href={`${PATHROUTES.DASHBOARD}/reservations`}
+            className={`hover:text-custom-white ${
               pathName === `${PATHROUTES.DASHBOARD}/reservations`
                 ? "text-custom-white"
                 : ""
-            }`}>
+            }`}
+          >
             Mis reservas
           </Link>
         </div>

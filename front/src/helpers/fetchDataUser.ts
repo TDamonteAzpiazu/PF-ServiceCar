@@ -1,5 +1,5 @@
 import { jwtVerify } from "jose";
-import { IService, IUser } from "./types/types";
+import { IUser } from "./types/types";
 
 export const fetchDataUserByID = async (
   token: string,
