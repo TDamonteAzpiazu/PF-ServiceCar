@@ -1,12 +1,9 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { useUser } from "@auth0/nextjs-auth0/client";
+import { useSession } from "next-auth/react";
 
 const GarageHome = () => {
-  // const { isLoading, error, user } = useUser();
-
-  // console.log(user);
   return (
     <section className="flex flex-col md:gap-4 md:flex-row items-center justify-between text-white pb-8">
       <div className="flex flex-col mx-10 md:flex-row w-full items-center mt-[69px] md:space-x-10 ">

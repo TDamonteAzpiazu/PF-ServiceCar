@@ -7,8 +7,8 @@ import { CreateUserDto } from "../dto/create-user.dto";
 import { JwtService } from "@nestjs/jwt";
 import * as jwt from 'jsonwebtoken';
 import axios from 'axios';
-import { Role } from "./roles.enum";
 import { config as dotenvConfig } from 'dotenv';
+
 dotenvConfig({ path: '.env.development' });
 
 @Injectable()
@@ -38,7 +38,7 @@ export class AuthService {
             roles: [user.role],
         };
 
-        const token = this.jwtService.sign(userPayload, {secret: process.env.JWT_SECRET});
+        const token = this.jwtService.sign(userPayload, { secret: process.env.JWT_SECRET });
 
         return { success: 'Autenticación exitosa', token };
     }
@@ -70,9 +70,8 @@ export class AuthService {
 
     async validateAuth0Token(idToken: string): Promise<any> {
         try {
-            
             const decoded = jwt.verify(idToken, this.auth0Secret, {
-                algorithms: ['RS256'],
+                algorithms: ['HS256'],
                 audience: this.auth0Audience,
                 issuer: `${this.auth0BaseUrl}/`
             });
@@ -93,5 +92,34 @@ export class AuthService {
         } catch (error) {
             throw new BadRequestException('No se pudo obtener la información del usuario de Auth0');
         }
+    }
+    async signUpGoogle(name: string, email: string, token: string): Promise<any> {
+        // Buscar si el usuario ya existe en la base de datos por el email
+        let userGoogle = await this.usersRepository.findOne({ where: { email } });
+
+        if (!userGoogle) {
+            // Si el usuario no existe, creamos un nuevo usuario
+            const passwordDefault = "Nearvet@" + Math.floor(1000 + Math.random() * 9000).toString();
+            const hashedPassword = await bcrypt.hash(passwordDefault, 10);
+
+            userGoogle = this.usersRepository.create({
+                name,
+                email,
+                password: hashedPassword, // Guardamos la contraseña encriptada
+            });
+
+            // Guardar el nuevo usuario en la base de datos
+            await this.usersRepository.save(userGoogle);
+        }
+
+        // Crear el payload para el token JWT
+        const payload = { id: userGoogle.id, email: userGoogle.email };
+        const jwtToken = this.jwtService.sign(payload); // Generar el token JWT
+
+        // Retornar el usuario junto con el token
+        return {
+            user: userGoogle,
+            token: jwtToken,
+        };
     }
 }

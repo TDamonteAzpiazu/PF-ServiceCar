@@ -13,16 +13,33 @@ const Reservations: React.FC = () => {
   const [reservations, setReservations] = useState<IAppointmentUser[] | null>(
     null
   );
+  const [history, setHistory] = useState<IAppointmentUser[] | null>(null);
   const [viewHistory, setViewHistory] = useState<boolean>(true);
   const dataUser: IUser = useSelector((state: any) => state.user.user);
   const token = parse(Cookies.get("token")?.toString() || "{}");
   const url = process.env.NEXT_PUBLIC_URL;
+
+  const filterAppointments = async (
+    appointments: IAppointmentUser[] | void
+  ) => {
+    if (appointments) {
+      const newAppointments: IAppointmentUser[] = await appointments.filter(
+        (appointment: IAppointmentUser) => {
+          return appointment.status !== "active";
+        }
+      );
+      await setHistory(newAppointments);
+    }
+  };
 
   useEffect(() => {
     if (dataUser && dataUser.id && token) {
       getAppointments(`${url}/appointments/user/${dataUser.id}`, token)
         .then((res) => {
           setReservations(res);
+        })
+        .then((res) => {
+          filterAppointments(res);
         })
         .catch((error) => {
           console.log(error);
@@ -57,7 +74,7 @@ const Reservations: React.FC = () => {
       {viewHistory ? (
         <div className="w-full">
           {reservations && reservations?.length > 0 ? (
-            <div className="w-full">
+            <div className="w-full flex flex-col bg-custom-grey bg-opacity-30 rounded p-4 gap-3 justify-center h-full">
               {reservations.map((reservation: IAppointmentUser) => (
                 <CardReservations
                   appointment={reservation}
@@ -82,9 +99,20 @@ const Reservations: React.FC = () => {
         </div>
       ) : (
         <div>
-          <p className="text-custom-grey">
-            Aqui vera el historial de sus reservas pasadas.
-          </p>
+          {history && history.length > 0 ? (
+            <div className="w-full">
+              {history.map((reservation: IAppointmentUser) => (
+                <CardReservations
+                  appointment={reservation}
+                  key={reservation.id}
+                />
+              ))}
+            </div>
+          ) : (
+            <p className="text-custom-grey">
+              Aqui vera el historial de sus reservas pasadas.
+            </p>
+          )}
         </div>
       )}
     </section>
