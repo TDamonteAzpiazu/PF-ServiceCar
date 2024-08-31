@@ -29,7 +29,7 @@ export interface IUser {
   image: string;
   role: string;
   status: string;
-  appointments: [];
+  appointments?: [];
 }
 
 export interface IUserRegister {

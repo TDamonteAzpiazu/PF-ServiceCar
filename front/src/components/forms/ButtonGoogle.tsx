@@ -7,6 +7,8 @@ const ButtonGoogle: React.FC<{
   setError: React.Dispatch<React.SetStateAction<string | null>>;
   url: string | undefined;
 }> = ({ setError, url }) => {
+
+
   return (
     <button
       onClick={() => signIn()}

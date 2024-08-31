@@ -94,7 +94,7 @@ export class AuthService {
         }
     }
 
-    async signUpGoogle(name: string, email: string, token: string): Promise<any> {
+    async signUpGoogle(name: string, email: string): Promise<any> {
         // Buscar si el usuario ya existe en la base de datos por el email
         let userGoogle = await this.usersRepository.findOne({ where: { email } });
 

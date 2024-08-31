@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form } from "formik";
 import { validarLogin } from "@/helpers/validateForms";
 import "../../styles/forms.css";
@@ -7,13 +7,12 @@ import ContainerInput from "./ContainerInput";
 import { useRouter } from "next/navigation";
 import { handleSubmit } from "@/helpers/fetchForms";
 import PATHROUTES from "@/helpers/PathRoutes";
-import { FcGoogle } from "react-icons/fc";
 import { IUserLogin, TokenProps } from "@/helpers/types/types";
 import ButtonLogin from "./ButtonLogin";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setToken, setUserData } from "@/redux/userSlice";
 import { fetchDataUser } from "@/helpers/fetchDataUser";
-import Link from "next/link";
+import { useSession } from "next-auth/react";
 import ButtonGoogle from "./ButtonGoogle";
 
 const LoginForm: React.FC = () => {
@@ -23,7 +22,8 @@ const LoginForm: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const secret = process.env.NEXT_PUBLIC_SECRET;
   const url = process.env.NEXT_PUBLIC_URL;
-
+  const dataUser = useSelector((state: any) => state.user.user);
+  const { status } = useSession();
   const handleSubmitLogin = async (values: IUserLogin) => {
     setLoading(true);
 
@@ -57,6 +57,12 @@ const LoginForm: React.FC = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (dataUser && status === "authenticated") {
+      router.push(PATHROUTES.LANDING);
+    }
+  }, [dataUser, status]);
 
   return (
     <div className="cont-form pt-3">

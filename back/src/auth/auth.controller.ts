@@ -34,11 +34,11 @@ export class AuthController {
     }
     @Post("authGoogle")
     @UsePipes(new ValidationPipe())
-    async signUpGoogle(@Body() body: { name: string, email: string, token: string }) {
-        const { name, email, token } = body;
+    async signUpGoogle(@Body() body: { name: string, email: string }) {
+        const { name, email } = body;
 
         try {
-            const response = await this.authService.signUpGoogle(name, email, token);
+            const response = await this.authService.signUpGoogle(name, email);
             return response;
         } catch (error) {
             throw new BadRequestException(error.message);
