@@ -7,8 +7,8 @@ import { CreateUserDto } from "../dto/create-user.dto";
 import { JwtService } from "@nestjs/jwt";
 import * as jwt from 'jsonwebtoken';
 import axios from 'axios';
+import { Role } from "./roles.enum";
 import { config as dotenvConfig } from 'dotenv';
-
 dotenvConfig({ path: '.env.development' });
 
 @Injectable()
@@ -38,7 +38,7 @@ export class AuthService {
             roles: [user.role],
         };
 
-        const token = this.jwtService.sign(userPayload, { secret: process.env.JWT_SECRET });
+        const token = this.jwtService.sign(userPayload, {secret: process.env.JWT_SECRET});
 
         return { success: 'Autenticación exitosa', token };
     }
@@ -70,8 +70,9 @@ export class AuthService {
 
     async validateAuth0Token(idToken: string): Promise<any> {
         try {
+            
             const decoded = jwt.verify(idToken, this.auth0Secret, {
-                algorithms: ['HS256'],
+                algorithms: ['RS256'],
                 audience: this.auth0Audience,
                 issuer: `${this.auth0BaseUrl}/`
             });
@@ -93,7 +94,8 @@ export class AuthService {
             throw new BadRequestException('No se pudo obtener la información del usuario de Auth0');
         }
     }
-    async signUpGoogle(name: string, email: string, token: string): Promise<any> {
+
+    async signUpGoogle(name: string, email: string): Promise<any> {
         // Buscar si el usuario ya existe en la base de datos por el email
         let userGoogle = await this.usersRepository.findOne({ where: { email } });
 
@@ -114,7 +116,7 @@ export class AuthService {
 
         // Crear el payload para el token JWT
         const payload = { id: userGoogle.id, email: userGoogle.email };
-        const jwtToken = this.jwtService.sign(payload); // Generar el token JWT
+        const jwtToken = this.jwtService.sign(payload, {secret: process.env.JWT_SECRET}); // Generar el token JWT
 
         // Retornar el usuario junto con el token
         return {
@@ -122,4 +124,5 @@ export class AuthService {
             token: jwtToken,
         };
     }
+
 }

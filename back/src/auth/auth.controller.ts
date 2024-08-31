@@ -15,8 +15,28 @@ export class AuthController {
         const { email, password } = credentials;
 
         try {
-            const response = await this.authService.signIn(email, password);
+            const response = await this.authService.signIn(email,password);
             return response;
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+    }
+
+    @Post("signin/auth0")
+    async signInWithAuth0(@Body('idToken') idToken: string) {
+        try {
+            const user = await this.authService.validateAuth0Token(idToken);
+            return { message: "User authenticated with Auth0", user };
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+    }
+
+    @Post("userinfo")
+    async getUserInfo(@Body('accessToken') accessToken: string) {
+        try {
+            const userInfo = await this.authService.getAuth0UserInfo(accessToken);
+            return userInfo;
         } catch (error) {
             throw new BadRequestException(error.message);
         }
@@ -24,26 +44,25 @@ export class AuthController {
 
     @HttpCode(201)
     @Post("signup")
-    @UsePipes(new ValidationPipe())
     async createUser(@Body() user: CreateUserDto) {
         try {
             const createdUser = await this.authService.signUp(user);
             return createdUser;
         } catch (error) {
-            throw new BadRequestException(error.message);
+            return { message: error.message };
         }
     }
-
     @Post("authGoogle")
     @UsePipes(new ValidationPipe())
-    async signUpGoogle(@Body() body: { name: string, email: string, token: string }) {
-        const { name, email, token } = body;
+    async signUpGoogle(@Body() body: { name: string, email: string }) {
+        const { name, email } = body;
 
         try {
-            const response = await this.authService.signUpGoogle(name, email, token);
+            const response = await this.authService.signUpGoogle(name, email);
             return response;
         } catch (error) {
             throw new BadRequestException(error.message);
         }
     }
 }
+

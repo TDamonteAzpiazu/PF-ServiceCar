@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+
 interface Window {
   voiceflow: {
     chat: {

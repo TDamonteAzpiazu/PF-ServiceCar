@@ -20,8 +20,8 @@ export class CreateUserDto {
   @ApiProperty({ example: 'Password123!', description: 'The password of the user', required: false })
   @MinLength(8)
   @MaxLength(80)
-  @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{3,80}$/, {
-    message: 'La contraseña debe contener al menos una letra minúscula, una letra mayúscula, un número y uno de los siguientes caracteres especiales: !@#$%^&*',
+  @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&]).{8,80}$/, {
+    message: 'La contraseña debe contener al menos una letra minúscula, una letra mayúscula, un número y uno de los siguientes caracteres especiales: !@#$%^&. La longitud debe ser de entre 8 y 80 caracteres.',
   })
   @IsOptional()
   password?: string;
