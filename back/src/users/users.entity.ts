@@ -1,6 +1,6 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsString, IsOptional, IsStrongPassword, IsUUID } from "class-validator";
-import { Appointment } from "../appointments/appointments.entity";
-import { Role } from "../auth/roles.enum";
+import { IsEmail, IsEnum, IsNotEmpty, IsString, IsStrongPassword, IsUUID } from "class-validator";
+import { Appointment } from "../appointments/appointments.entity"
+import { Role } from "../auth/roles.enum"
 import { Status } from "../enum/status.enum";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { v4 as uuid } from 'uuid';
@@ -11,42 +11,41 @@ export class User {
     @IsUUID()
     id: string = uuid();
 
-    @Column({ length: 50, nullable: true })
+    @Column({length : 50})
     @IsString()
-    @IsOptional()
-    name?: string;
-
-    @Column({ unique: true, nullable: true })
+    @IsNotEmpty()
+    name: string;
+    
+    @Column({ unique: true })
     @IsEmail()
     @IsNotEmpty()
-    @IsOptional()
-    email?: string;
+    email: string;
 
-    @Column({ nullable: true })
+    @Column()
     @IsStrongPassword()
-    @IsOptional()
-    password?: string;
-
-    @Column({ nullable: true })
+    @IsNotEmpty()
+    password: string;
+    
+    @Column()
     @IsString()
-    @IsOptional()
-    address?: string;
+    @IsNotEmpty()
+    address: string;
 
-    @Column({ default: 'https://res.cloudinary.com/dc8tneepi/image/upload/ztbuutsulfhoarq63xsh.jpg', nullable: true })
+    @Column({ default: 'https://res.cloudinary.com/dc8tneepi/image/upload/ztbuutsulfhoarq63xsh.jpg' }) 
     @IsString()
-    @IsOptional()
-    image?: string;
+    @IsNotEmpty()
+    image: string;
 
-    @Column({ default: Role.User, nullable: true })
+    @Column({default: Role.User})
     @IsEnum(Role)
-    @IsOptional()
-    role?: Role;
+    @IsNotEmpty()
+    role: Role;
 
     @OneToMany(() => Appointment, (appointment) => appointment.user)
-    appointments?: Appointment[];
+    appointments: Appointment[];
 
-    @Column({ default: Status.Active, nullable: true })
+    @Column({default: Status.Active})
     @IsEnum(Status)
-    @IsOptional()
-    status?: Status;
+    @IsNotEmpty()
+    status: Status; 
 }

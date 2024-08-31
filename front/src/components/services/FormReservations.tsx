@@ -23,7 +23,6 @@ const FormReservations: React.FC<{
   const url = process.env.NEXT_PUBLIC_URL;
   const token = parse(Cookies.get("token")?.toString() || "{}");
   const dataUser: IUser = useSelector((state: any) => state.user.user);
-  const [selectedDate, setSelectedDate] = useState<string>("");
 
   const fetchAppointment = async (values: { date: string; time: string }) => {
     try {
@@ -86,10 +85,6 @@ const FormReservations: React.FC<{
                     : ""
                 }
               `}
-              onChange={(e:any) => {
-                formikProps.handleChange(e);
-                setSelectedDate(e.target.value); 
-              }}
                 />
                 <span style={{ color: "red" }}>
                   <ErrorMessage name="date" />
@@ -125,8 +120,7 @@ const FormReservations: React.FC<{
                 type="submit"
                 className="bg-custom-red rounded text-base py-2 sm:px-3 w-full font-semibold hover:bg-custom-white hover:text-custom-red"
               >
-                {selectedDate ? `Reservar para ${selectedDate}` : "Reservar"}
-              
+                Reservar
               </button>
             </div>
           </Form>

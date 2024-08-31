@@ -6,10 +6,8 @@ import Image from "next/image";
 import { FaCheckSquare, FaCoffee } from "react-icons/fa";
 import { MdLocalCarWash } from "react-icons/md";
 import NavbarService from "./NavbarService";
-import Map from "./Map";
 
 const ServiceDetail: React.FC<{ id: string }> = ({ id }) => {
-  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
   const url = process.env.NEXT_PUBLIC_URL;
   const [service, setService] = useState<IService>();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -90,18 +88,20 @@ const ServiceDetail: React.FC<{ id: string }> = ({ id }) => {
               <p className="flex gap-2 items-center">
                 <span className="text-2xl text-custom-red">
                   <FaCoffee />
-                </span> 
+                </span>
                 Zona resto-bar para comodidad del cliente
               </p>
             </div>
           </div>
           <div className="mt-3 mb-6 flex justify-center">
-          
-            {/* <Map
-              apiKey={apiKey!}
-              center={{ lat: -31.053075, lng: -64.498695 }}
-              zoom={8}
-            /> */}
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d11687.057015968177!2d-64.49447745976698!3d-31.05197151289664!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sar!4v1724800084286!5m2!1ses-419!2sar"
+              width="1000"
+              height="400"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="rounded-lg"
+            ></iframe>
           </div>
           {isMenuOpen && (
             <div
