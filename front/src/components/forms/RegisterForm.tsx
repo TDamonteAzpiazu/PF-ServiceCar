@@ -7,6 +7,7 @@ import ContainerInput from "./ContainerInput";
 import { useRouter } from "next/navigation";
 import { handleSubmit } from "@/helpers/fetchForms";
 import PATHROUTES from "@/helpers/PathRoutes";
+import { FcGoogle } from "react-icons/fc";
 import { IUserRegister, IUserSend } from "@/helpers/types/types";
 import ButtonGoogle from "./ButtonGoogle";
 
@@ -37,9 +38,8 @@ const RegisterForm: React.FC = () => {
       throw new Error("Error al crear un usuario");
     }
   };
-
   return (
-    <div className="cont-form">
+    <div className="cont-form ">
       <Formik
         initialValues={{
           name: "",
@@ -113,7 +113,7 @@ const RegisterForm: React.FC = () => {
             <div className="cont-btn flex flex-col w-full justify-center mb-5">
               <button
                 type="submit"
-                className="bg-custom-red text-custom-white rounded-md md:text-base md:py-2 md:px-5 hover:cursor-pointer hover:bg-red-600 hover:text-custom-white text-sm py-1.5 px-4"
+                className=" bg-custom-red  text-custom-white  rounded-md md:text-base md:py-2 md:px-5 hover:cursor-pointer hover:bg-red-600 hover:text-custom-white text-sm py-1.5 px-4"
               >
                 Registrar
               </button>

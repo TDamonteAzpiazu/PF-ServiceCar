@@ -7,7 +7,7 @@ import Chat from "@/components/Chat";
 import Footer from "@/components/Footer";
 import { Providers } from "@/redux/Providers";
 import { AuthProvider } from "@/redux/AuthProvider";
-import { ProviderNextAuth } from "@/components/ProviderNextAuth";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,7 +27,7 @@ export default function RootLayout({
         className={`${inter.className} bg-cover`}
         style={{ backgroundImage: "url(/fondo2.png)" }}
       >
-        <ProviderNextAuth>
+        <UserProvider>
           <Providers>
             <AuthProvider>
               <Navbar />
@@ -36,7 +36,7 @@ export default function RootLayout({
               <Footer />
             </AuthProvider>
           </Providers>
-        </ProviderNextAuth>
+        </UserProvider>
       </body>
     </html>
   );
