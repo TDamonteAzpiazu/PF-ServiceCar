@@ -94,4 +94,35 @@ export class AuthService {
             throw new BadRequestException('No se pudo obtener la información del usuario de Auth0');
         }
     }
+
+    async signUpGoogle(name: string, email: string): Promise<any> {
+        // Buscar si el usuario ya existe en la base de datos por el email
+        let userGoogle = await this.usersRepository.findOne({ where: { email } });
+
+        if (!userGoogle) {
+            // Si el usuario no existe, creamos un nuevo usuario
+            const passwordDefault = "Nearvet@" + Math.floor(1000 + Math.random() * 9000).toString();
+            const hashedPassword = await bcrypt.hash(passwordDefault, 10);
+
+            userGoogle = this.usersRepository.create({
+                name,
+                email,
+                password: hashedPassword, // Guardamos la contraseña encriptada
+            });
+
+            // Guardar el nuevo usuario en la base de datos
+            await this.usersRepository.save(userGoogle);
+        }
+
+        // Crear el payload para el token JWT
+        const payload = { id: userGoogle.id, email: userGoogle.email };
+        const jwtToken = this.jwtService.sign(payload); // Generar el token JWT
+
+        // Retornar el usuario junto con el token
+        return {
+            user: userGoogle,
+            token: jwtToken,
+        };
+    }
+
 }

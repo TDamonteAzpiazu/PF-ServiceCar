@@ -52,4 +52,17 @@ export class AuthController {
             return { message: error.message };
         }
     }
+    @Post("authGoogle")
+    @UsePipes(new ValidationPipe())
+    async signUpGoogle(@Body() body: { name: string, email: string }) {
+        const { name, email } = body;
+
+        try {
+            const response = await this.authService.signUpGoogle(name, email);
+            return response;
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+    }
 }
+

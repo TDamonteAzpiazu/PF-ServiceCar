@@ -1,5 +1,9 @@
 import { jwtVerify } from "jose";
-import { IService, IUser } from "./types/types";
+import { IUser } from "./types/types";
+import Cookies from "js-cookie";
+import { serialize } from "cookie";
+import { useDispatch } from "react-redux";
+import { setToken } from "@/redux/userSlice";
 
 export const fetchDataUserByID = async (
   token: string,
