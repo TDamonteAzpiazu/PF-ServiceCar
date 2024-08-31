@@ -2,10 +2,8 @@ import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from '../users/users.entity';
+import { User } from '../users/users.entity'; 
 import { JwtModule } from '@nestjs/jwt';
-
-
 
 @Module({
   imports: [
@@ -14,9 +12,8 @@ import { JwtModule } from '@nestjs/jwt';
       secret: process.env.AUTH0_SECRET, // Usa el secreto de Auth0 para JWT
       signOptions: { expiresIn: '60m' },
     }),
-    
   ],
-  providers: [AuthService], 
+  providers: [AuthService],
   controllers: [AuthController],
 })
 export class AuthModule {}

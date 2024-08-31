@@ -11,18 +11,18 @@ export class User {
     @IsUUID()
     id: string = uuid();
 
-    @Column({ length: 50, nullable: true })
+    @Column({length : 50})
     @IsString()
-    @IsOptional()
-    name?: string;
+    @IsNotEmpty()
+    name: string;
 
-    @Column({ unique: true, nullable: true })
+    
+    @Column({ unique: true })
     @IsEmail()
     @IsNotEmpty()
-    @IsOptional()
-    email?: string;
+    email: string;
 
-    @Column({ nullable: true })
+    @Column()
     @IsStrongPassword()
     @IsOptional()
     password?: string;
@@ -32,21 +32,23 @@ export class User {
     @IsOptional()
     address?: string;
 
-    @Column({ default: 'https://res.cloudinary.com/dc8tneepi/image/upload/ztbuutsulfhoarq63xsh.jpg', nullable: true })
-    @IsString()
-    @IsOptional()
-    image?: string;
 
-    @Column({ default: Role.User, nullable: true })
+    @Column({ default: 'https://res.cloudinary.com/dc8tneepi/image/upload/ztbuutsulfhoarq63xsh.jpg' })
+    @IsString()
+    @IsNotEmpty()
+    image: string;
+
+    @Column({default: Role.User})
     @IsEnum(Role)
-    @IsOptional()
-    role?: Role;
+    @IsNotEmpty()
+    role: Role;
 
     @OneToMany(() => Appointment, (appointment) => appointment.user)
     appointments?: Appointment[];
 
-    @Column({ default: Status.Active, nullable: true })
+    @Column({default: Status.Active})
     @IsEnum(Status)
-    @IsOptional()
-    status?: Status;
+    @IsNotEmpty()
+    status: Status; 
 }
+
