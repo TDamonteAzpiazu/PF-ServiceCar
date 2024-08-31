@@ -116,7 +116,7 @@ export class AuthService {
 
         // Crear el payload para el token JWT
         const payload = { id: userGoogle.id, email: userGoogle.email };
-        const jwtToken = this.jwtService.sign(payload); // Generar el token JWT
+        const jwtToken = this.jwtService.sign(payload, {secret: process.env.JWT_SECRET}); // Generar el token JWT
 
         // Retornar el usuario junto con el token
         return {
