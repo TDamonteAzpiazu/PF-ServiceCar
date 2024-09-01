@@ -10,9 +10,13 @@ import { Service } from './services.entity';
 import { Status } from '../enum/status.enum';
 import { predefinedServices } from '../helpers/services';
 import { Appointment } from '../appointments/appointments.entity';
+import { CreateServiceDto } from 'src/dto/create-service.dto';
 
 @Injectable()
 export class ServicesService implements OnModuleInit {
+  create(CreateServiceDto: CreateServiceDto): Service | PromiseLike<Service> {
+    throw new Error('Method not implemented.');
+  }
   constructor(
     @InjectRepository(Service)
     private readonly servicesRepository: Repository<Service>,

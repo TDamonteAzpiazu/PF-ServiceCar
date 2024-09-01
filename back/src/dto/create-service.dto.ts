@@ -3,12 +3,7 @@ import { IsEnum, IsNotEmpty, IsNumber, IsPositive, IsString, IsUUID } from 'clas
 import { Status } from '../enum/status.enum';
 
 export class CreateServiceDto {
-  @ApiProperty({
-    description: 'UUID del servicio, generado automáticamente',
-    example: 'b2f5ff47-32e5-4e09-b9c0-3aab432babc3',
-  })
-  @IsUUID()
-  id: string;
+
 
   @ApiProperty({
     description: 'Tipo de servicio',
@@ -44,7 +39,7 @@ export class CreateServiceDto {
 
   @ApiProperty({
     description: 'Precio del servicio',
-    example: 50.5,
+    example: 50,
   })
   @IsNumber()
   @IsPositive()

@@ -6,7 +6,7 @@ import { Role } from "../auth/roles.enum";
 import { AuthGuard } from "../auth/auth.guard"
 import { User } from "./users.entity";
 import { CreateUserDto } from "../dto/create-user.dto"
-import { ApiTags } from "@nestjs/swagger";
+import { ApiOperation, ApiTags } from "@nestjs/swagger";
 
 @ApiTags('users')
 @Controller('users')
@@ -14,6 +14,8 @@ export class UsersController {
     constructor(private readonly userService: UsersService) {}
 
     @Get()
+    @UseGuards(AuthGuard)
+    @ApiOperation({ summary: 'Obtiene todos los usuarios' })
     @Roles(Role.Admin)
     @UseGuards(AuthGuard, RolesGuard)
     async getAllUsers(){
@@ -22,18 +24,21 @@ export class UsersController {
 
     @Get(':id')
     @UseGuards(AuthGuard)
+    @ApiOperation({ summary: 'Obtener usuario por id' })
     async getUserById(@Param('id', ParseUUIDPipe) id: string) : Promise<Omit<User, 'password'>> {
         return await this.userService.getUserById(id);
     }
 
     @Put(':id')
     @UseGuards(AuthGuard)
+    @ApiOperation({ summary: 'Actualizar usuario' })
     async updateUser(@Param('id', ParseUUIDPipe) id: string, @Body() data: Partial<CreateUserDto>): Promise<User> {
         return await this.userService.updateUser(id, data);
     }
 
     @Put('delete/:id')
     @UseGuards(AuthGuard)
+    @ApiOperation({ summary: 'Eliminar usuario' })
     async deleteUser(@Param('id', ParseUUIDPipe) id: string): Promise<{message: string, user: User}> {
         return await this.userService.deleteUser(id);
     }

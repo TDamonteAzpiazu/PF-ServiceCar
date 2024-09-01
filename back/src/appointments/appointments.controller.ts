@@ -50,7 +50,7 @@ export class AppointmentsController {
   }
 
   @Put(':id')
-  //@UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Actualizar una cita existente' })
   @ApiResponse({ status: 200, description: 'La cita ha sido actualizada exitosamente.', type: Appointment })
   @ApiResponse({ status: 401, description: 'No autorizado.' })
@@ -63,7 +63,7 @@ export class AppointmentsController {
   }
 
   @Delete(':id')
-  //@UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Eliminar una cita por ID' })
   @ApiResponse({ status: 204, description: 'La cita ha sido eliminada exitosamente.' })
   @ApiResponse({ status: 401, description: 'No autorizado.' })
