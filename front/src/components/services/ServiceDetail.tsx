@@ -90,19 +90,18 @@ const ServiceDetail: React.FC<{ id: string }> = ({ id }) => {
               <p className="flex gap-2 items-center">
                 <span className="text-2xl text-custom-red">
                   <FaCoffee />
-                </span> 
+                </span>
                 Zona resto-bar para comodidad del cliente
               </p>
             </div>
           </div>
-          <div className="mt-3 mb-6 flex justify-center">
-          
-            {/* <Map
+          {/* <div className="mt-3 mb-6 flex justify-center">
+            <Map
               apiKey={apiKey!}
               center={{ lat: -31.053075, lng: -64.498695 }}
               zoom={8}
-            /> */}
-          </div>
+            />
+          </div> */}
           {isMenuOpen && (
             <div
               className="fixed inset-0 bg-black bg-opacity-55 z-40"

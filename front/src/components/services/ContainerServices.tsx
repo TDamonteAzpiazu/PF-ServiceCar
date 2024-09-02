@@ -26,7 +26,7 @@ const ContainerServices: React.FC = () => {
       console.log(error);
     }
   }, []);
-
+console.log(serviciosOrdenados)
   const handleOrdenarPrecioAsc = () => {
     setServiciosOrdenados(ordenarPrecioAsc(serviciosOrdenados));
   };

@@ -10,9 +10,11 @@ const ServiceCard: React.FC<IService> = ({
   id,
   type,
   description,
-  location,
+  vehiculo,
   image,
   price,
+  status,
+  sucursales,
 }) => {
   return (
     <div className="relative md:m-0 m-3 text-custom-white flex items-center md:mb-6 bg-neutral-800 bg-opacity-90 rounded-bl-3xl rounded-tr-3xl shadow-md overflow-hidden md:mr-6  duration-300 ease-in-out lg:min-h-[250px] min-h-[280px] transition-transform transform hover:scale-105">
@@ -26,7 +28,7 @@ const ServiceCard: React.FC<IService> = ({
           className="absolute inset-0"
         />
       </div>
-      <div className="flex flex-col justify-between gap-2.5 px-4 w-2/3">
+      <div className="flex flex-col justify-between gap-3 px-4 w-2/3">
         <h5 className="text-lg font-semibold mb-1">{type}</h5>
         <p className="text-custom-grey flex gap-1 items-center ">
           <span className=" text-custom-red text-2xl">
@@ -38,7 +40,8 @@ const ServiceCard: React.FC<IService> = ({
           <span className=" text-custom-red text-2xl">
             <FaLocationDot />
           </span>
-          {location}
+
+          <p className="text-sm">{sucursales[0]}...</p>
         </p>
         <div className="flex items-center justify-between">
           <span className="text-xl flex gap-1 font-bold items-center">
