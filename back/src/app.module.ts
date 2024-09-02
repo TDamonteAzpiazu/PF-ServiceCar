@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { AppointmentsModule } from './appointments/appointments.module';
 import { config as dotenvConfig } from 'dotenv';
+import { ReviewsModule } from './reviews/reviews.module';
 
 dotenvConfig({ path: '.env.development' });
 @Module({
@@ -27,6 +28,7 @@ dotenvConfig({ path: '.env.development' });
     UsersModule,
     AppointmentsModule,
     ServicesModule,
+    ReviewsModule,
     CloudinaryModule,
     JwtModule.register({
       global: true,
