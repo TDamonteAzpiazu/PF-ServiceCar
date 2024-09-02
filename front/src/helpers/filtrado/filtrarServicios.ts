@@ -3,7 +3,7 @@ import { IService, ISucursales } from "@/helpers/types/types";
 export const filtrarServicios = (
   servicios: IService[],
   palabraClave: string,
-  ubicacionesSeleccionadas: ISucursales[], // Cambiado a ISucursales[]
+  ubicacionesSeleccionadas: ISucursales[], 
   vehiculosSeleccionados: string[]
 ): IService[] => {
   const palabraClaveNormalizada = palabraClave.toLowerCase();
