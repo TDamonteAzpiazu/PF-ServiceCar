@@ -1,4 +1,5 @@
 "use client";
+"use client";
 import { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { FaFilter } from "react-icons/fa";
@@ -80,4 +81,4 @@ const Filters: React.FC<FiltersProps> = ({
   );
 };
 
-export default Filters;
+export default Filters;

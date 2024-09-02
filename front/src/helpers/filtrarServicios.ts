@@ -6,5 +6,5 @@ export const filtrarServicios = (servicios: IService[], palabraClave: string): I
     servicio.type.toLowerCase().includes(palabraClaveNormalizada) ||
     servicio.description.toLowerCase().includes(palabraClaveNormalizada) ||
     servicio.location.toLowerCase().includes(palabraClaveNormalizada)
-  );
+  );
 };

@@ -2,7 +2,9 @@ import { Controller, FileTypeValidator, MaxFileSizeValidator, Param, ParseFilePi
 import { CloudinaryService } from "./cloudinary.service";
 import { UsersService } from "src/users/users.service";
 import { FileInterceptor } from "@nestjs/platform-express";
+import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
 
+@ApiTags('cloudinary')
 @Controller('cloudinary')
 export class CloudinaryController {
     constructor(
@@ -11,6 +13,7 @@ export class CloudinaryController {
     ) {}
 
     @Post('userImage/:id')
+    @ApiOperation({ summary: 'subir una imagen asociado a un id de usuario' })
     @UseInterceptors(FileInterceptor('file'))
     async uploadUserImage(
         @Param('id', ParseUUIDPipe) id: string,

@@ -38,8 +38,8 @@ const ContainerServices: React.FC = () => {
           Encuentra el servicio que buscas
         </h2>
         <Filters
-          servicios={servicios}  
-          setServiciosFiltrados={setServiciosOrdenados}  
+          servicios={servicios}
+          setServiciosFiltrados={setServiciosOrdenados}
           ordenPrecioAsc={handleOrdenarPrecioAsc}
           ordenPrecioDesc={handleOrdenarPrecioDesc}
         />

@@ -45,4 +45,4 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({ mostrarFiltros }) => {
   );
 };
 
-export default FilterOptions;
+export default FilterOptions;
