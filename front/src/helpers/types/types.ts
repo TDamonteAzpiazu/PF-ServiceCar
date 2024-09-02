@@ -101,3 +101,14 @@ export interface IOpinion {
   opinion: string;
   icono: string;
 }
+
+export interface ISucursales {
+  id: string;
+  name: string;
+  address: string;
+  latitud: string;
+  longitud: string;
+  details: string;
+  services: IService[];
+ status: string;
+}

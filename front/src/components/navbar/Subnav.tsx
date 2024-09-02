@@ -4,6 +4,7 @@ import { IoCloseSharp } from "react-icons/io5";
 import PATHROUTES from "@/helpers/PathRoutes";
 import { usePathname } from "next/navigation";
 import { IUser } from "@/helpers/types/types";
+import { FaRegCircleUser } from "react-icons/fa6";
 
 interface SubNavProps {
   typeClass: boolean;
@@ -51,27 +52,42 @@ const SubNav: React.FC<SubNavProps> = ({ typeClass, dataUser }) => {
       <Link
         href={`${PATHROUTES.DASHBOARD}/reservations`}
         className={`enlaces ${
-          dataUser ? "flex" : "hidden"
+          dataUser ? "block" : "hidden"
         } hover:text-custom-white font-semibold ${
-          pathName === `${PATHROUTES.DASHBOARD}/reservations` ? "text-custom-white" : ""
+          pathName === `${PATHROUTES.DASHBOARD}/reservations`
+            ? "text-custom-white"
+            : ""
         } `}
       >
         Reservas
       </Link>
-      <div className="pt-8">
+      {dataUser ? (
         <Link
-          href={PATHROUTES.REGISTER}
-          className={`enlaces md:hidden text-center text-custom-grey min-w-20 border-2 font-semibold border-custom-red py-1.5 px-4 rounded-md bg-none  hover:text-custom-red`}
+          href={`${PATHROUTES.DASHBOARD}/user`}
+          className={`enlaces md:hidden hover:text-custom-white font-semibold text-6xl flex justify-end ${
+            pathName === `${PATHROUTES.DASHBOARD}/user`
+              ? "text-custom-white"
+              : ""
+          } `}
         >
-          Registro
+          <FaRegCircleUser />
         </Link>
-        <Link
-          href={PATHROUTES.LOGIN}
-          className="enlaces text-center md:hidden min-w-24 text-custom-white bg-custom-red py-1.5 px-4 rounded hover:bg-red-700 "
-        >
-          Login
-        </Link>
-      </div>
+      ) : (
+        <div className="pt-8">
+          <Link
+            href={PATHROUTES.REGISTER}
+            className={`enlaces md:hidden text-center text-custom-grey min-w-20 border-2 font-semibold border-custom-red py-1.5 px-4 rounded-md bg-none  hover:text-custom-red`}
+          >
+            Registro
+          </Link>
+          <Link
+            href={PATHROUTES.LOGIN}
+            className="enlaces text-center md:hidden min-w-24 text-custom-white bg-custom-red py-1.5 px-4 rounded hover:bg-red-700 "
+          >
+            Login
+          </Link>
+        </div>
+      )}
 
       <div className="md:hidden absolute flex top-5 justify-between w-full">
         <p className="text-custom-red text-2xl font-semibold">GarageJS</p>

@@ -56,9 +56,8 @@ const FormReservations: React.FC<{
             token,
             setError
           );
-         
+          console.log(preference.preferenceId);
           await setPreferenceId(preference.preferenceId);
-          
         }
       }
     } catch (error) {
