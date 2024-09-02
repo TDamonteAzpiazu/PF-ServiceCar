@@ -56,7 +56,7 @@ const InfoAccount: React.FC = () => {
               </div>
               <div className="w-1/2">
                 <span className="font-light text-custom-grey">Dirección:</span>
-                <p>{dataUser?.address}</p>
+                <p>{dataUser?.address || "Av. San martin 123"} </p>
               </div>
             </div>
           </div>

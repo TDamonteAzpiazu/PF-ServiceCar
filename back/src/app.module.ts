@@ -12,6 +12,8 @@ import { config as dotenvConfig } from 'dotenv';
 import { ReviewsModule } from './reviews/reviews.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { MercadopagoModule } from './mercadopago/mercadopago.module';
+import { SucursalesModule } from './sucursales/sucursales.module';
 
 dotenvConfig({ path: '.env.development' });
 @Module({
@@ -31,7 +33,9 @@ dotenvConfig({ path: '.env.development' });
     AppointmentsModule,
     ServicesModule,
     ReviewsModule,
+    SucursalesModule,
     CloudinaryModule,
+    MercadopagoModule,
     JwtModule.register({
       global: true,
       signOptions: { expiresIn: '1h' },
