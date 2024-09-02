@@ -2,7 +2,7 @@ import { Body, Controller, Post, BadRequestException, UsePipes, ValidationPipe, 
 import { AuthService } from "./auth.service";
 import { LoginUserDto } from "../dto/loginUser.dto"; 
 import { CreateUserDto } from "../dto/create-user.dto";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiOperation, ApiTags } from "@nestjs/swagger";
 
 @ApiTags('auth')
 @Controller("auth")
@@ -10,6 +10,7 @@ export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
     @Post("signin")
+    @ApiOperation({ summary: 'loguear usuario' })
     @UsePipes(new ValidationPipe())
     async signIn(@Body() credentials: LoginUserDto) {
         const { email, password } = credentials;
@@ -22,28 +23,12 @@ export class AuthController {
         }
     }
 
-    @Post("signin/auth0")
-    async signInWithAuth0(@Body('idToken') idToken: string) {
-        try {
-            const user = await this.authService.validateAuth0Token(idToken);
-            return { message: "User authenticated with Auth0", user };
-        } catch (error) {
-            throw new BadRequestException(error.message);
-        }
-    }
 
-    @Post("userinfo")
-    async getUserInfo(@Body('accessToken') accessToken: string) {
-        try {
-            const userInfo = await this.authService.getAuth0UserInfo(accessToken);
-            return userInfo;
-        } catch (error) {
-            throw new BadRequestException(error.message);
-        }
-    }
+
 
     @HttpCode(201)
     @Post("signup")
+    @ApiOperation({ summary: 'crear usuario' })
     async createUser(@Body() user: CreateUserDto) {
         try {
             const createdUser = await this.authService.signUp(user);
@@ -53,6 +38,7 @@ export class AuthController {
         }
     }
     @Post("authGoogle")
+    @ApiOperation({ summary: 'auth con google' })
     @UsePipes(new ValidationPipe())
     async signUpGoogle(@Body() body: { name: string, email: string }) {
         const { name, email } = body;

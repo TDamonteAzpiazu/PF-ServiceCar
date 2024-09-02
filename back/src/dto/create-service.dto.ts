@@ -1,60 +1,47 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEnum, IsNotEmpty, IsNumber, IsPositive, IsString, IsUUID } from 'class-validator';
-import { Status } from '../enum/status.enum';
+import { IsString, IsNumber, IsNotEmpty, IsArray, ArrayNotEmpty, IsEnum } from 'class-validator';
+import { Vehiculos } from '../enum/vehiculos.enum'; // Importa la enumeración Vehiculos
 
 export class CreateServiceDto {
   @ApiProperty({
-    description: 'UUID del servicio, generado automáticamente',
-    example: 'b2f5ff47-32e5-4e09-b9c0-3aab432babc3',
-  })
-  @IsUUID()
-  id: string;
-
-  @ApiProperty({
-    description: 'Tipo de servicio',
-    example: 'Cambio de aceite',
+    description: 'Tipo de servicio, por ejemplo, "Cambio de Filtro de Aire".',
+    example: 'Cambio de Filtro de Aire',
   })
   @IsString()
   @IsNotEmpty()
   type: string;
 
   @ApiProperty({
-    description: 'Descripción del servicio',
-    example: 'Cambio de aceite para motores a gasolina',
+    description: 'Descripción detallada del servicio.',
+    example: 'Reemplazo del filtro de aire para un mejor rendimiento del motor.',
   })
   @IsString()
   @IsNotEmpty()
   description: string;
 
   @ApiProperty({
-    description: 'Ubicación donde se proporciona el servicio',
-    example: 'Madrid, España',
-  })
-  @IsString()
-  @IsNotEmpty()
-  location: string;
-
-  @ApiProperty({
-    description: 'URL de la imagen del servicio',
-    example: 'http://example.com/image.jpg',
-  })
-  @IsString()
-  @IsNotEmpty()
-  image: string;
-
-  @ApiProperty({
-    description: 'Precio del servicio',
-    example: 50.5,
+    description: 'Precio del servicio en dólares.',
+    example: 25,
   })
   @IsNumber()
-  @IsPositive()
+  @IsNotEmpty()
   price: number;
 
   @ApiProperty({
-    description: 'Estado del servicio',
-    enum: Status,
-    example: Status.Active,
+    description: 'Nombres de las sucursales donde se ofrecerá el servicio.',
+    example: ['Sucursal 1', 'Sucursal 2'],
   })
-  @IsEnum(Status)
-  status: Status;
+  @IsArray()
+  @ArrayNotEmpty()
+  @IsString({ each: true })
+  sucursales: string[];
+
+  @ApiProperty({
+    description: 'Tipo de vehículo para el que se aplica el servicio.',
+    example: 'Auto',
+    enum: Vehiculos,
+  })
+  @IsEnum(Vehiculos)
+  @IsNotEmpty()
+  vehiculo: Vehiculos;
 }

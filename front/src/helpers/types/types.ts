@@ -29,7 +29,7 @@ export interface IUser {
   image: string;
   role: string;
   status: string;
-  appointments?: [];
+  appointments?: []; 
 }
 
 export interface IUserRegister {
@@ -58,7 +58,7 @@ export interface handleProp {
 
 export interface IAppointment {
   user: string;
-  service: string[];
+  service: string[]; 
   date: string;
   time: string;
 }

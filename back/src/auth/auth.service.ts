@@ -7,7 +7,6 @@ import { CreateUserDto } from "../dto/create-user.dto";
 import { JwtService } from "@nestjs/jwt";
 import * as jwt from 'jsonwebtoken';
 import axios from 'axios';
-import { Role } from "./roles.enum";
 import { config as dotenvConfig } from 'dotenv';
 dotenvConfig({ path: '.env.development' });
 
@@ -82,18 +81,7 @@ export class AuthService {
         }
     }
 
-    async getAuth0UserInfo(accessToken: string): Promise<any> {
-        try {
-            const response = await axios.get(`${this.auth0BaseUrl}/userinfo`, {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
-            return response.data;
-        } catch (error) {
-            throw new BadRequestException('No se pudo obtener la información del usuario de Auth0');
-        }
-    }
+
 
     async signUpGoogle(name: string, email: string): Promise<any> {
         // Buscar si el usuario ya existe en la base de datos por el email

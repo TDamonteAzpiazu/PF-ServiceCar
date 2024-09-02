@@ -34,6 +34,7 @@ const ContainerServices: React.FC = () => {
   const handleOrdenarPrecioDesc = () => {
     setServiciosOrdenados(ordernarPrecioDesc(serviciosOrdenados));
   };
+
   return (
     <>
       <div className="flex sm:flex-row flex-col sm:justify-between mx-8 sm:items-center">
@@ -41,6 +42,8 @@ const ContainerServices: React.FC = () => {
           Encuentra el servicio que buscas
         </h2>
         <Filters
+          servicios={servicios}
+          setServiciosFiltrados={setServiciosOrdenados}
           ordenPrecioAsc={handleOrdenarPrecioAsc}
           ordenPrecioDesc={handleOrdenarPrecioDesc}
         />
