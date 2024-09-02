@@ -59,7 +59,7 @@ const Reservations: React.FC = () => {
           }`}
         >
           <button onClick={() => setViewHistory(true)}>
-            Reservas pendientes (0)
+            Reservas pendientes ({reservations?.length})
           </button>
         </div>
         <div className="border border-custom-red sm:block hidden "></div>

@@ -80,7 +80,7 @@ const Navbar: React.FC = () => {
             href={`${PATHROUTES.DASHBOARD}/user`}
             className="md:flex hidden items-center gap-2 text-custom-white"
           >
-            <p className="text-xl font-medium overflow-hidden max-w-40 max-h-8">
+            <p className="text-xl font-medium overflow-hidden max-w-40 max-h-8 capitalize">
               {dataUser?.name}
             </p>
             <span className="text-5xl">
