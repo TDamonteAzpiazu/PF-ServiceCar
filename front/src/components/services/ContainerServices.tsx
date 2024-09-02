@@ -21,9 +21,8 @@ const ContainerServices: React.FC = () => {
       setServicios(fetchedServicios);
       setServiciosOrdenados(fetchedServicios);
 
-      // Obtener las sucursales únicas como objetos ISucursales
       const sucursalesUnicasNames = Array.from(new Set(fetchedServicios.flatMap(servicio => servicio.sucursales.map(sucursal => sucursal.name))));
-      const sucursalesUnicas = sucursalesUnicasNames.map(name => ({ name } as ISucursales)); // Crear objetos ISucursales
+      const sucursalesUnicas = sucursalesUnicasNames.map(name => ({ name } as ISucursales)); 
       const vehiculosUnicos = Array.from(new Set(fetchedServicios.flatMap(servicio => servicio.vehiculo)));
 
       setSucursales(sucursalesUnicas);

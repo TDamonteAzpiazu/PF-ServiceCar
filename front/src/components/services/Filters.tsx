@@ -46,7 +46,6 @@ const Filters: React.FC<FiltersProps> = ({
     setServiciosFiltrados(serviciosFiltrados);
   };
 
-  // Cambia el tipo de los parámetros aquí para que coincida con los tipos esperados por FilterOptions
   const handleFilterChange = (ubicaciones: ISucursales[], vehiculos: string[]) => {
     setUbicacionesSeleccionadas(ubicaciones);
     setVehiculosSeleccionados(vehiculos);
@@ -78,7 +77,7 @@ const Filters: React.FC<FiltersProps> = ({
             mostrarFiltros={mostrarFiltros}
             sucursales={sucursales}
             vehiculos={vehiculos}
-            onFilterChange={handleFilterChange} // Asegúrate de que handleFilterChange coincida con el tipo esperado
+            onFilterChange={handleFilterChange} 
           />
         </div>
         <div className="relative">
