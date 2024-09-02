@@ -9,23 +9,19 @@ export const filtrarServicios = (
   const palabraClaveNormalizada = palabraClave.toLowerCase();
 
   return servicios.filter(servicio => {
-    // Verifica si el servicio tiene alguna de las sucursales seleccionadas
     const tieneSucursalSeleccionada = ubicacionesSeleccionadas.length === 0 ||
       servicio.sucursales.some(sucursal =>
         ubicacionesSeleccionadas.some(ubicacion => ubicacion.name === sucursal.name)
       );
 
-    // Verifica si el servicio es del tipo de vehículo seleccionado
     const esVehiculoSeleccionado = vehiculosSeleccionados.length === 0 ||
       vehiculosSeleccionados.includes(servicio.vehiculo);
 
-    // Verifica si el servicio coincide con la búsqueda de texto
     const coincideBusqueda = 
       servicio.type.toLowerCase().includes(palabraClaveNormalizada) ||
       servicio.description.toLowerCase().includes(palabraClaveNormalizada) ||
       servicio.vehiculo.toLowerCase().includes(palabraClaveNormalizada);
 
-    // Retorna verdadero si cumple con todos los filtros
     return tieneSucursalSeleccionada && esVehiculoSeleccionado && coincideBusqueda;
   });
 };
