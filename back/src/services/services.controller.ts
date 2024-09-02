@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
     Body,
     Controller,
     Delete,
@@ -12,11 +13,16 @@ import {
   import { ApiOperation, ApiTags } from '@nestjs/swagger';
   import { ServicesService } from './services.service';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { CreateServiceDto } from '../dto/create-service.dto';
+import { SucursalesService } from '../sucursales/sucursales.service';
   
   @ApiTags('services')
   @Controller('services')
   export class ServicesController {
-    constructor(private readonly servicesService: ServicesService) {}
+    constructor(
+      private readonly servicesService: ServicesService,
+      private readonly sucursalesService: SucursalesService,
+    ) {}
   
     @Get()
     //@UseGuards(AuthGuard)
@@ -42,45 +48,44 @@ import { AuthGuard } from 'src/auth/auth.guard';
     }
   
     @Post()
-    //@UseGuards(AuthGuard)
-    @ApiOperation({ summary: 'crear un servicio' })
-    async create(@Body() body) {
-      const { type, description, location, image, price } = body;
+  //@UseGuards(AuthGuard)
+  @ApiOperation({ summary: 'Crear un servicio' })
+  async create(@Body() body: CreateServiceDto) {
+    const serviceId = await this.servicesService.addService(body);
+
+    return {
+      message: 'Service created successfully',
+      id: serviceId,
+    };
+  }
   
-      const serviceId = await this.servicesService.addService({
-        type,
-        description,
-        location,
-        image,
-        price,
-        appointments: []
-      });
-  
-      return {
-        message: 'Service created successfully',
-        id: serviceId,
-      };
+  @Put(':id')
+  @ApiOperation({ summary: 'Actualizar un servicio' })
+  async update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() body: Partial<CreateServiceDto>,
+  ) {
+    const { type, description, price, sucursales, vehiculo } = body;
+
+    // Convert sucursales names to instances
+    const sucursalesEntities = await this.sucursalesService.findByNames(sucursales);
+    if (sucursalesEntities.length !== sucursales.length) {
+      throw new BadRequestException('Some of the provided branch names are invalid');
     }
-  
-    @Put(':id')
-    //@UseGuards(AuthGuard)
-    @ApiOperation({ summary: 'actualizar un servicio' })
-    async update(@Param('id', ParseUUIDPipe) id: string, @Body() body) {
-      const { type, description, location, image, price } = body;
-  
-      const serviceId = await this.servicesService.updateService(id, {
-        type,
-        description,
-        location,
-        image,
-        price,
-      });
-  
-      return {
-        message: 'Service updated successfully',
-        id: serviceId,
-      };
-    }
+
+    const serviceId = await this.servicesService.updateService(id, {
+      type,
+      description,
+      price,
+      sucursales: sucursalesEntities,
+      vehiculo,
+    });
+
+    return {
+      message: 'Service updated successfully',
+      id: serviceId,
+    };
+  }
   
     @Delete(':id')
     //@UseGuards(AuthGuard)
