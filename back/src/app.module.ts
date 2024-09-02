@@ -10,6 +10,8 @@ import { UsersModule } from './users/users.module';
 import { AppointmentsModule } from './appointments/appointments.module';
 import { config as dotenvConfig } from 'dotenv';
 import { ReviewsModule } from './reviews/reviews.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 dotenvConfig({ path: '.env.development' });
 @Module({
@@ -36,7 +38,7 @@ dotenvConfig({ path: '.env.development' });
       secret: process.env.JWT_SECRET,
     }),
   ],
-  controllers: [],
-  providers: [],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
