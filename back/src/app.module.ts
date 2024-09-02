@@ -10,6 +10,7 @@ import { UsersModule } from './users/users.module';
 import { AppointmentsModule } from './appointments/appointments.module';
 import { config as dotenvConfig } from 'dotenv';
 import { MercadopagoModule } from './mercadopago/mercadopago.module';
+import { SucursalesModule } from './sucursales/sucursales.module';
 
 dotenvConfig({ path: '.env.development' });
 @Module({
@@ -28,6 +29,7 @@ dotenvConfig({ path: '.env.development' });
     UsersModule,
     AppointmentsModule,
     ServicesModule,
+    SucursalesModule,
     CloudinaryModule,
     MercadopagoModule,
     JwtModule.register({
