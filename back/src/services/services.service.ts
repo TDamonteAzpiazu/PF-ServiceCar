@@ -53,16 +53,32 @@ export class ServicesService implements OnModuleInit {
   }
 
   async getServices() {
-    return this.servicesRepository.find();
+    // return this.servicesRepository.find({relations: ['sucursales']});
+    const services = await this.servicesRepository.createQueryBuilder('service')
+      .leftJoinAndSelect('service.sucursales', 'sucursal')
+      .getMany();
+    
+    // Transformar el resultado para solo incluir los nombres de las sucursales
+    return services.map(service => ({
+      ...service,
+      sucursales: service.sucursales.map(sucursal => sucursal.name)
+    }));
   }
 
   async getServiceById(id: string) {
-    const service = await this.servicesRepository.findOne({ where: { id } });
+    const service = await this.servicesRepository.createQueryBuilder('service')
+      .leftJoinAndSelect('service.sucursales', 'sucursal')
+      .where('service.id = :id', { id })
+      .getOne();
 
-    if (!service)
+    if (!service) {
       throw new NotFoundException(`Couldn't find service with id '${id}'`);
+    }
 
-    return service;
+    return {
+      ...service,
+      sucursales: service.sucursales.map(sucursal => sucursal.name)
+    };
   }
 
   async addService(serviceData: CreateServiceDto): Promise<string> {
