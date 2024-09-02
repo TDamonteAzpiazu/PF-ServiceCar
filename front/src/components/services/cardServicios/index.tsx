@@ -3,16 +3,17 @@ import Image from "next/image";
 import { IService } from "@/helpers/types/types";
 import Link from "next/link";
 import { MdAttachMoney, MdOutlineDescription } from "react-icons/md";
-import { FaLocationDot } from "react-icons/fa6";
+import { FaLocationDot, FaTruck, FaBuilding } from "react-icons/fa6";
 import PATHROUTES from "@/helpers/PathRoutes";
 
 const ServiceCard: React.FC<IService> = ({
   id,
   type,
   description,
-  location,
   image,
   price,
+  vehiculo,
+  sucursales
 }) => {
   return (
     <div className="relative md:m-0 m-3 text-custom-white flex items-center md:mb-6 bg-neutral-800 bg-opacity-90 rounded-bl-3xl rounded-tr-3xl shadow-md overflow-hidden md:mr-6  duration-300 ease-in-out lg:min-h-[250px] min-h-[280px] transition-transform transform hover:scale-105">
@@ -21,7 +22,7 @@ const ServiceCard: React.FC<IService> = ({
         <Image
           src={image}
           alt={type}
-          layout="fill" //cambiar propiedad
+          layout="fill"
           objectFit="cover"
           className="absolute inset-0"
         />
@@ -34,12 +35,23 @@ const ServiceCard: React.FC<IService> = ({
           </span>
           {description}
         </p>
+
+        {/* Vehiculo */}
         <p className="text-custom-grey flex gap-1 items-center">
-          <span className=" text-custom-red text-2xl">
+          <span className="text-custom-red text-2xl">
+            <FaTruck />
+          </span>
+          {vehiculo}
+        </p>
+
+        <p className="text-custom-grey flex gap-1 items-center">
+          <span className="text-custom-red text-2xl">
             <FaLocationDot />
           </span>
-          {location}
+          {/* Assumes 'location' should be replaced with 'sucursales' */}
+          {sucursales.join(", ")}
         </p>
+
         <div className="flex items-center justify-between">
           <span className="text-xl flex gap-1 font-bold items-center">
             <span className=" text-custom-red text-2xl">

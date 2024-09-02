@@ -88,9 +88,10 @@ export interface IService {
   id: string;
   type: string;
   description: string;
-  location: string;
   image: string;
   price: number;
+  vehiculo: string;
+  sucursales: ISucursales[];
 }
 export interface IOpinion {
   estrellas: number;
@@ -98,4 +99,13 @@ export interface IOpinion {
   ocupacion: string;
   opinion: string;
   icono: string;
+}
+
+export interface ISucursales  {
+  id: string;
+  name: string;
+  latitud: string;
+  longitud: string;
+  details: string
+  services: IService[]
 }

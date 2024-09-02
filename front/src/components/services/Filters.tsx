@@ -1,16 +1,18 @@
 "use client";
-"use client";
+
 import { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { FaFilter } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 import OrdenOpciones from "./Ordenamiento";
-import { filtrarServicios } from "@/helpers/filtrarServicios";
-import { IService } from "@/helpers/types/types";
-import FilterOptions from "@/helpers/filterOptiones";
+import { filtrarServicios } from "@/helpers/filtrado/filtrarServicios";
+import { IService, ISucursales } from "@/helpers/types/types";
+import FilterOptions from "@/helpers/filtrado/filterOptiones";
 
 interface FiltersProps {
   servicios: IService[];
+  sucursales: ISucursales[];
+  vehiculos: string[];
   setServiciosFiltrados: (servicios: IService[]) => void;
   ordenPrecioAsc: () => void;
   ordenPrecioDesc: () => void;
@@ -18,6 +20,8 @@ interface FiltersProps {
 
 const Filters: React.FC<FiltersProps> = ({
   servicios,
+  sucursales,
+  vehiculos,
   setServiciosFiltrados,
   ordenPrecioAsc,
   ordenPrecioDesc,
@@ -25,11 +29,35 @@ const Filters: React.FC<FiltersProps> = ({
   const [mostrarOrdenOpciones, setMostrarOrdenOpciones] = useState(false);
   const [mostrarFiltros, setMostrarFiltros] = useState(false);
   const [busqueda, setBusqueda] = useState("");
+  const [ubicacionesSeleccionadas, setUbicacionesSeleccionadas] = useState<ISucursales[]>([]);
+  const [vehiculosSeleccionados, setVehiculosSeleccionados] = useState<string[]>([]);
 
   const handleBusqueda = (event: React.ChangeEvent<HTMLInputElement>) => {
     const palabraClave = event.target.value;
     setBusqueda(palabraClave);
-    const serviciosFiltrados = filtrarServicios(servicios, palabraClave);
+
+    const serviciosFiltrados = filtrarServicios(
+      servicios,
+      palabraClave,
+      ubicacionesSeleccionadas,
+      vehiculosSeleccionados
+    );
+
+    setServiciosFiltrados(serviciosFiltrados);
+  };
+
+  // Cambia el tipo de los parámetros aquí para que coincida con los tipos esperados por FilterOptions
+  const handleFilterChange = (ubicaciones: ISucursales[], vehiculos: string[]) => {
+    setUbicacionesSeleccionadas(ubicaciones);
+    setVehiculosSeleccionados(vehiculos);
+    
+    const serviciosFiltrados = filtrarServicios(
+      servicios,
+      busqueda,
+      ubicaciones,
+      vehiculos
+    );
+
     setServiciosFiltrados(serviciosFiltrados);
   };
 
@@ -46,7 +74,12 @@ const Filters: React.FC<FiltersProps> = ({
               <FaFilter />
             </span>
           </button>
-          <FilterOptions mostrarFiltros={mostrarFiltros} />
+          <FilterOptions
+            mostrarFiltros={mostrarFiltros}
+            sucursales={sucursales}
+            vehiculos={vehiculos}
+            onFilterChange={handleFilterChange} // Asegúrate de que handleFilterChange coincida con el tipo esperado
+          />
         </div>
         <div className="relative">
           <button
@@ -81,4 +114,4 @@ const Filters: React.FC<FiltersProps> = ({
   );
 };
 
-export default Filters;
+export default Filters;
