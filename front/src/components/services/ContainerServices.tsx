@@ -1,14 +1,15 @@
-"use client"
+"use client";
+
 import React, { useState, useEffect } from "react";
 import Cards from "@/components/services/cardsServicios";
 import { FetchServicio } from "@/helpers/serviciosFetch";
-import Filters from "@/components/services/Filters";
 import { IService, ISucursales } from "@/helpers/types/types";
 import {
   ordenarPrecioAsc,
   ordernarPrecioDesc,
 } from "@/helpers/filtrado/ordenamientoService";
 import { filtrarServicios } from "@/helpers/filtrado/filtrarServicios";
+import Filters from "./Filters";
 
 const ContainerServices: React.FC = () => {
   const [servicios, setServicios] = useState<IService[]>([]);
@@ -17,14 +18,19 @@ const ContainerServices: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const fetchedServicios = await FetchServicio();
-      setServicios(fetchedServicios);
-      setServiciosOrdenados(fetchedServicios);
+      try {
+        const fetchedServicios = await FetchServicio();
+        setServicios(fetchedServicios);
+        setServiciosOrdenados(fetchedServicios);
 
-    
-      const vehiculosUnicos = Array.from(new Set(fetchedServicios.flatMap(servicio => servicio.vehiculo)));
+        const vehiculosUnicos = Array.from(
+          new Set(fetchedServicios.flatMap((servicio) => servicio.vehiculo))
+        );
 
-      setVehiculos(vehiculosUnicos);
+        setVehiculos(vehiculosUnicos);
+      } catch (error) {
+        console.error("Error fetching servicios:", error);
+      }
     };
 
     fetchData();
@@ -39,11 +45,7 @@ const ContainerServices: React.FC = () => {
   };
 
   const handleFilterChange = (ubicaciones: ISucursales[], vehiculos: string[]) => {
-    const serviciosFiltrados = filtrarServicios(
-      servicios,
-      "",
-      vehiculos
-    );
+    const serviciosFiltrados = filtrarServicios(servicios, "", vehiculos);
     setServiciosOrdenados(serviciosFiltrados);
   };
 

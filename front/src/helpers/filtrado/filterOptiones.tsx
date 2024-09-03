@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { ISucursales } from "../types/types";
-import { fetchSucursales } from "../fetchSucursales";
+import { FetchSucursales } from "../serviciosFetch";
 
 interface FilterOptionsProps {
   mostrarFiltros: boolean;
@@ -19,7 +19,7 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
   useEffect(() => {
     const fetchAndSetSucursales = async () => {
       try {
-        const data = await fetchSucursales();
+        const data = await FetchSucursales();
         setSucursalesData(data);
       } catch (error) {
         console.error('Error fetching sucursales:', error);

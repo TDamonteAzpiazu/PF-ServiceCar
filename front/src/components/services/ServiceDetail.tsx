@@ -6,10 +6,9 @@ import Image from "next/image";
 import { FaCheckSquare, FaCoffee } from "react-icons/fa";
 import { MdLocalCarWash } from "react-icons/md";
 import NavbarService from "./NavbarService";
-import Map from "./Map";
+import SucursalesDetail from "./SucursalesDetail";
 
 const ServiceDetail: React.FC<{ id: string }> = ({ id }) => {
-  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
   const url = process.env.NEXT_PUBLIC_URL;
   const [service, setService] = useState<IService>();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -34,13 +33,15 @@ const ServiceDetail: React.FC<{ id: string }> = ({ id }) => {
           <div className="flex sm:flex-row flex-col sm:justify-between sm:items-center items-start mb-5">
             <div className="flex flex-col sm:mb-0 mb-4">
               <h2 className="text-3xl">{service.type}</h2>
-              <p className="text-custom-grey font-light">{service.location}</p>
+              <p className="text-custom-grey pt-1 font-light">
+                Selecciona la sucursal que mejor se adapte a tus preferencias
+              </p>
             </div>
             <button
               className="bg-custom-red rounded py-3 px-4 hover:bg-red-600"
               onClick={toggleMenu}
             >
-              Reservar | US${service.price} por dia
+              Reservar | ARS${service.price} 
             </button>
           </div>
 
@@ -69,7 +70,7 @@ const ServiceDetail: React.FC<{ id: string }> = ({ id }) => {
                   className="bg-custom-red rounded py-3 px-4 hover:bg-red-600"
                   onClick={toggleMenu}
                 >
-                  Reservar | US${service.price} por dia
+                  Reservar | US${service.price} 
                 </button>
               </div>
             </div>
@@ -90,19 +91,12 @@ const ServiceDetail: React.FC<{ id: string }> = ({ id }) => {
               <p className="flex gap-2 items-center">
                 <span className="text-2xl text-custom-red">
                   <FaCoffee />
-                </span> 
+                </span>
                 Zona resto-bar para comodidad del cliente
               </p>
             </div>
           </div>
-          <div className="mt-3 mb-6 flex justify-center">
-          
-            {/* <Map
-              apiKey={apiKey!}
-              center={{ lat: -31.053075, lng: -64.498695 }}
-              zoom={8}
-            /> */}
-          </div>
+          <SucursalesDetail service={service} />
           {isMenuOpen && (
             <div
               className="fixed inset-0 bg-black bg-opacity-55 z-40"

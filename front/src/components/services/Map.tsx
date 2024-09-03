@@ -1,26 +1,28 @@
 import React from 'react';
-import { GoogleMap, LoadScript } from '@react-google-maps/api';
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
 interface MapProps {
   apiKey: string;
-  center: google.maps.LatLngLiteral;
+  center: { lat: number; lng: number };
   zoom: number;
+  markers: { lat: number; lng: number; name: string }[];
 }
 
-const Map: React.FC<MapProps> = ({ apiKey, center, zoom }) => {
-  const mapContainerStyle = {
-    height: '400px',
-    width: '100%',
-  };
-
+const Map: React.FC<MapProps> = ({ apiKey, center, zoom, markers }) => {
   return (
     <LoadScript googleMapsApiKey={apiKey}>
       <GoogleMap
-        mapContainerStyle={mapContainerStyle}
+        mapContainerStyle={{ height: "400px", width: "100%",borderRadius:"10px" }}
         center={center}
         zoom={zoom}
       >
-        {/* Puedes agregar marcadores u otros componentes aquí */}
+        {markers.map((marker, index) => (
+          <Marker
+            key={index}
+            position={{ lat: marker.lat, lng: marker.lng }}
+            label={marker.name} 
+          />
+        ))}
       </GoogleMap>
     </LoadScript>
   );

@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import { handleProp, handlePropAppointment } from "./types/types";
+import { handleProp, handlePropAppointment, IAppointment } from "./types/types";
 import PATHROUTES from "./PathRoutes";
 
 export const handleSubmit = async ({
@@ -34,12 +34,10 @@ export const handleSubmit = async ({
   }
 };
 
-export const handleSubmitApppoint = async ({
-  setError,
-  url,
-  values,
-  token,
-}: handlePropAppointment) => {
+export const handleSubmitApppoint = async (
+  values:IAppointment,
+  token:any
+) => {
   try {
     if (!token && !values.user) {
       Swal.fire({
@@ -49,30 +47,15 @@ export const handleSubmitApppoint = async ({
         html: `<p>¿Desea loguearse? <a href=${PATHROUTES.LOGIN}> INGRESAR</a></p>`,
       });
       return;
-    }
-
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(values),
-    });
-    const data = await response.json();
-
-    if (response.ok) {
+    } else {
       Swal.fire({
-        title: "Reserva gestionada exitosamente",
-        text: `Ha creado su reserva para el dia ${values.date} a las ${values.time} horas.`,
+        title: "Reserva iniciada exitosamente",
+        text: `Por favor proceda al pago para confirmar la reserva.`,
         icon: "success",
       });
-
-      return { response, data };
-    } else {
-      setError(data.message || "Error al crear la reserva");
+      return true
     }
   } catch (error) {
-    setError("Error al crear la reserva");
+    console.log(error)
   }
 };
