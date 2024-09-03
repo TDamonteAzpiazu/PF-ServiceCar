@@ -5,13 +5,14 @@ import { CiSearch } from "react-icons/ci";
 import { FaFilter } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 import OrdenOpciones from "./Ordenamiento";
-import { filtrarServicios } from "@/helpers/filtrado/filtrarServicios";
+import { filtrarServiciosPorSucursal } from "@/helpers/filtrado/filtrarServicios"; // Importa la nueva función
 import { IService, ISucursales } from "@/helpers/types/types";
 import FilterOptions from "@/helpers/filtrado/filterOptiones";
 
 interface FiltersProps {
   servicios: IService[];
   vehiculos: string[];
+  ubicaciones: ISucursales[]; // Agrega el tipo para ubicaciones
   setServiciosFiltrados: (servicios: IService[]) => void;
   ordenPrecioAsc: () => void;
   ordenPrecioDesc: () => void;
@@ -20,6 +21,7 @@ interface FiltersProps {
 const Filters: React.FC<FiltersProps> = ({
   servicios,
   vehiculos,
+  ubicaciones,
   setServiciosFiltrados,
   ordenPrecioAsc,
   ordenPrecioDesc,
@@ -34,8 +36,9 @@ const Filters: React.FC<FiltersProps> = ({
     const palabraClave = event.target.value;
     setBusqueda(palabraClave);
 
-    const serviciosFiltrados = filtrarServicios(
+    const serviciosFiltrados = filtrarServiciosPorSucursal(
       servicios,
+      ubicacionesSeleccionadas.map(ubicacion => ubicacion.name).join(','), // Filtra por nombres de sucursales
       palabraClave,
       vehiculosSeleccionados
     );
@@ -43,12 +46,13 @@ const Filters: React.FC<FiltersProps> = ({
     setServiciosFiltrados(serviciosFiltrados);
   };
 
-  // Cambia el tipo de los parámetros aquí para que coincida con los tipos esperados por FilterOptions
-  const handleFilterChange = ( vehiculos: string[]) => {
+  const handleFilterChange = (ubicaciones: ISucursales[], vehiculos: string[]) => {
+    setUbicacionesSeleccionadas(ubicaciones);
     setVehiculosSeleccionados(vehiculos);
     
-    const serviciosFiltrados = filtrarServicios(
+    const serviciosFiltrados = filtrarServiciosPorSucursal(
       servicios,
+      ubicaciones.map(ubicacion => ubicacion.name).join(','), // Filtra por nombres de sucursales
       busqueda,
       vehiculos
     );
@@ -72,7 +76,7 @@ const Filters: React.FC<FiltersProps> = ({
           <FilterOptions
             mostrarFiltros={mostrarFiltros}
             vehiculos={vehiculos}
-            onFilterChange={handleFilterChange} // Asegúrate de que handleFilterChange coincida con el tipo esperado
+            onFilterChange={handleFilterChange}
           />
         </div>
         <div className="relative">

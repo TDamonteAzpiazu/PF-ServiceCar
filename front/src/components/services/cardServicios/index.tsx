@@ -49,7 +49,7 @@ const ServiceCard: React.FC<IService> = ({
           <span className="text-custom-red text-2xl">
             <FaLocationDot />
           </span>
-          {location}
+          {sucursales.join(", ")}
         </p>
 
         <div className="flex items-center justify-between">

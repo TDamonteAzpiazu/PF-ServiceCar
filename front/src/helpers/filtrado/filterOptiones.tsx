@@ -5,7 +5,7 @@ import { FetchSucursales } from "../serviciosFetch";
 interface FilterOptionsProps {
   mostrarFiltros: boolean;
   vehiculos: string[];
-  onFilterChange: (vehiculos: string[]) => void;
+  onFilterChange: (ubicaciones: ISucursales[], vehiculos: string[]) => void;
 }
 
 const FilterOptions: React.FC<FilterOptionsProps> = ({
@@ -15,6 +15,7 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
 }) => {
   const [sucursalesData, setSucursalesData] = useState<ISucursales[]>([]);
   const [vehiculosSeleccionados, setVehiculosSeleccionados] = useState<Set<string>>(new Set());
+  const [ubicacionesSeleccionadas, setUbicacionesSeleccionadas] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     const fetchAndSetSucursales = async () => {
@@ -30,61 +31,76 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
   }, []);
 
   useEffect(() => {
-    
-    onFilterChange( Array.from(vehiculosSeleccionados));
-  }, [ vehiculosSeleccionados, onFilterChange]);
+    onFilterChange(
+      sucursalesData.filter(sucursal => ubicacionesSeleccionadas.has(sucursal.name)),
+      Array.from(vehiculosSeleccionados)
+    );
+  }, [ubicacionesSeleccionadas, vehiculosSeleccionados]);
 
-  
+  const handleSucursalChange = (sucursal: string) => {
+    setUbicacionesSeleccionadas(prev => {
+      const updated = new Set(prev);
+      if (updated.has(sucursal)) {
+        updated.delete(sucursal);
+      } else {
+        updated.add(sucursal);
+      }
+      return updated;
+    });
+  };
 
   const handleVehiculoChange = (vehiculo: string) => {
     setVehiculosSeleccionados(prev => {
-      const newSelections = new Set(prev);
-      if (newSelections.has(vehiculo)) {
-        newSelections.delete(vehiculo);
+      const updated = new Set(prev);
+      if (updated.has(vehiculo)) {
+        updated.delete(vehiculo);
       } else {
-        newSelections.add(vehiculo);
+        updated.add(vehiculo);
       }
-      return newSelections;
+      return updated;
     });
   };
 
   return (
-    <>
-      {mostrarFiltros && (
-        <div className="absolute z-10 bg-black text-white p-6 rounded-md shadow-lg top-full mt-2 w-64">
-          {/* Filtrar por Ubicación */}
-          <div className="mb-6">
-            <h3 className="font-semibold text-custom-red mb-3">Sucursales</h3>
-            {sucursalesData.map((sucursal, index) => (
-              <label key={`sucursal-${sucursal.name || index}`} className="block mb-3 cursor-pointer">
-                <input
-                  type="checkbox"
-                  className="mr-1 accent-custom-red"
-                  
-                />
-                <span className="text-white">{sucursal.name}</span>
+    <div
+      className={`absolute top-16 right-0 z-10 bg-black text-white rounded-lg border border-custom-red ${mostrarFiltros ? "block" : "hidden"}`}
+    >
+      <div className="p-4">
+        <h3 className="font-semibold text-lg mb-2">Filtros</h3>
+        <div className="mb-4">
+          <h4 className="font-semibold">Sucursales</h4>
+          {sucursalesData.map((sucursal) => (
+            <div key={sucursal.name} className="flex items-center">
+              <input
+                type="checkbox"
+                id={`sucursal-${sucursal.name}`}
+                value={sucursal.name}
+                onChange={() => handleSucursalChange(sucursal.name)}
+              />
+              <label htmlFor={`sucursal-${sucursal.name}`} className="ml-2">
+                {sucursal.name}
               </label>
-            ))}
-          </div>
-
-          {/* Filtrar por Tipo de Vehículo */}
-          <div className="mb-6">
-            <h3 className="font-semibold text-custom-red mb-3">Vehículo</h3>
-            {vehiculos.map((vehiculo, index) => (
-              <label key={`vehiculo-${vehiculo || index}`} className="block mb-3 cursor-pointer">
-                <input
-                  type="checkbox"
-                  className="mr-1 accent-custom-red"
-                  checked={vehiculosSeleccionados.has(vehiculo || '')}
-                  onChange={() => handleVehiculoChange(vehiculo || '')}
-                />
-                <span className="text-white">{vehiculo}</span>
-              </label>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
-      )}
-    </>
+        <div>
+          <h4 className="font-semibold">Vehículos</h4>
+          {vehiculos.map((vehiculo) => (
+            <div key={vehiculo} className="flex items-center">
+              <input
+                type="checkbox"
+                id={`vehiculo-${vehiculo}`}
+                value={vehiculo}
+                onChange={() => handleVehiculoChange(vehiculo)}
+              />
+              <label htmlFor={`vehiculo-${vehiculo}`} className="ml-2">
+                {vehiculo}
+              </label>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 };
 
