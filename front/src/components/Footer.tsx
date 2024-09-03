@@ -74,7 +74,7 @@ const Footer: React.FC = () => {
         </div>
       </div>
       <p className="text-center text-custom-grey">
-        &copy;All rights reserved GarageJS - 2024
+        &copy; 2024 GarageJS. Todos los derechos reservados. 
       </p>
     </footer>
   );
