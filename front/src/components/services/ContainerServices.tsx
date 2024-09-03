@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import React, { useState, useEffect } from "react";
 import Cards from "@/components/services/cardsServicios";
 import { FetchServicio } from "@/helpers/serviciosFetch";
@@ -8,11 +8,11 @@ import {
   ordenarPrecioAsc,
   ordernarPrecioDesc,
 } from "@/helpers/filtrado/ordenamientoService";
+import { filtrarServicios } from "@/helpers/filtrado/filtrarServicios";
 
 const ContainerServices: React.FC = () => {
   const [servicios, setServicios] = useState<IService[]>([]);
   const [serviciosOrdenados, setServiciosOrdenados] = useState<IService[]>([]);
-  const [sucursales, setSucursales] = useState<ISucursales[]>([]);
   const [vehiculos, setVehiculos] = useState<string[]>([]);
 
   useEffect(() => {
@@ -21,11 +21,9 @@ const ContainerServices: React.FC = () => {
       setServicios(fetchedServicios);
       setServiciosOrdenados(fetchedServicios);
 
-      const sucursalesUnicasNames = Array.from(new Set(fetchedServicios.flatMap(servicio => servicio.sucursales.map(sucursal => sucursal.name))));
-      const sucursalesUnicas = sucursalesUnicasNames.map(name => ({ name } as ISucursales)); 
+    
       const vehiculosUnicos = Array.from(new Set(fetchedServicios.flatMap(servicio => servicio.vehiculo)));
 
-      setSucursales(sucursalesUnicas);
       setVehiculos(vehiculosUnicos);
     };
 
@@ -40,6 +38,15 @@ const ContainerServices: React.FC = () => {
     setServiciosOrdenados(ordernarPrecioDesc(serviciosOrdenados));
   };
 
+  const handleFilterChange = (ubicaciones: ISucursales[], vehiculos: string[]) => {
+    const serviciosFiltrados = filtrarServicios(
+      servicios,
+      "",
+      vehiculos
+    );
+    setServiciosOrdenados(serviciosFiltrados);
+  };
+
   return (
     <>
       <div className="flex sm:flex-row flex-col sm:justify-between mx-8 sm:items-center">
@@ -48,7 +55,6 @@ const ContainerServices: React.FC = () => {
         </h2>
         <Filters
           servicios={servicios}
-          sucursales={sucursales}
           vehiculos={vehiculos}
           setServiciosFiltrados={setServiciosOrdenados}
           ordenPrecioAsc={handleOrdenarPrecioAsc}

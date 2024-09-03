@@ -11,7 +11,6 @@ import FilterOptions from "@/helpers/filtrado/filterOptiones";
 
 interface FiltersProps {
   servicios: IService[];
-  sucursales: ISucursales[];
   vehiculos: string[];
   setServiciosFiltrados: (servicios: IService[]) => void;
   ordenPrecioAsc: () => void;
@@ -20,7 +19,6 @@ interface FiltersProps {
 
 const Filters: React.FC<FiltersProps> = ({
   servicios,
-  sucursales,
   vehiculos,
   setServiciosFiltrados,
   ordenPrecioAsc,
@@ -39,21 +37,19 @@ const Filters: React.FC<FiltersProps> = ({
     const serviciosFiltrados = filtrarServicios(
       servicios,
       palabraClave,
-      ubicacionesSeleccionadas,
       vehiculosSeleccionados
     );
 
     setServiciosFiltrados(serviciosFiltrados);
   };
 
-  const handleFilterChange = (ubicaciones: ISucursales[], vehiculos: string[]) => {
-    setUbicacionesSeleccionadas(ubicaciones);
+  // Cambia el tipo de los parámetros aquí para que coincida con los tipos esperados por FilterOptions
+  const handleFilterChange = ( vehiculos: string[]) => {
     setVehiculosSeleccionados(vehiculos);
     
     const serviciosFiltrados = filtrarServicios(
       servicios,
       busqueda,
-      ubicaciones,
       vehiculos
     );
 
@@ -75,9 +71,8 @@ const Filters: React.FC<FiltersProps> = ({
           </button>
           <FilterOptions
             mostrarFiltros={mostrarFiltros}
-            sucursales={sucursales}
             vehiculos={vehiculos}
-            onFilterChange={handleFilterChange} 
+            onFilterChange={handleFilterChange} // Asegúrate de que handleFilterChange coincida con el tipo esperado
           />
         </div>
         <div className="relative">

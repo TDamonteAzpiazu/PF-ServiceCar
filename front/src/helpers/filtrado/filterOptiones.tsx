@@ -1,42 +1,40 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import { ISucursales } from "../types/types";
+import { fetchSucursales } from "../fetchSucursales";
 
 interface FilterOptionsProps {
   mostrarFiltros: boolean;
-  sucursales: ISucursales[];
   vehiculos: string[];
-  onFilterChange: (ubicaciones: ISucursales[], vehiculos: string[]) => void;
+  onFilterChange: (vehiculos: string[]) => void;
 }
 
 const FilterOptions: React.FC<FilterOptionsProps> = ({
   mostrarFiltros,
-  sucursales,
   vehiculos,
   onFilterChange
 }) => {
-  const [ubicacionesSeleccionadas, setUbicacionesSeleccionadas] = useState<Set<string>>(new Set());
+  const [sucursalesData, setSucursalesData] = useState<ISucursales[]>([]);
   const [vehiculosSeleccionados, setVehiculosSeleccionados] = useState<Set<string>>(new Set());
 
   useEffect(() => {
-    const ubicaciones = sucursales.filter(sucursal =>
-      sucursal.name !== undefined && ubicacionesSeleccionadas.has(sucursal.name)
-    );
-    onFilterChange(ubicaciones, Array.from(vehiculosSeleccionados));
-  }, [ubicacionesSeleccionadas, vehiculosSeleccionados, sucursales]);
-
-  const handleUbicacionChange = (sucursalName: string) => {
-    setUbicacionesSeleccionadas(prev => {
-      const newSelections = new Set(prev);
-      if (newSelections.has(sucursalName)) {
-        newSelections.delete(sucursalName);
-      } else {
-        newSelections.add(sucursalName);
+    const fetchAndSetSucursales = async () => {
+      try {
+        const data = await fetchSucursales();
+        setSucursalesData(data);
+      } catch (error) {
+        console.error('Error fetching sucursales:', error);
       }
-      return newSelections;
-    });
-  };
+    };
+
+    fetchAndSetSucursales();
+  }, []);
+
+  useEffect(() => {
+    
+    onFilterChange( Array.from(vehiculosSeleccionados));
+  }, [ vehiculosSeleccionados, onFilterChange]);
+
+  
 
   const handleVehiculoChange = (vehiculo: string) => {
     setVehiculosSeleccionados(prev => {
@@ -57,13 +55,12 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
           {/* Filtrar por Ubicación */}
           <div className="mb-6">
             <h3 className="font-semibold text-custom-red mb-3">Sucursales</h3>
-            {sucursales.map((sucursal, index) => (
+            {sucursalesData.map((sucursal, index) => (
               <label key={`sucursal-${sucursal.name || index}`} className="block mb-3 cursor-pointer">
                 <input
                   type="checkbox"
                   className="mr-1 accent-custom-red"
-                  checked={ubicacionesSeleccionadas.has(sucursal.name || '')}
-                  onChange={() => handleUbicacionChange(sucursal.name || '')}
+                  
                 />
                 <span className="text-white">{sucursal.name}</span>
               </label>
