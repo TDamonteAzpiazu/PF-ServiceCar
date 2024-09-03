@@ -61,6 +61,7 @@ export interface IAppointment {
   service: string[];
   date: string;
   time: string;
+  sucursal:string
 }
 
 export interface IAppointmentUser {

@@ -94,6 +94,9 @@ export const validateAppointment = async (input: FormikValues) => {
   if (!input.time) {
     errors.time = "La hora es requerida";
   }
+  if (!input.sucursal) {
+    errors.sucursal = "La sucursal es requerida";
+  }
 
   if (selectedDate.getDay() === 5 || selectedDate.getDay() === 6) {
     errors.date = "Los turnos no están disponibles los sábados ni domingos.";

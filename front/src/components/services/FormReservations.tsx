@@ -27,7 +27,7 @@ const FormReservations: React.FC<{
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [preferenceId, setPreferenceId] = useState<string | null>(null);
 
-  const fetchAppointment = async (values: { date: string; time: string }) => {
+  const fetchAppointment = async (values: { date: string; time: string; sucursales:string }) => {
     try {
       if (!token || !dataUser) {
         Swal.fire({
@@ -46,6 +46,7 @@ const FormReservations: React.FC<{
           service: [service.id],
           time: values.time,
           user: dataUser.id,
+          sucursal: values.sucursales
         };
         const response = await handleSubmitApppoint(data, token);
         if (response) {
@@ -68,7 +69,7 @@ const FormReservations: React.FC<{
   return (
     <div>
       <Formik
-        initialValues={{ date: "", time: "" }}
+        initialValues={{ date: "", time: "", sucursales: "" }}
         validate={validateAppointment}
         onSubmit={async (values) => {
           await fetchAppointment(values);
@@ -122,6 +123,27 @@ const FormReservations: React.FC<{
                   <ErrorMessage name="time" />
                 </span>
               </div>
+            </div>
+            <div className="w-full flex flex-col">
+              <Field
+                type="select"
+                as="select"
+                name="sucursales"
+                className={`border border-custom-red bg-transparent outline-none py-2 px-3 rounded w-full
+                ${
+                  (formikProps.errors.sucursales &&
+                    formikProps.touched.sucursales) ||
+                  error
+                    ? "error"
+                    : ""
+                }
+              `}
+              >
+                <option value="" label={"Seleccione una sucursal"} className="text-black"/>
+                {service.sucursales.map((option) => (
+                  <option key={option} value={option} label={option} className="text-black bg-transparent"/>
+                ))}
+              </Field>
             </div>
             {error ? <p className="text-red-600">¡{error}!</p> : ""}
             <div className=" flex h-10 mt-4 justify-center w-full">
