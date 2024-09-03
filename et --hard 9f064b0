@@ -1,0 +1,70 @@
+[33m46555b3[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mluz[m[33m)[m HEAD@{0}: commit (merge): Merge remote-tracking branch 'origin/paolo' into luz
+[33mc40790c[m HEAD@{1}: commit: box filtrados lista
+[33m9f064b0[m HEAD@{2}: pull origin dev: Merge made by the 'ort' strategy.
+[33mc7d2c18[m HEAD@{3}: commit (merge): commit con ajustes de merge listos
+[33mdec6747[m HEAD@{4}: checkout: moving from dev to luz
+[33m10f6f11[m[33m ([m[1;32mdev[m[33m)[m HEAD@{5}: pull origin dev: Fast-forward
+[33m14d66c3[m HEAD@{6}: checkout: moving from luz to dev
+[33mdec6747[m HEAD@{7}: commit: listo buscador en servicios
+[33m5f290f0[m HEAD@{8}: commit: correción de idioma listo por ahora
+[33m868a703[m HEAD@{9}: commit: correción de idioma listo por ahora
+[33mea098e4[m HEAD@{10}: checkout: moving from dev to luz
+[33m14d66c3[m HEAD@{11}: pull origin dev: Fast-forward
+[33m1752dfe[m HEAD@{12}: checkout: moving from luz to dev
+[33mea098e4[m HEAD@{13}: commit: correción de idioma
+[33m14d66c3[m HEAD@{14}: pull origin dev: Fast-forward
+[33m54a00d2[m[33m ([m[1;31morigin/luz[m[33m)[m HEAD@{15}: commit: listo componente de servicios en landing
+[33m7aee8e6[m HEAD@{16}: commit: detalle estilos
+[33m1cf9e2a[m HEAD@{17}: commit: ordenar por... ya implementado
+[33m1752dfe[m HEAD@{18}: checkout: moving from dev to luz
+[33m1752dfe[m HEAD@{19}: pull origin dev: Fast-forward
+[33m25635b0[m HEAD@{20}: checkout: moving from luz to dev
+[33m1752dfe[m HEAD@{21}: pull origin dev: Fast-forward
+[33m5c90e27[m HEAD@{22}: commit: listo servicios, falta ajustar detalles de estilos
+[33m484dd14[m HEAD@{23}: checkout: moving from dev to luz
+[33m25635b0[m HEAD@{24}: pull origin dev: Fast-forward
+[33mdede615[m HEAD@{25}: checkout: moving from luz to dev
+[33m484dd14[m HEAD@{26}: pull origin dev: Merge made by the 'ort' strategy.
+[33m9575ad6[m HEAD@{27}: checkout: moving from dev to luz
+[33mdede615[m HEAD@{28}: pull origin dev: Fast-forward
+[33ma175d85[m HEAD@{29}: checkout: moving from luz to dev
+[33m9575ad6[m HEAD@{30}: commit: lsito servicios falta editar estilos
+[33m5252677[m HEAD@{31}: pull origin dev: Merge made by the 'ort' strategy.
+[33m95b3175[m HEAD@{32}: pull origin dev: Merge made by the 'ort' strategy.
+[33mcf88d85[m HEAD@{33}: checkout: moving from dev to luz
+[33ma175d85[m HEAD@{34}: pull origin dev: Fast-forward
+[33m9e951c6[m HEAD@{35}: checkout: moving from luz to dev
+[33mcf88d85[m HEAD@{36}: commit: servicios conexión lista, a mejorar estilos
+[33mf859d7e[m HEAD@{37}: commit: servicios vista creada, falta conexión con back y mejorar estilos
+[33m17299fb[m HEAD@{38}: commit: commit con vista sucursales lista
+[33m5f782a3[m HEAD@{39}: pull origin dev: Fast-forward
+[33ma9101ee[m HEAD@{40}: reset: moving to HEAD
+[33ma9101ee[m HEAD@{41}: commit: correcion opiniones
+[33mae033a6[m HEAD@{42}: commit: correcion margin y helper
+[33me4cb3f4[m HEAD@{43}: commit: componente de opiniones listo
+[33m9e951c6[m HEAD@{44}: pull origin dev: Fast-forward
+[33m6e261fd[m HEAD@{45}: checkout: moving from dev to luz
+[33m9e951c6[m HEAD@{46}: pull origin dev: Fast-forward
+[33mecc5275[m HEAD@{47}: checkout: moving from luz to dev
+[33m6e261fd[m HEAD@{48}: commit: contacto vista lista
+[33mda89e9b[m HEAD@{49}: commit: cambios en formulario contacto
+[33mcec5ac2[m HEAD@{50}: pull origin dev: Merge made by the 'ort' strategy.
+[33mcb94957[m HEAD@{51}: checkout: moving from luz to luz
+[33mcb94957[m HEAD@{52}: checkout: moving from dev to luz
+[33mecc5275[m HEAD@{53}: pull origin dev: Fast-forward
+[33m44bcdc5[m HEAD@{54}: checkout: moving from luz to dev
+[33mcb94957[m HEAD@{55}: commit: listo vista de contacto
+[33m058d7f9[m HEAD@{56}: commit: home banner y about listos
+[33m391a9f3[m HEAD@{57}: commit: service button de home, a revisar
+[33m5793fd7[m HEAD@{58}: commit: commit con banner listo
+[33m75a43eb[m HEAD@{59}: commit: componente about terminado, banner a chequear
+[33m44bcdc5[m HEAD@{60}: checkout: moving from dev to luz
+[33m44bcdc5[m HEAD@{61}: pull origin dev: Fast-forward
+[33mdfcf7bb[m HEAD@{62}: checkout: moving from luz to dev
+[33m44bcdc5[m HEAD@{63}: pull origin dev: Fast-forward
+[33mdfcf7bb[m HEAD@{64}: pull origin dev: Fast-forward
+[33mafab46e[m[33m ([m[1;31morigin/rodri[m[33m)[m HEAD@{65}: checkout: moving from agus to luz
+[33md16e1c5[m[33m ([m[1;31morigin/agus[m[33m, [m[1;32magus[m[33m)[m HEAD@{66}: checkout: moving from luz to agus
+[33mafab46e[m[33m ([m[1;31morigin/rodri[m[33m)[m HEAD@{67}: checkout: moving from dev to luz
+[33mdfcf7bb[m HEAD@{68}: checkout: moving from main to dev
+[33m9ded8b1[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{69}: clone: from https://github.com/TDamonteAzpiazu/PF-ServiceCar.git

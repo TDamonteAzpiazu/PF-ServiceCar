@@ -93,7 +93,7 @@ const Navbar: React.FC = () => {
               href={PATHROUTES.LOGIN}
               className="text-custom-white bg-custom-red py-1 px-3 rounded w-24 text-center hover:bg-red-600"
             >
-              Login
+              Acceder 
             </Link>
             <Link
               href={PATHROUTES.REGISTER}

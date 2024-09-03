@@ -17,7 +17,7 @@ const ContactoInfo = () => {
         <div className="flex items-center transform transition-transform duration-300 hover:scale-105 hover:translate-y-1">
           <FaPhone size={30} className="mr-4 text-red-600" />
           <div>
-            <h4 className="font-bold">Numero Telefónico</h4>
+            <h4 className="font-bold">Número Telefónico</h4>
             <p>+62 82 4032 567</p>
           </div>
         </div>
