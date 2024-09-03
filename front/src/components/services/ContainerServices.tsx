@@ -14,15 +14,19 @@ const ContainerServices: React.FC = () => {
   const [serviciosOrdenados, setServiciosOrdenados] = useState<IService[]>([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const fetchedServicios = await FetchServicio();
-      setServicios(fetchedServicios);
-      setServiciosOrdenados(fetchedServicios);
-    };
+    try {
+      const fetchData = async () => {
+        const fetchedServicios = await FetchServicio();
+        setServicios(fetchedServicios);
+        setServiciosOrdenados(fetchedServicios);
+      };
 
-    fetchData();
+      fetchData();
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
-
+console.log(serviciosOrdenados)
   const handleOrdenarPrecioAsc = () => {
     setServiciosOrdenados(ordenarPrecioAsc(serviciosOrdenados));
   };

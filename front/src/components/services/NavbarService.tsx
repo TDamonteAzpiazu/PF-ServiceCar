@@ -35,7 +35,7 @@ const NavbarService: React.FC<{
         <h3 className="text-xl">{service.type}</h3>
         <p className="text-neutral-400">Valor: US$ {service.price}.</p>
       </div>
-      <FormReservations service={service} setIsMenuOpen={setIsMenuOpen}/>
+      <FormReservations service={service}/>
     </div>
   );
 };
