@@ -29,7 +29,7 @@ export interface IUser {
   image: string;
   role: string;
   status: string;
-  appointments?: []; 
+  appointments?: [];
 }
 
 export interface IUserRegister {
@@ -58,7 +58,7 @@ export interface handleProp {
 
 export interface IAppointment {
   user: string;
-  service: string[]; 
+  service: string[];
   date: string;
   time: string;
 }
@@ -88,9 +88,11 @@ export interface IService {
   id: string;
   type: string;
   description: string;
-  location: string;
+  sucursales: string[];
   image: string;
   price: number;
+  status: string;
+  vehiculo: string;
 }
 export interface IOpinion {
   estrellas: number;
@@ -98,4 +100,15 @@ export interface IOpinion {
   ocupacion: string;
   opinion: string;
   icono: string;
+}
+
+export interface ISucursales {
+  id: string;
+  name: string;
+  address: string;
+  latitud: string;
+  longitud: string;
+  details: string;
+  services: IService[];
+ status: string;
 }

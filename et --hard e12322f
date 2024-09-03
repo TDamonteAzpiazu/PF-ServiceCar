@@ -1,0 +1,90 @@
+[33me12322f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mluz[m[33m)[m funciona filtro vehiculos y muestra sucursales
+[33mc1c01e3[m[33m ([m[1;31morigin/luz[m[33m)[m problemita en filtro sucursales
+[33m4f815d5[m problemita en filtro sucursal
+[33m7e0f312[m problemita en filtro sucursal
+[33m802c41e[m problemita en filtro sucursales
+[33m77f4c17[m pull
+[33m4882cc0[m Merge pull request #43 from TDamonteAzpiazu/tobo
+[33md7f30a3[m Las rutas de servicios traen un array con las sucursales en las que esta disponible el servicio
+[33m7e60efe[m Enitdad y rutas de sucursales, relacion con servicios, vehiculos en la entidad de servicios y coordenadas
+[33mb56d93c[m Merge pull request #42 from TDamonteAzpiazu/paolo
+[33m95aff67[m actualizando rama y documentando swagger
+[33mee191c6[m documentando swagger
+[33mbf8e29c[m arrglo rama
+[33me609c4d[m App Funcionando!!!!!
+[33mc9c9530[m revisando cambios
+[33m171ae28[m revisando cambios
+[33m5c94b43[m commit con cambios de las ramas
+[33mbbfc383[m Merge pull request #41 from TDamonteAzpiazu/tobo
+[33m7359567[m Error en jwt solucionado
+[33m8a6c5e2[m Merge pull request #40 from TDamonteAzpiazu/agus
+[33mb85d370[m Merge branch 'dev' into agus
+[33mfcf751d[m Registro e inicio de sesión con terceros listo
+[33m349721d[m Merge pull request #39 from TDamonteAzpiazu/revert-37-paolo
+[33m32d50e1[m Revert "Paolo"
+[33m54fbbba[m Merge pull request #37 from TDamonteAzpiazu/paolo
+[33mb02ddc0[m Merge branch 'dev' into paolo
+[33mcb5ffdb[m Correcciones varias
+[33m8baa306[m Funcionamiento parcial de acceso con terceros
+[33mc40790c[m box filtrados lista
+[33m028e6b5[m[33m ([m[1;31morigin/paolo[m[33m, [m[1;32mpaolo[m[33m)[m ruta y controlador para inicio de sesion con google
+[33m9f064b0[m Merge branch 'dev' of https://github.com/TDamonteAzpiazu/PF-ServiceCar into luz
+[33mc2292cd[m Merge pull request #36 from TDamonteAzpiazu/tobo
+[33m5f1e3fa[m Merge branch 'dev' into tobo
+[33mc02fe24[m MERCADOPAGO FUNCIONA VAMOOOOOOOOOS
+[33ma7483cc[m Merge branch 'dev' of https://github.com/TDamonteAzpiazu/PF-ServiceCar into agus
+[33m0f4edc4[m Remove .env file from repository
+[33m08afae1[m prueba
+[33m65493ed[m prueba
+[33m178875b[m Implementacion authnext
+[33mdd45e14[m Merge branch 'dev' of https://github.com/TDamonteAzpiazu/PF-ServiceCar into paolo
+[33m18f2a99[m Implementacion authnext
+[33m86a56a1[m Comienzo de implementación de authnext
+[33m711bcf0[m prueba
+[33m2153926[m Implementaciones varias
+[33ma7e5a53[m Merge branch 'paolo' of https://github.com/TDamonteAzpiazu/PF-ServiceCar into agus
+[33m03b2db8[m desimplementando auth0
+[33m230ee1f[m Merge branch 'paolo' of https://github.com/TDamonteAzpiazu/PF-ServiceCar into agus
+[33mc7d2c18[m commit con ajustes de merge listos
+[33m10f6f11[m Merge pull request #34 from TDamonteAzpiazu/agus
+[33m1777f38[m Merge branch 'agus' of https://github.com/TDamonteAzpiazu/PF-ServiceCar into paolo
+[33ma437b69[m inicio con google modificado
+[33m74b1a29[m Vista serviceDetail lista, funcionamiento de reservas e inicio de Auth0
+[33mb93603e[m Merge pull request #33 from TDamonteAzpiazu/paolo
+[33m010e3d6[m validaciones de servicios y appointments,getActiveReservationsForService
+[33mdec6747[m listo buscador en servicios
+[33m5f290f0[m correción de idioma listo por ahora
+[33m868a703[m correción de idioma listo por ahora
+[33m5e0a2b5[m Inicio de mercadopago
+[33mea098e4[m correción de idioma
+[33m4dc1584[m get /reservations/:id
+[33m65571db[m limitaciones de servicios activos
+[33mc11a8b0[m validaciones multiples servicios por turno
+[33m5013187[m Merge branch 'dev' of https://github.com/TDamonteAzpiazu/PF-ServiceCar into agus
+[33m1629640[m Inicio de vista serviceDetail
+[33m3c06f4f[m Inicio de vista serviceDetail
+[33m14d66c3[m Merge pull request #29 from TDamonteAzpiazu/tobo
+[33m46bdc59[m Merge pull request #28 from TDamonteAzpiazu/luz
+[33m9c84ca7[m Ruta para obtener los turnos de un usuario
+[33m54a00d2[m listo componente de servicios en landing
+[33m7aee8e6[m detalle estilos
+[33m1cf9e2a[m ordenar por... ya implementado
+[33m1752dfe[m Merge pull request #27 from TDamonteAzpiazu/agus
+[33maf46d44[m Terminaciòn de vista de reservas(sin datos), Implementaciòn de vista services completa y correcciones varias
+[33m6808023[m Merge pull request #26 from TDamonteAzpiazu/luz
+[33m5c90e27[m listo servicios, falta ajustar detalles de estilos
+[33m484dd14[m Merge branch 'dev' of https://github.com/TDamonteAzpiazu/PF-ServiceCar into luz
+[33m25635b0[m Merge pull request #24 from TDamonteAzpiazu/agus
+[33m9575ad6[m lsito servicios falta editar estilos
+[33m5252677[m Merge branch 'dev' of https://github.com/TDamonteAzpiazu/PF-ServiceCar into luz
+[33mdede615[m Merge pull request #25 from TDamonteAzpiazu/tobo
+[33m20378c2[m Fotos en el helper de servicios
+[33m7d428f5[m Merge branch 'dev' into agus
+[33m7c78349[m Correccion de errores e implementacion de vista dinamica de reservas (inicio)
+[33mbc657bf[m reservas y correcciones varias
+[33m95b3175[m Merge branch 'dev' of https://github.com/TDamonteAzpiazu/PF-ServiceCar into luz
+[33ma175d85[m Merge pull request #22 from TDamonteAzpiazu/paolo
+[33m0087782[m Solucion de conflictos 4
+[33m586ce61[m Solucion de conflictos 3
+[33m5d44644[m Conflictos resueltos
+[33m4627a97[m Resolucion de conflictos

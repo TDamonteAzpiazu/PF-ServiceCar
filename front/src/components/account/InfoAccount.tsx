@@ -1,5 +1,6 @@
 "use client";
 
+import { IUser } from "@/helpers/types/types";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -8,7 +9,7 @@ import { useSelector } from "react-redux";
 
 const InfoAccount: React.FC = () => {
 
-  const dataUser = useSelector((state: any) => state.user.user);
+  const dataUser:IUser = useSelector((state: any) => state.user.user);
 
   return (
     <section className="md:w-3/4 w-full mt-2 mr-4">

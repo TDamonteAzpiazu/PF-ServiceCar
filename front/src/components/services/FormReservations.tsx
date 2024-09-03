@@ -14,16 +14,18 @@ import Cookies from "js-cookie";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import PATHROUTES from "@/helpers/PathRoutes";
+import { createPreference } from "@/helpers/fetchMp";
+import WalletMP from "../WalletMP";
 
 const FormReservations: React.FC<{
   service: IService;
-  setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({ service, setIsMenuOpen }) => {
+}> = ({ service }) => {
   const [error, setError] = useState<string | null>(null);
   const url = process.env.NEXT_PUBLIC_URL;
   const token = parse(Cookies.get("token")?.toString() || "{}");
   const dataUser: IUser = useSelector((state: any) => state.user.user);
   const [selectedDate, setSelectedDate] = useState<string>("");
+  const [preferenceId, setPreferenceId] = useState<string | null>(null);
 
   const fetchAppointment = async (values: { date: string; time: string }) => {
     try {
@@ -45,16 +47,17 @@ const FormReservations: React.FC<{
           time: values.time,
           user: dataUser.id,
         };
-
-        const response = await handleSubmitApppoint({
-          values: data,
-          url: `${url}/appointments`,
-          setError: setError,
-          token: token,
-        });
-
-        if (response?.response.ok) {
-          setIsMenuOpen(false);
+        const response = await handleSubmitApppoint(data, token);
+        if (response) {
+          const preference = await createPreference(
+            url,
+            service,
+            data,
+            token,
+            setError
+          );
+          console.log(preference.preferenceId);
+          await setPreferenceId(preference.preferenceId);
         }
       }
     } catch (error) {
@@ -132,6 +135,7 @@ const FormReservations: React.FC<{
           </Form>
         )}
       </Formik>
+      <WalletMP preferenceId={preferenceId} />
     </div>
   );
 };

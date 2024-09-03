@@ -1,15 +1,18 @@
 "use client";
+
 import { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { FaFilter } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 import OrdenOpciones from "./Ordenamiento";
-import { filtrarServicios } from "@/helpers/filtrarServicios";
-import { IService } from "@/helpers/types/types";
-import FilterOptions from "@/helpers/filterOptiones"
+import { filtrarServiciosPorSucursal } from "@/helpers/filtrado/filtrarServicios"; // Importa la nueva función
+import { IService, ISucursales } from "@/helpers/types/types";
+import FilterOptions from "@/helpers/filtrado/filterOptiones";
 
 interface FiltersProps {
   servicios: IService[];
+  vehiculos: string[];
+  ubicaciones: ISucursales[]; // Agrega el tipo para ubicaciones
   setServiciosFiltrados: (servicios: IService[]) => void;
   ordenPrecioAsc: () => void;
   ordenPrecioDesc: () => void;
@@ -17,6 +20,8 @@ interface FiltersProps {
 
 const Filters: React.FC<FiltersProps> = ({
   servicios,
+  vehiculos,
+  ubicaciones,
   setServiciosFiltrados,
   ordenPrecioAsc,
   ordenPrecioDesc,
@@ -24,11 +29,34 @@ const Filters: React.FC<FiltersProps> = ({
   const [mostrarOrdenOpciones, setMostrarOrdenOpciones] = useState(false);
   const [mostrarFiltros, setMostrarFiltros] = useState(false);
   const [busqueda, setBusqueda] = useState("");
+  const [ubicacionesSeleccionadas, setUbicacionesSeleccionadas] = useState<ISucursales[]>([]);
+  const [vehiculosSeleccionados, setVehiculosSeleccionados] = useState<string[]>([]);
 
   const handleBusqueda = (event: React.ChangeEvent<HTMLInputElement>) => {
     const palabraClave = event.target.value;
     setBusqueda(palabraClave);
-    const serviciosFiltrados = filtrarServicios(servicios, palabraClave);
+
+    const serviciosFiltrados = filtrarServiciosPorSucursal(
+      servicios,
+      ubicacionesSeleccionadas.map(ubicacion => ubicacion.name).join(','), // Filtra por nombres de sucursales
+      palabraClave,
+      vehiculosSeleccionados
+    );
+
+    setServiciosFiltrados(serviciosFiltrados);
+  };
+
+  const handleFilterChange = (ubicaciones: ISucursales[], vehiculos: string[]) => {
+    setUbicacionesSeleccionadas(ubicaciones);
+    setVehiculosSeleccionados(vehiculos);
+    
+    const serviciosFiltrados = filtrarServiciosPorSucursal(
+      servicios,
+      ubicaciones.map(ubicacion => ubicacion.name).join(','), // Filtra por nombres de sucursales
+      busqueda,
+      vehiculos
+    );
+
     setServiciosFiltrados(serviciosFiltrados);
   };
 
@@ -45,7 +73,11 @@ const Filters: React.FC<FiltersProps> = ({
               <FaFilter />
             </span>
           </button>
-          <FilterOptions mostrarFiltros={mostrarFiltros} />
+          <FilterOptions
+            mostrarFiltros={mostrarFiltros}
+            vehiculos={vehiculos}
+            onFilterChange={handleFilterChange}
+          />
         </div>
         <div className="relative">
           <button
@@ -80,4 +112,4 @@ const Filters: React.FC<FiltersProps> = ({
   );
 };
 
-export default Filters;
+export default Filters;
