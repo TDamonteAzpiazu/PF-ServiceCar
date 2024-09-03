@@ -1,11 +1,15 @@
-import { Body, Controller, Get, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Res } from '@nestjs/common';
 import { MercadoPagoService } from './mercadopago.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { AppointmentsService } from '../appointments/appointments.service';
 
 @ApiTags('mercadopago')
 @Controller('mercadopago')
 export class MercadoPagoController {
-    constructor(private readonly mercadoPagoService: MercadoPagoService) { }
+    constructor(
+        private readonly mercadoPagoService: MercadoPagoService,
+        private readonly appointmentsService: AppointmentsService
+    ) { }
 
     @Post()
     @ApiOperation({ summary: 'Crea una orden de compra en MercadoPago' })
@@ -15,8 +19,9 @@ export class MercadoPagoController {
 
     @Get('success')
     @ApiOperation({ summary: 'Redirecciona a MercadoPago para pagar' })
-    success(@Res() res) {
+    async success(@Query('external_reference') idAppointment: string, @Res() res) {
         console.log('success');
+        await this.appointmentsService.updatePayment(idAppointment);
         res.redirect('http://localhost:3000/');
     }
 

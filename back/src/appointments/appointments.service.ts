@@ -6,6 +6,7 @@ import { CreateAppointmentDto } from '../dto/create-appointment.dto';
 import { User } from '../users/users.entity';
 import { Service } from '../services/services.entity';
 import { Status } from '../enum/status.enum';
+import { Pago } from '../enum/pago.enum';
 
 @Injectable()
 export class AppointmentsService {
@@ -177,6 +178,20 @@ export class AppointmentsService {
       await this.appointmentRepository.save(appointment);
     } catch (error) {
       throw new InternalServerErrorException('Failed to delete appointment');
+    }
+  }
+
+  async updatePayment(id: string): Promise<Appointment> {
+    const appointment = await this.appointmentRepository.findOne({ where: { id } });
+    if (!appointment) {
+      throw new NotFoundException(`Appointment with ID ${id} not found`);
+    }
+
+    try {
+      appointment.pago = Pago.Realizado;
+      return await this.appointmentRepository.save(appointment);
+    } catch (error) {
+      throw new InternalServerErrorException('Failed to update payment');
     }
   }
 }
