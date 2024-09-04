@@ -27,7 +27,11 @@ const FormReservations: React.FC<{
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [preferenceId, setPreferenceId] = useState<string | null>(null);
 
-  const fetchAppointment = async (values: { date: string; time: string; sucursales:string }) => {
+  const fetchAppointment = async (values: {
+    date: string;
+    time: string;
+    // sucursales: string;
+  }) => {
     try {
       if (!token || !dataUser) {
         Swal.fire({
@@ -46,7 +50,7 @@ const FormReservations: React.FC<{
           service: [service.id],
           time: values.time,
           user: dataUser.id,
-          sucursal: values.sucursales
+          // sucursal: values.sucursales,
         };
         const response = await handleSubmitApppoint(data, token);
         if (response) {
@@ -72,7 +76,7 @@ const FormReservations: React.FC<{
         initialValues={{ date: "", time: "", sucursales: "" }}
         validate={validateAppointment}
         onSubmit={async (values) => {
-          await fetchAppointment(values);
+          await fetchAppointment({date:values.date, time:values.time});
         }}
       >
         {(formikProps) => (
@@ -126,7 +130,6 @@ const FormReservations: React.FC<{
             </div>
             <div className="w-full flex flex-col">
               <Field
-                type="select"
                 as="select"
                 name="sucursales"
                 className={`border border-custom-red bg-transparent outline-none py-2 px-3 rounded w-full
@@ -139,11 +142,23 @@ const FormReservations: React.FC<{
                 }
               `}
               >
-                <option value="" label={"Seleccione una sucursal"} className="text-black"/>
+                <option
+                  value=""
+                  label={"Seleccione una sucursal"}
+                  className=" bg-[#2b2b2b]"
+                />
                 {service.sucursales.map((option) => (
-                  <option key={option} value={option} label={option} className="text-black bg-transparent"/>
+                  <option
+                    key={option}
+                    value={option}
+                    label={option}
+                    className=" bg-[#2b2b2b] "
+                  />
                 ))}
               </Field>
+              <span style={{ color: "red" }}>
+                <ErrorMessage name="sucursales" />
+              </span>
             </div>
             {error ? <p className="text-red-600">¡{error}!</p> : ""}
             <div className=" flex h-10 mt-4 justify-center w-full">

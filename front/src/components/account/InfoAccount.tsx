@@ -1,5 +1,6 @@
 "use client";
 
+import PATHROUTES from "@/helpers/PathRoutes";
 import { IUser } from "@/helpers/types/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -63,7 +64,7 @@ const InfoAccount: React.FC = () => {
           </div>
           <div className="flex justify-center my-7">
             <Link
-              href="/edit"
+              href={PATHROUTES.LANDING}
               className="bg-custom-red rounded font-semibold py-2 px-6  hover:bg-red-600 text-custom-white"
             >
               Editar perfil

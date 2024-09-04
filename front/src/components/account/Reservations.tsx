@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { parse } from "jsonc-parser";
 import Cookies from "js-cookie";
 import CardReservations from "./CardReservations";
+import { deleteAppointment } from "@/helpers/fetchReservations";
 
 const Reservations: React.FC = () => {
   const [reservations, setReservations] = useState<IAppointmentUser[] | null>(
@@ -19,35 +20,60 @@ const Reservations: React.FC = () => {
   const token = parse(Cookies.get("token")?.toString() || "{}");
   const url = process.env.NEXT_PUBLIC_URL;
 
-  const filterAppointments = async (
+  const filterAppointmentsPay = async (
     appointments: IAppointmentUser[] | void
   ) => {
     if (appointments) {
-      const newAppointments: IAppointmentUser[] = await appointments.filter(
+      const newAppointments: IAppointmentUser[] = appointments.filter(
         (appointment: IAppointmentUser) => {
-          return appointment.status !== "active";
+          return appointment.statusPay === "true";
         }
       );
-      await setHistory(newAppointments);
+      setHistory(newAppointments);
+    }
+  };
+
+  const filterAppointmentsActive = async (
+    appointments: IAppointmentUser[] | void
+  ) => {
+    if (appointments) {
+      const newAppointments: IAppointmentUser[] = appointments.filter(
+        (appointment: IAppointmentUser) => {
+          return appointment.status === "active";
+        }
+      );
+      setReservations(newAppointments);
+    }
+  };
+
+  const fetchAppointments = async () => {
+    try {
+      const appointments = await getAppointments(
+        `${url}/appointments/user/${dataUser.id}`,
+        token
+      );
+      filterAppointmentsActive(appointments);
+      filterAppointmentsPay(appointments);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDelete = async (appointmentId: string) => {
+    try {
+      await deleteAppointment(`${url}/appointments/${appointmentId}`, token);
+
+      fetchAppointments();
+    } catch (error) {
+      console.error("Error al eliminar la cita:", error);
     }
   };
 
   useEffect(() => {
     if (dataUser && dataUser.id && token) {
-      getAppointments(`${url}/appointments/user/${dataUser.id}`, token)
-        .then((res) => {
-          setReservations(res);
-        })
-        .then((res) => {
-          filterAppointments(res);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      fetchAppointments();
     }
   }, [dataUser]);
-
-  console.log(reservations);
 
   return (
     <section className="py-3 w-full text-custom-white">
@@ -75,24 +101,26 @@ const Reservations: React.FC = () => {
       </div>
       {viewHistory ? (
         <div className="w-full">
-          {reservations && reservations?.length > 0 ? (
+          {reservations && reservations.length > 0 ? (
             <div className="w-full flex flex-col bg-custom-grey bg-opacity-30 rounded p-4 gap-3 justify-center h-full">
               {reservations.map((reservation: IAppointmentUser) => (
                 <CardReservations
                   appointment={reservation}
                   key={reservation.id}
+                  onDelete={() => handleDelete(reservation.id)}
+                  fetchAppointments={fetchAppointments}
+                  cardPay={false}
                 />
               ))}
             </div>
           ) : (
             <div>
               <p className="text-custom-grey mb-8">
-                Aqui podra ver sus reservas pendientes al dia de la fecha.
+                Aquí podrá ver sus reservas pendientes al día de la fecha.
               </p>
-
               <Link
                 href={PATHROUTES.SERVICES}
-                className=" bg-custom-white text-custom-red rounded py-2 font-semibold px-3 hover:bg-custom-red hover:text-custom-white"
+                className="bg-custom-white text-custom-red rounded py-2 font-semibold px-3 hover:bg-custom-red hover:text-custom-white"
               >
                 ¡Reserva un nuevo servicio!
               </Link>
@@ -102,17 +130,20 @@ const Reservations: React.FC = () => {
       ) : (
         <div>
           {history && history.length > 0 ? (
-            <div className="w-full">
+            <div className="w-full flex flex-col bg-custom-grey bg-opacity-30 rounded p-4 gap-3 justify-center h-full">
               {history.map((reservation: IAppointmentUser) => (
                 <CardReservations
                   appointment={reservation}
                   key={reservation.id}
+                  fetchAppointments={fetchAppointments}
+                  onDelete={() => handleDelete(reservation.id)}
+                  cardPay={true}
                 />
               ))}
             </div>
           ) : (
             <p className="text-custom-grey">
-              Aqui vera el historial de sus reservas pasadas.
+              Aquí verá el historial de sus reservas pasadas.
             </p>
           )}
         </div>

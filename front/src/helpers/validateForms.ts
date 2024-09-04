@@ -94,8 +94,8 @@ export const validateAppointment = async (input: FormikValues) => {
   if (!input.time) {
     errors.time = "La hora es requerida";
   }
-  if (!input.sucursal) {
-    errors.sucursal = "La sucursal es requerida";
+  if (!input.sucursales || input.sucursales === "") {
+    errors.sucursales = "La sucursal es requerida";
   }
 
   if (selectedDate.getDay() === 5 || selectedDate.getDay() === 6) {
@@ -105,7 +105,7 @@ export const validateAppointment = async (input: FormikValues) => {
   if (selectedDate < new Date()) {
     errors.date = "No puedes seleccionar una fecha anterior a hoy";
   }
-  if (selectedTime.getHours() < 9 || selectedTime.getHours() > 17) {
+  if (selectedTime.getHours() < 7 || selectedTime.getHours() > 17) {
     errors.time = "La hora debe estar entre las 07:00 y las 17:00";
   }
 
@@ -151,3 +151,53 @@ const generateTimeOptions = () => {
   return options;
 };
 export const timeOptions = generateTimeOptions();
+
+export const validateAppointmentUpdate = async (input: FormikValues) => {
+  const selectedDate: Date = new Date(input.date);
+  const selectedTime: Date = new Date(`2024-01-01 ${input.time}:00`);
+  const errors: Partial<FormikValues> = {};
+  if (!input.date) {
+    errors.date = "La fecha es requerida";
+  }
+  if (!input.time) {
+    errors.time = "La hora es requerida";
+  }
+  if (input.servicios && !input.sucursales) {
+    errors.sucursales = "La sucursal es requerida";
+  }
+
+  if (selectedDate.getDay() === 5 || selectedDate.getDay() === 6) {
+    errors.date = "Los turnos no están disponibles los sábados ni domingos.";
+  }
+
+  if (selectedDate < new Date()) {
+    errors.date = "No puedes seleccionar una fecha anterior a hoy";
+  }
+  if (selectedTime.getHours() < 7 || selectedTime.getHours() > 17) {
+    errors.time = "La hora debe estar entre las 07:00 y las 17:00";
+  }
+
+  const response = await fetch(
+    "https://date.nager.at/api/v3/publicholidays/2024/AR",
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  const holidays = await response.json();
+
+  const isHoliday = holidays.some((holiday: any) => {
+    const holidayDate: Date = new Date(holiday.date);
+    return (
+      holidayDate.getDate() === selectedDate.getDate() &&
+      holidayDate.getMonth() === selectedDate.getMonth()
+    );
+  });
+
+  if (isHoliday) {
+    errors.date = "No puedes seleccionar un feriado";
+  }
+  return errors;
+};
