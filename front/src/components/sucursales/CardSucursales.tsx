@@ -30,7 +30,7 @@ const CardSucursales: React.FC<{ sucursales: ISucursales[] }> = ({
         </h3>
         <p className="text-gray-400 mb-2">{sucursales[activeTab].address}</p>
         <p className="pb-4">{sucursales[activeTab].details}</p>
-        {/* <Map
+        <Map
           apiKey={apiKey!}
           center={{
             lat: Number(sucursales[activeTab].latitud),
@@ -44,7 +44,7 @@ const CardSucursales: React.FC<{ sucursales: ISucursales[] }> = ({
               name: sucursales[activeTab].name,
             },
           ]}
-        /> */}
+        />
       </div>
     </div>
   );
