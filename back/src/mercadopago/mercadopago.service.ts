@@ -18,6 +18,7 @@ export class MercadoPagoService {
             failure: "http://localhost:3001/mercadopago/failure",
         },
         auto_return: 'approved',
+        external_reference: body.idAppointment,
         };
 
         try {
