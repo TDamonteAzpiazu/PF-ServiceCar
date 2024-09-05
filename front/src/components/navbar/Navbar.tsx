@@ -7,14 +7,13 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import SubNav from "./Subnav";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { useSelector } from "react-redux";
-import { parse } from "jsonc-parser";
 import Cookies from "js-cookie";
 import { IUser } from "@/helpers/types/types";
 
 const Navbar: React.FC = () => {
   const headerRef = useRef<HTMLDivElement>(null);
   const dataUser:IUser = useSelector((state: any) => state.user.user);
-  const token = parse(Cookies.get("token")?.toString() || "{}");
+  const token = Cookies.get("token")
   useEffect(() => {
     const menu: HTMLElement | null = document.getElementById("menu");
     const mostrar: HTMLElement | null = document.getElementById("mostrar");
@@ -62,7 +61,7 @@ const Navbar: React.FC = () => {
       className={`flex bg-black bg-opacity-20 backdrop-blur-xl shadow-lg justify-around items-center fixed w-full py-3 px-6 z-50 transition-colors duration-300 `}
     >
       <div className="pl-3 flex w-3/5 gap-4">
-        <Image src={"/Garagejs.png"} alt="Garagejs" width={110} height={10} />
+        <Image src={"/garagejs.svg"} alt="Garagejs" width={110} height={10} />
 
         <div className="flex items-center">
           <SubNav typeClass={true} dataUser={dataUser}/>

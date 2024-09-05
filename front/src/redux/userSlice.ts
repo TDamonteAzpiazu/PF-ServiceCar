@@ -17,7 +17,7 @@ const userSlice = createSlice({
     setToken: (state, action) => {
       state.token = action.payload;
       if (action.payload) {
-        Cookies.set("token", JSON.stringify( action.payload), { expires: 3 });
+        Cookies.set("token", action.payload, { expires: 3 });
       } 
     },
     logout: (state) => {

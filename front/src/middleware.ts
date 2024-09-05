@@ -33,16 +33,11 @@ export const middleware = async (request: NextRequest) => {
   if (!userData) {
     return NextResponse.redirect(new URL("/", request.url));
   }
-  const user: string = JSON.parse(userData!);
-  if (!user) {
-    return NextResponse.redirect(new URL("/", request.url));
-  }
-  if (user) {
-    if (userData) {
-      const validateToken = await validateJWT(secret, user);
-      if (validateToken === true) {
-        return NextResponse.next();
-      }
+
+  if (userData) {
+    const validateToken = await validateJWT(secret, userData);
+    if (validateToken === true) {
+      return NextResponse.next();
     }
   }
 };

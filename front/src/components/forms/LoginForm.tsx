@@ -103,7 +103,7 @@ const LoginForm: React.FC = () => {
             )}
             <div className="cont-btn flex flex-col w-full justify-center mb-5">
               <ButtonLogin loading={loading} name="Ingresar" />
-              <ButtonGoogle setError={setError} url={url} />
+              <ButtonGoogle login={true} />
             </div>
           </Form>
         )}

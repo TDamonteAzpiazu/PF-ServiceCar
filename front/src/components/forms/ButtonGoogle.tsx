@@ -4,11 +4,9 @@ import { FcGoogle } from "react-icons/fc";
 import { signIn } from "next-auth/react";
 
 const ButtonGoogle: React.FC<{
-  setError: React.Dispatch<React.SetStateAction<string | null>>;
-  url: string | undefined;
-}> = ({ setError, url }) => {
-
-
+  login: boolean;
+ 
+}> = ({ login }) => {
   return (
     <button
       onClick={() => signIn()}
@@ -18,7 +16,7 @@ const ButtonGoogle: React.FC<{
       <span>
         <FcGoogle />
       </span>
-      Registrarse con Google
+      {login ? "Ingresar con Google" : " Registrarse con Google"}
     </button>
   );
 };

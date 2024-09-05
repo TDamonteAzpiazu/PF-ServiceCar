@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
         <div className="">
           <Image
             loading="lazy"
-            src="/Garagejs.png"
+            src="/garagejs.svg"
             alt="Garagejs"
             width={150}
             height={100}
