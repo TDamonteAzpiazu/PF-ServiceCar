@@ -108,7 +108,6 @@ export interface IOpinion {
 export interface IOpinionUser {
   estrellas: number;
   opinion: string;
-  icono: string;
   date: string;
   service: string;
 }
