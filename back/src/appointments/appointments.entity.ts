@@ -4,6 +4,7 @@ import { Status } from "../enum/status.enum";
 import { Service } from "../services/services.entity";
 import { User } from "../users/users.entity";
 import { Pago } from "../enum/pago.enum";
+import { Sucursal } from "../sucursales/sucursales.entity";
 
 @Entity({ name: 'appointments' })
 export class Appointment {
@@ -28,4 +29,7 @@ export class Appointment {
 
     @Column({ default: Pago.Pendiente })
     pago: Pago;
+
+    @ManyToOne(() => Sucursal, (sucursal) => sucursal.appointments)
+    sucursal: Sucursal
 }

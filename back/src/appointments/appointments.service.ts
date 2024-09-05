@@ -7,6 +7,7 @@ import { User } from '../users/users.entity';
 import { Service } from '../services/services.entity';
 import { Status } from '../enum/status.enum';
 import { Pago } from '../enum/pago.enum';
+import { Sucursal } from '../sucursales/sucursales.entity';
 
 @Injectable()
 export class AppointmentsService {
@@ -17,6 +18,8 @@ export class AppointmentsService {
     private readonly userRepository: Repository<User>,
     @InjectRepository(Service)
     private readonly serviceRepository: Repository<Service>,
+    @InjectRepository(Sucursal)
+    private readonly sucursalRepository: Repository<Sucursal>,
   ) {}
 
   async findAll(): Promise<Appointment[]> {
@@ -41,7 +44,7 @@ export class AppointmentsService {
   }
 
   async create(createAppointmentDto: CreateAppointmentDto): Promise<Appointment> {
-    const { user: userId, service: serviceIds, date, time } = createAppointmentDto;
+    const { user: userId, service: serviceIds, date, time, sucursal } = createAppointmentDto;
 
     // Verificar existencia de User
     const user = await this.userRepository.findOne({ where: { id: userId } });
@@ -59,6 +62,12 @@ export class AppointmentsService {
 
     if (activeAppointmentsCount >= 4) {
       throw new BadRequestException('No puedes tener más de 4 turnos activos');
+    }
+
+    const idSucursal = await this.sucursalRepository.findOne({ where: { name: sucursal } });
+
+    if (!idSucursal) {
+      throw new NotFoundException(`Sucursal with name: ${sucursal} not found`);
     }
 
     // Validar que al menos haya un servicio
@@ -93,6 +102,7 @@ export class AppointmentsService {
       service: services,
       date,
       time,
+      sucursal: idSucursal,
     });
 
     try {
@@ -151,6 +161,15 @@ export class AppointmentsService {
       appointment.service = services;
     }
 
+    // Asignar Sucursal
+    if (updateAppointmentDto.sucursal) {
+      const sucursal = await this.sucursalRepository.findOne({ where: { name: updateAppointmentDto.sucursal } });
+      if (!sucursal) {
+        throw new NotFoundException(`Sucursal with name: ${updateAppointmentDto.sucursal} not found`);
+      }
+      appointment.sucursal = sucursal;
+    }
+
     // Asignar otros campos
     if (updateAppointmentDto.date) {
       appointment.date = updateAppointmentDto.date;
@@ -182,11 +201,12 @@ export class AppointmentsService {
   }
 
   async updatePayment(id: string): Promise<Appointment> {
+    console.log("segunda funcion:", id)
     const appointment = await this.appointmentRepository.findOne({ where: { id } });
     if (!appointment) {
       throw new NotFoundException(`Appointment with ID ${id} not found`);
     }
-
+    
     try {
       appointment.pago = Pago.Realizado;
       return await this.appointmentRepository.save(appointment);

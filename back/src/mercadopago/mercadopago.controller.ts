@@ -21,8 +21,9 @@ export class MercadoPagoController {
     @ApiOperation({ summary: 'Redirecciona a MercadoPago para pagar' })
     async success(@Query('external_reference') idAppointment: string, @Res() res) {
         console.log('success');
+        console.log("Primera funcion: ",idAppointment);
         await this.appointmentsService.updatePayment(idAppointment);
-        res.redirect('http://localhost:3000/');
+        res.redirect('http://localhost:3000/account/reservations');
     }
 
     @Get('failure')
