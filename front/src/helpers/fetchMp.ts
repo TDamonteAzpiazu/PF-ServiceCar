@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import { IAppointment, IService } from "./types/types";
 
 export const createPreference = async (
@@ -8,22 +9,29 @@ export const createPreference = async (
   setError: React.Dispatch<React.SetStateAction<string | null>>
 ) => {
   try {
-    const resReservations = await fetch('${url}/appointments', {
+    const resReservations = await fetch(`${url}/appointments`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        'Authorization': 'Bearer ${token}',
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(data),
     });
-    // Imprime el contenido de la respuesta para depuración
-    const textReservations = await resReservations.text();
-    console.log('Response from /appointments:', textReservations);
-
-    const appointmentRes = JSON.parse(textReservations);
-
-    if (appointmentRes) {
-      const res = await fetch('${url}/mercadopago', {
+    const appointmentRes = await resReservations.json();
+    if (appointmentRes.message === "No puedes tener más de 4 turnos activos") {
+      Swal.fire({
+        title: "No se ha reservado el servicio",
+        text: appointmentRes.message,
+        icon: "error",
+      });
+      return;
+    } else {
+      Swal.fire({
+        title: "Reserva iniciada exitosamente",
+        text: `Por favor proceda al pago para confirmar la reserva.`,
+        icon: "success",
+      });
+      const res = await fetch(`${url}/mercadopago`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -34,23 +42,17 @@ export const createPreference = async (
               id: service.id,
               service: service.type,
               price: service.price,
-              idAppointment: appointmentRes.id,
             },
           ],
+          idAppointment: appointmentRes.id,
         }),
       });
-
-            // Imprime el contenido de la respuesta para depuración
-            const textMercadoPago = await res.text();
-            console.log('Response from /mercadopago:', textMercadoPago);
-            const dataRes = JSON.parse(textMercadoPago);
-      // const dataRes = await res.json();
+      const dataRes = await res.json();
       return dataRes;
-    } else {
-      throw new Error('HTTP error! Status: ${resReservations.status}');
     }
   } catch (error: any) {
     console.error("Error creating preference:", error.message);
+    setError(error.message);
     throw error;
   }
 };

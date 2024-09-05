@@ -17,7 +17,7 @@ const ServiceCard: React.FC<IService> = ({
   sucursales,
 }) => {
   return (
-    <div className="relative md:m-0 m-3 text-custom-white flex items-center md:mb-6 bg-neutral-800 bg-opacity-90 rounded-bl-3xl rounded-tr-3xl shadow-md overflow-hidden md:mr-6  duration-300 ease-in-out lg:min-h-[260px] min-h-[280px] transition-transform transform hover:scale-105">
+    <div className="relative  text-custom-white flex items-center  bg-neutral-800 bg-opacity-90 rounded-bl-3xl rounded-tr-3xl shadow-md overflow-hidden  duration-300 ease-in-out sm:min-h-[290px] md:min-h-[310px] min-h-[300px] transition-transform transform hover:scale-105">
       <div className="absolute left-0 top-0 bottom-0 w-2 bg-custom-red"></div>
       <div className="flex-shrink-0 w-1/3 h-full relative overflow-hidden">
         <Image
@@ -30,14 +30,13 @@ const ServiceCard: React.FC<IService> = ({
       </div>
       <div className="flex flex-col justify-between gap-3 px-4 w-2/3">
         <h5 className="text-lg font-semibold mb-1">{type}</h5>
-        <p className="text-custom-grey flex gap-1 items-center text-sm">
+        <p className="text-custom-grey flex gap-1 items-center text-sm ">
           <span className=" text-custom-red text-2xl">
             <MdOutlineDescription />
           </span>
-          {description}
+          <span className="truncate-description">{description}</span>
         </p>
 
-        {/* Vehiculo */}
         <p className="text-custom-grey flex gap-1 items-center">
           <span className="text-custom-red text-2xl">
             <FaTruck />
@@ -49,7 +48,7 @@ const ServiceCard: React.FC<IService> = ({
           <span className="text-custom-red text-2xl">
             <FaLocationDot />
           </span>
-          {sucursales.join(", ")}
+          {sucursales[0]}...
         </p>
 
         <div className="flex items-center justify-between">

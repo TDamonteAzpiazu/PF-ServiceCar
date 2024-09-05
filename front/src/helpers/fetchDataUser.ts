@@ -1,9 +1,6 @@
 import { jwtVerify } from "jose";
 import { IUser } from "./types/types";
-import Cookies from "js-cookie";
-import { serialize } from "cookie";
-import { useDispatch } from "react-redux";
-import { setToken } from "@/redux/userSlice";
+import Swal from "sweetalert2";
 
 export const fetchDataUserByID = async (
   token: string,
@@ -46,3 +43,39 @@ export const fetchDataUser = async (
   }
 };
 
+export const updateUser = async (
+  url: string,
+  token: string,
+  setError: React.Dispatch<React.SetStateAction<string | null>>,
+  values: { name: string; email: string; address: string }
+) => {
+  try {
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(values),
+    });
+    const data = await response.json();
+    console.log(data);
+    if (response.ok) {
+      Swal.fire({
+        title: "Actualización correcta",
+        text: "Su perfil ha sido actualizado exitosamente.",
+        icon: "success",
+      });
+      return data;
+    } else {
+      Swal.fire({
+        title: "Error",
+        text: data.message || "No se pudo editar el perfil.",
+        icon: "error",
+      });
+      return
+    }
+  } catch (error: any) {
+    setError(error.message);
+  }
+};

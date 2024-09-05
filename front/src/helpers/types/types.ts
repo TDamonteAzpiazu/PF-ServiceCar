@@ -61,6 +61,7 @@ export interface IAppointment {
   service: string[];
   date: string;
   time: string;
+  sucursal?: string;
 }
 
 export interface IAppointmentUser {
@@ -68,7 +69,9 @@ export interface IAppointmentUser {
   date: string;
   time: string;
   status: string;
+  pago?: string;
   user: IUser;
+  sucursal?: string;
   service: IService[];
 }
 
@@ -102,6 +105,14 @@ export interface IOpinion {
   icono: string;
 }
 
+export interface IOpinionUser {
+  estrellas: number;
+  opinion: string;
+  icono: string;
+  date: string;
+  service: string;
+}
+
 export interface ISucursales {
   id: string;
   name: string;
@@ -110,5 +121,5 @@ export interface ISucursales {
   longitud: string;
   details: string;
   services: IService[];
- status: string;
+  status: string;
 }
