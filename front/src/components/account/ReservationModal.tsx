@@ -13,6 +13,8 @@ const ReservationModal: React.FC<{
   setViewIappointmentDetail: React.Dispatch<React.SetStateAction<boolean>>;
   appointment: IAppointmentUser;
 }> = ({ setViewIappointmentDetail, viewIappointmentDetail, appointment }) => {
+  const appointmentDate = new Date(appointment.date);
+  const now = new Date();
   return (
     <CSSTransition
       in={viewIappointmentDetail}
@@ -40,11 +42,19 @@ const ReservationModal: React.FC<{
           <div>
             <h3 className="text-xl font-light">Su orden:</h3>
             <div className="flex flex-col py-2 gap-2">
-              <p className="font-semibold capitalize text-green-600">
+              <p
+                className={`font-semibold capitalize ${
+                  appointmentDate < now ? "text-red-600" : "text-green-600"
+                }`}
+              >
                 <span className="font-extralight pr-1 text-custom-white">
                   Status:
                 </span>
-                {appointment.status === "active" ? "Vigente" : "Cumplida"}
+                {appointmentDate < now
+                  ? "Vencida"
+                  : appointment.status === "active"
+                  ? "Vigente"
+                  : "Eliminada"}
               </p>
               <p className="font-semibold">
                 <span className="font-extralight pr-1">Fecha:</span>

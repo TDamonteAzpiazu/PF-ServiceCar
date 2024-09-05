@@ -92,8 +92,8 @@ export const validateAppointment = async (input: FormikValues) => {
   if (!input.time) {
     errors.time = "La hora es requerida";
   }
-  if (!input.sucursales || input.sucursales === "") {
-    errors.sucursales = "La sucursal es requerida";
+  if (!input.sucursal || input.sucursal === "") {
+    errors.sucursal = "La sucursal es requerida";
   }
 
   if (selectedDate.getDay() === 5 || selectedDate.getDay() === 6) {
@@ -181,8 +181,8 @@ export const validateAppointmentUpdate = async (input: FormikValues) => {
   if (!input.time) {
     errors.time = "La hora es requerida";
   }
-  if (input.servicios && !input.sucursales) {
-    errors.sucursales = "La sucursal es requerida";
+  if (input.servicios && !input.sucursal) {
+    errors.sucursal = "La sucursal es requerida";
   }
 
   if (selectedDate.getDay() === 5 || selectedDate.getDay() === 6) {

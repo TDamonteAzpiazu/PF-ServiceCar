@@ -10,7 +10,6 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-
 import Cookies from "js-cookie";
 import PATHROUTES from "@/helpers/PathRoutes";
 import { updateAppointment } from "@/helpers/fetchReservations";
@@ -47,7 +46,7 @@ const FormUpdateReservation: React.FC<{
         date: formatDate(appointment.date),
         time: appointment.time,
         servicios: undefined,
-        sucursales: undefined,
+        sucursal: undefined,
       }}
       validate={validateAppointmentUpdate}
       onSubmit={async (values) => {
@@ -146,9 +145,9 @@ const FormUpdateReservation: React.FC<{
                 <span className="text-custom-grey text-sm">Sucursal</span>
                 <Field
                   as="select"
-                  name="sucursales"
+                  name="sucursal"
                   className={`border border-custom-red bg-transparent outline-none py-2 px-3 rounded w-full ${
-                    (errors.sucursales && touched.sucursales) || error
+                    (errors.sucursal && touched.sucursal) || error
                       ? "error"
                       : ""
                   }`}
@@ -168,7 +167,7 @@ const FormUpdateReservation: React.FC<{
                   ))}
                 </Field>
                 <span style={{ color: "red" }}>
-                  <ErrorMessage name="sucursales" />
+                  <ErrorMessage name="sucursal" />
                 </span>
               </div>
             )}

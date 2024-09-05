@@ -26,7 +26,11 @@ const FormReservations: React.FC<{
   const dataUser: IUser = useSelector((state: any) => state.user.user);
   const [selectedDate, setSelectedDate] = useState<string>("");
 
-  const fetchAppointment = async (values: { date: string; time: string }) => {
+  const fetchAppointment = async (values: {
+    date: string;
+    time: string;
+    sucursal: string;
+  }) => {
     try {
       if (!token || !dataUser) {
         Swal.fire({
@@ -46,6 +50,7 @@ const FormReservations: React.FC<{
           service: [service.id],
           time: values.time,
           user: dataUser.id,
+          sucursal: values.sucursal
         };
 
         const preference = await createPreference(
@@ -67,10 +72,10 @@ const FormReservations: React.FC<{
   return (
     <div>
       <Formik
-        initialValues={{ date: "", time: "", sucursales: "" }}
+        initialValues={{ date: "", time: "", sucursal: "" }}
         validate={validateAppointment}
         onSubmit={async (values) => {
-          await fetchAppointment({ date: values.date, time: values.time });
+          await fetchAppointment(values);
         }}
       >
         {(formikProps) => (
@@ -125,11 +130,11 @@ const FormReservations: React.FC<{
             <div className="w-full flex flex-col">
               <Field
                 as="select"
-                name="sucursales"
+                name="sucursal"
                 className={`border border-custom-red bg-transparent outline-none py-2 px-3 rounded w-full
                 ${
-                  (formikProps.errors.sucursales &&
-                    formikProps.touched.sucursales) ||
+                  (formikProps.errors.sucursal &&
+                    formikProps.touched.sucursal) ||
                   error
                     ? "error"
                     : ""
@@ -151,7 +156,7 @@ const FormReservations: React.FC<{
                 ))}
               </Field>
               <span style={{ color: "red" }}>
-                <ErrorMessage name="sucursales" />
+                <ErrorMessage name="sucursal" />
               </span>
             </div>
             {error ? <p className="text-red-600">¡{error}!</p> : ""}

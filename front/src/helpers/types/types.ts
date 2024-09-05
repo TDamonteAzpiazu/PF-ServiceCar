@@ -69,8 +69,9 @@ export interface IAppointmentUser {
   date: string;
   time: string;
   status: string;
-  statusPay?: string;
+  pago?: string;
   user: IUser;
+  sucursal?: string;
   service: IService[];
 }
 
@@ -102,6 +103,14 @@ export interface IOpinion {
   ocupacion: string;
   opinion: string;
   icono: string;
+}
+
+export interface IOpinionUser {
+  estrellas: number;
+  opinion: string;
+  icono: string;
+  date: string;
+  service: string;
 }
 
 export interface ISucursales {

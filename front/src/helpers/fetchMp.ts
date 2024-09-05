@@ -42,9 +42,9 @@ export const createPreference = async (
               id: service.id,
               service: service.type,
               price: service.price,
-              idAppointment: appointmentRes.id,
             },
           ],
+          idAppointment: appointmentRes.id,
         }),
       });
       const dataRes = await res.json();

@@ -17,8 +17,9 @@ const Reservations: React.FC = () => {
   const [history, setHistory] = useState<IAppointmentUser[] | null>(null);
   const [viewHistory, setViewHistory] = useState<boolean>(true);
   const dataUser: IUser = useSelector((state: any) => state.user.user);
-  const token = Cookies.get("token")
+  const token = Cookies.get("token");
   const url = process.env.NEXT_PUBLIC_URL;
+  const now = new Date("2024-09-25T00:00:00Z");
 
   const filterAppointmentsPay = async (
     appointments: IAppointmentUser[] | void
@@ -26,9 +27,11 @@ const Reservations: React.FC = () => {
     if (appointments) {
       const newAppointments: IAppointmentUser[] = appointments.filter(
         (appointment: IAppointmentUser) => {
-          return appointment.statusPay === "true";
+          const appointmentDate = new Date(appointment.date);
+          return appointment.status === "active" && appointmentDate < now;
         }
       );
+
       setHistory(newAppointments);
     }
   };
@@ -39,7 +42,8 @@ const Reservations: React.FC = () => {
     if (appointments) {
       const newAppointments: IAppointmentUser[] = appointments.filter(
         (appointment: IAppointmentUser) => {
-          return appointment.status === "active";
+          const appointmentDate = new Date(appointment.date);
+          return appointment.status === "active" && appointmentDate > now;
         }
       );
       setReservations(newAppointments);
@@ -74,6 +78,7 @@ const Reservations: React.FC = () => {
       fetchAppointments();
     }
   }, [dataUser]);
+  console.log(history);
 
   return (
     <section className="py-3 w-full text-custom-white">
