@@ -30,14 +30,13 @@ const ServiceCard: React.FC<IService> = ({
       </div>
       <div className="flex flex-col justify-between gap-3 px-4 w-2/3">
         <h5 className="text-lg font-semibold mb-1">{type}</h5>
-        <p className="text-custom-grey flex gap-1 items-center text-sm">
+        <p className="text-custom-grey flex gap-1 items-center text-sm ">
           <span className=" text-custom-red text-2xl">
             <MdOutlineDescription />
           </span>
-          {description}
+          <span className="truncate-description">{description}</span>
         </p>
 
-        {/* Vehiculo */}
         <p className="text-custom-grey flex gap-1 items-center">
           <span className="text-custom-red text-2xl">
             <FaTruck />

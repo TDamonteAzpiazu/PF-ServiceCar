@@ -1,7 +1,7 @@
 "use client";
 
 import { IAppointmentUser, IService } from "@/helpers/types/types";
-import { ErrorMessage, Field, Form, Formik, useFormikContext } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import {
   getTomorrowDate,
   timeOptions,
@@ -10,7 +10,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import { parse } from "jsonc-parser";
+
 import Cookies from "js-cookie";
 import PATHROUTES from "@/helpers/PathRoutes";
 import { updateAppointment } from "@/helpers/fetchReservations";
@@ -30,7 +30,7 @@ const FormUpdateReservation: React.FC<{
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [selectedService, setSelectedService] = useState<string | null>(null);
   const [sucursales, setSucursales] = useState<string[]>([]);
-  const token = parse(Cookies.get("token")?.toString() || "{}");
+  const token = Cookies.get("token")
   const url = process.env.NEXT_PUBLIC_URL;
 
   const formatDate = (dateString: string) => {
@@ -53,7 +53,7 @@ const FormUpdateReservation: React.FC<{
       onSubmit={async (values) => {
         const res = await updateAppointment(
           `${url}/appointments/${appointment.id}`,
-          token,
+          token!,
           values,
           appointment,
           setError

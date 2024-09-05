@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import { IAppointment, IService } from "./types/types";
 
 export const createPreference = async (
@@ -17,7 +18,19 @@ export const createPreference = async (
       body: JSON.stringify(data),
     });
     const appointmentRes = await resReservations.json();
-    if (appointmentRes) {
+    if (appointmentRes.message === "No puedes tener más de 4 turnos activos") {
+      Swal.fire({
+        title: "No se ha reservado el servicio",
+        text: appointmentRes.message,
+        icon: "error",
+      });
+      return;
+    } else {
+      Swal.fire({
+        title: "Reserva iniciada exitosamente",
+        text: `Por favor proceda al pago para confirmar la reserva.`,
+        icon: "success",
+      });
       const res = await fetch(`${url}/mercadopago`, {
         method: "POST",
         headers: {
@@ -36,12 +49,10 @@ export const createPreference = async (
       });
       const dataRes = await res.json();
       return dataRes;
-    } else {
-      throw new Error(`HTTP error! Status: ${resReservations.status}`);
     }
   } catch (error: any) {
     console.error("Error creating preference:", error.message);
-    setError(error.message)
+    setError(error.message);
     throw error;
   }
 };

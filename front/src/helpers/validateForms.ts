@@ -21,8 +21,6 @@ export const validarRegister = (input: FormikValues): Partial<FormikValues> => {
   const emailRegex: RegExp = /^[\w-]+(?:\.[\w-]+)*@(?:[\w-]+\.)+[a-zA-Z]{2,7}$/;
   const passwordRegex: RegExp =
     /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;"'<>,.?/\\|-]).+$/;
-  const phoneRegex: RegExp =
-    /^\+?\d{1,3}[\s-]?\(?\d{3}\)?[\s-]?\d{3}[\s-]?\d{4}$/;
 
   if (!input.name) {
     errors.name = "El nombre es requerido";
@@ -139,6 +137,27 @@ export const getTomorrowDate = () => {
   const tomorrow: Date = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
   return tomorrow.toISOString().split("T")[0];
+};
+
+export const validarUpdateUser = (input: FormikValues): Partial<FormikValues> => {
+  const errors: Partial<FormikValues> = {};
+  const emailRegex: RegExp = /^[\w-]+(?:\.[\w-]+)*@(?:[\w-]+\.)+[a-zA-Z]{2,7}$/;
+
+  if (!input.name) {
+    errors.name = "El nombre es requerido";
+  }
+  if (!input.email) {
+    errors.email = "El email es requerido";
+  }
+  if (!input.address) {
+    errors.address = "La dirección es requerida";
+  }
+
+  if (input.email && !emailRegex.test(input.email)) {
+    errors.email = "El email es inválido";
+  }
+
+  return errors;
 };
 
 const generateTimeOptions = () => {

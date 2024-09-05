@@ -5,7 +5,7 @@ import { IAppointmentUser, IUser } from "@/helpers/types/types";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { parse } from "jsonc-parser";
+
 import Cookies from "js-cookie";
 import CardReservations from "./CardReservations";
 import { deleteAppointment } from "@/helpers/fetchReservations";
@@ -17,7 +17,7 @@ const Reservations: React.FC = () => {
   const [history, setHistory] = useState<IAppointmentUser[] | null>(null);
   const [viewHistory, setViewHistory] = useState<boolean>(true);
   const dataUser: IUser = useSelector((state: any) => state.user.user);
-  const token = parse(Cookies.get("token")?.toString() || "{}");
+  const token = Cookies.get("token")
   const url = process.env.NEXT_PUBLIC_URL;
 
   const filterAppointmentsPay = async (
@@ -50,7 +50,7 @@ const Reservations: React.FC = () => {
     try {
       const appointments = await getAppointments(
         `${url}/appointments/user/${dataUser.id}`,
-        token
+        token!
       );
       filterAppointmentsActive(appointments);
       filterAppointmentsPay(appointments);
@@ -61,7 +61,7 @@ const Reservations: React.FC = () => {
 
   const handleDelete = async (appointmentId: string) => {
     try {
-      await deleteAppointment(`${url}/appointments/${appointmentId}`, token);
+      await deleteAppointment(`${url}/appointments/${appointmentId}`, token!);
 
       fetchAppointments();
     } catch (error) {
