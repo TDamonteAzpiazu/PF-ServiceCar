@@ -11,11 +11,15 @@ interface FilterOptionsProps {
 const FilterOptions: React.FC<FilterOptionsProps> = ({
   mostrarFiltros,
   vehiculos,
-  onFilterChange
+  onFilterChange,
 }) => {
   const [sucursalesData, setSucursalesData] = useState<ISucursales[]>([]);
-  const [vehiculosSeleccionados, setVehiculosSeleccionados] = useState<Set<string>>(new Set());
-  const [ubicacionesSeleccionadas, setUbicacionesSeleccionadas] = useState<Set<string>>(new Set());
+  const [vehiculosSeleccionados, setVehiculosSeleccionados] = useState<
+    Set<string>
+  >(new Set());
+  const [ubicacionesSeleccionadas, setUbicacionesSeleccionadas] = useState<
+    Set<string>
+  >(new Set());
 
   useEffect(() => {
     const fetchAndSetSucursales = async () => {
@@ -23,7 +27,7 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
         const data = await FetchSucursales();
         setSucursalesData(data);
       } catch (error) {
-        console.error('Error fetching sucursales:', error);
+        console.error("Error fetching sucursales:", error);
       }
     };
 
@@ -32,13 +36,15 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
 
   useEffect(() => {
     onFilterChange(
-      sucursalesData.filter(sucursal => ubicacionesSeleccionadas.has(sucursal.name)),
+      sucursalesData.filter((sucursal) =>
+        ubicacionesSeleccionadas.has(sucursal.name)
+      ),
       Array.from(vehiculosSeleccionados)
     );
   }, [ubicacionesSeleccionadas, vehiculosSeleccionados]);
 
   const handleSucursalChange = (sucursal: string) => {
-    setUbicacionesSeleccionadas(prev => {
+    setUbicacionesSeleccionadas((prev) => {
       const updated = new Set(prev);
       if (updated.has(sucursal)) {
         updated.delete(sucursal);
@@ -50,7 +56,7 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
   };
 
   const handleVehiculoChange = (vehiculo: string) => {
-    setVehiculosSeleccionados(prev => {
+    setVehiculosSeleccionados((prev) => {
       const updated = new Set(prev);
       if (updated.has(vehiculo)) {
         updated.delete(vehiculo);
@@ -63,21 +69,26 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
 
   return (
     <div
-      className={`absolute top-16 right-0 z-10 bg-black text-white rounded-lg border border-custom-red ${mostrarFiltros ? "block" : "hidden"}`}
+      className={`absolute top-16 mt-1 sm:right-0 right-20 z-10 bg-black text-white rounded-lg border border-custom-red ${
+        mostrarFiltros ? "flex" : "hidden"
+      }`}
     >
-      <div className="p-4">
+      <div className="p-3 " style={{minWidth:"220px"}}>
         <h3 className="font-semibold text-lg mb-2">Filtros</h3>
         <div className="mb-4">
           <h4 className="font-semibold">Sucursales</h4>
           {sucursalesData.map((sucursal) => (
-            <div key={sucursal.name} className="flex items-center">
+            <div key={sucursal.name} className="flex items-center gap-1">
               <input
                 type="checkbox"
                 id={`sucursal-${sucursal.name}`}
                 value={sucursal.name}
                 onChange={() => handleSucursalChange(sucursal.name)}
               />
-              <label htmlFor={`sucursal-${sucursal.name}`} className="ml-2">
+              <label
+                htmlFor={`sucursal-${sucursal.name}`}
+                className="ml-2 md:text-base text-sm"
+              >
                 {sucursal.name}
               </label>
             </div>
@@ -86,14 +97,17 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
         <div>
           <h4 className="font-semibold">Vehículos</h4>
           {vehiculos.map((vehiculo) => (
-            <div key={vehiculo} className="flex items-center">
+            <div key={vehiculo} className="flex items-center gap-1">
               <input
                 type="checkbox"
                 id={`vehiculo-${vehiculo}`}
                 value={vehiculo}
                 onChange={() => handleVehiculoChange(vehiculo)}
               />
-              <label htmlFor={`vehiculo-${vehiculo}`} className="ml-2">
+              <label
+                htmlFor={`vehiculo-${vehiculo}`}
+                className="ml-2 md:text-base text-sm"
+              >
                 {vehiculo}
               </label>
             </div>

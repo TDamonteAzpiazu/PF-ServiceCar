@@ -2,7 +2,7 @@ import { Sucursal } from "../sucursales/sucursales.entity";
 
 export const predefinedSucursales: Partial<Sucursal>[] = [
   {
-    name: "GarageJS - Córdoba Centro",
+    name: "Córdoba Centro",
     address: "Av. Colón 1234, Córdoba, Argentina",
     latitud: "-31.4135",
     longitud: "-64.1811",
@@ -10,7 +10,7 @@ export const predefinedSucursales: Partial<Sucursal>[] = [
       "Esta sucursal cuenta con un equipo especializado en mecánica rápida y servicios de mantenimiento preventivo. Ofrecemos servicios de cambio de aceite, revisión de frenos, y más.",
   },
   {
-    name: "GarageJS - Buenos Aires Norte",
+    name: "Buenos Aires Norte",
     address: "Av. Libertador 5678, Buenos Aires, Argentina",
     latitud: "-34.5679",
     longitud: "-58.4434",
@@ -18,7 +18,7 @@ export const predefinedSucursales: Partial<Sucursal>[] = [
       "En Buenos Aires Norte ofrecemos servicios completos de reparación, desde mecánica ligera hasta reparaciones mayores. Además, contamos con un taller de pintura automotriz.",
   },
   {
-    name: "GarageJS - Mendoza Oeste",
+    name: "Mendoza Oeste",
     address: "Calle Las Heras 910, Mendoza, Argentina",
     latitud: "-32.8904",
     longitud: "-68.8282",

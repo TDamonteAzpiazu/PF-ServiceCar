@@ -1,4 +1,3 @@
-"use client";
 import {
   getTomorrowDate,
   timeOptions,
@@ -8,26 +7,30 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useState } from "react";
 import "../../styles/forms.css";
 import { IAppointment, IService, IUser } from "@/helpers/types/types";
-import { handleSubmitApppoint } from "@/helpers/fetchForms";
-import { parse } from "jsonc-parser";
 import Cookies from "js-cookie";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import PATHROUTES from "@/helpers/PathRoutes";
 import { createPreference } from "@/helpers/fetchMp";
 import WalletMP from "../WalletMP";
+import Spinner from "../spinner/Spinner";
 
 const FormReservations: React.FC<{
   service: IService;
 }> = ({ service }) => {
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [preferenceId, setPreferenceId] = useState<string | null>(null);
   const url = process.env.NEXT_PUBLIC_URL;
-  const token = parse(Cookies.get("token")?.toString() || "{}");
+  const token = Cookies.get("token");
   const dataUser: IUser = useSelector((state: any) => state.user.user);
   const [selectedDate, setSelectedDate] = useState<string>("");
-  const [preferenceId, setPreferenceId] = useState<string | null>(null);
 
-  const fetchAppointment = async (values: { date: string; time: string }) => {
+  const fetchAppointment = async (values: {
+    date: string;
+    time: string;
+    sucursal: string;
+  }) => {
     try {
       if (!token || !dataUser) {
         Swal.fire({
@@ -41,34 +44,35 @@ const FormReservations: React.FC<{
         });
         return;
       } else {
+        setIsLoading(true);
         const data: IAppointment = {
           date: values.date,
           service: [service.id],
           time: values.time,
           user: dataUser.id,
+          sucursal: values.sucursal
         };
-        const response = await handleSubmitApppoint(data, token);
-        if (response) {
-          const preference = await createPreference(
-            url,
-            service,
-            data,
-            token,
-            setError
-          );
-          console.log(preference.preferenceId);
-          await setPreferenceId(preference.preferenceId);
-        }
+
+        const preference = await createPreference(
+          url,
+          service,
+          data,
+          token,
+          setError
+        );
+        setPreferenceId(preference.preferenceId);
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div>
       <Formik
-        initialValues={{ date: "", time: "" }}
+        initialValues={{ date: "", time: "", sucursal: "" }}
         validate={validateAppointment}
         onSubmit={async (values) => {
           await fetchAppointment(values);
@@ -123,8 +127,40 @@ const FormReservations: React.FC<{
                 </span>
               </div>
             </div>
+            <div className="w-full flex flex-col">
+              <Field
+                as="select"
+                name="sucursal"
+                className={`border border-custom-red bg-transparent outline-none py-2 px-3 rounded w-full
+                ${
+                  (formikProps.errors.sucursal &&
+                    formikProps.touched.sucursal) ||
+                  error
+                    ? "error"
+                    : ""
+                }
+              `}
+              >
+                <option
+                  value=""
+                  label={"Seleccione una sucursal"}
+                  className=" bg-[#2b2b2b]"
+                />
+                {service.sucursales.map((option) => (
+                  <option
+                    key={option}
+                    value={option}
+                    label={option}
+                    className=" bg-[#2b2b2b] "
+                  />
+                ))}
+              </Field>
+              <span style={{ color: "red" }}>
+                <ErrorMessage name="sucursal" />
+              </span>
+            </div>
             {error ? <p className="text-red-600">¡{error}!</p> : ""}
-            <div className=" flex h-10 mt-4 justify-center w-full">
+            <div className="flex h-10 mt-4 justify-center w-full">
               <button
                 type="submit"
                 className="bg-custom-red rounded text-base py-2 sm:px-3 w-full font-semibold hover:bg-custom-white hover:text-custom-red"
@@ -135,7 +171,13 @@ const FormReservations: React.FC<{
           </Form>
         )}
       </Formik>
-      <WalletMP preferenceId={preferenceId} />
+      {isLoading ? (
+        <div className="flex justify-center w-full items-center mt-2">
+          <Spinner title="Cargando boton de pago..." />
+        </div>
+      ) : (
+        preferenceId && <WalletMP preferenceId={preferenceId} />
+      )}
     </div>
   );
 };

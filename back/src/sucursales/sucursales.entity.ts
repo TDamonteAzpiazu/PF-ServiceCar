@@ -1,8 +1,9 @@
 import { IsEnum, IsNotEmpty, IsString, IsUUID } from "class-validator";
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { v4 as uuid } from 'uuid';
 import { Service } from "../services/services.entity";
 import { Status } from "../enum/status.enum";
+import { Appointment } from "../appointments/appointments.entity";
 
 @Entity({ name: 'sucursales' })
 export class Sucursal {
@@ -42,4 +43,7 @@ export class Sucursal {
     @IsEnum(Status)
     @IsNotEmpty()
     status: Status
+
+    @OneToMany(() => Appointment, (appointment) => appointment.sucursal)
+    appointments: Appointment[]
 }

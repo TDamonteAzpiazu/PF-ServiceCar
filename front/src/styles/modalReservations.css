@@ -1,0 +1,42 @@
+
+.modal-enter {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  .modal-enter-active {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 300ms ease-in, transform 300ms ease-in;
+  }
+  .modal-exit {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .modal-exit-active {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 300ms ease-in, transform 300ms ease-in;
+  }
+  
+  
+  .modal-overlay {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    width: 50%;
+    min-height: 28vh;
+    background-color: #2b2b2b;
+    position: relative;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    overflow-y: auto;
+  }
+  
