@@ -33,4 +33,12 @@ export class CreateAppointmentDto {
   @IsString()
   @IsNotEmpty()
   time: string;
+
+  @ApiProperty({
+    description: 'sucursal',
+    example: 'Cordoba',
+  })
+  @IsString()
+  @IsNotEmpty()
+  sucursal: string;
 }

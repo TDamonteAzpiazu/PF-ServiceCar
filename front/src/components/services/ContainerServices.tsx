@@ -74,7 +74,7 @@ const ContainerServices: React.FC = () => {
           ordenPrecioDesc={handleOrdenarPrecioDesc}
         />
       </div>
-      <section className="mx-8">
+      <section className="mx-6">
         <Cards servicios={serviciosOrdenados} />
       </section>
     </>

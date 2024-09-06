@@ -138,7 +138,7 @@ const RegisterForm: React.FC = () => {
                 Registrar
               </button> */}
               <ButtonLogin loading={loading} name="Registrar" />
-              <ButtonGoogle setError={setError} url={url} />
+              <ButtonGoogle login={false} />
             </div>
           </Form>
         )}
