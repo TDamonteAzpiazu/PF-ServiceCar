@@ -7,13 +7,14 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import SubNav from "./Subnav";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { useSelector } from "react-redux";
+import { parse } from "jsonc-parser";
 import Cookies from "js-cookie";
 import { IUser } from "@/helpers/types/types";
 
 const Navbar: React.FC = () => {
   const headerRef = useRef<HTMLDivElement>(null);
   const dataUser:IUser = useSelector((state: any) => state.user.user);
-  const token = Cookies.get("token")
+  const token = parse(Cookies.get("token")?.toString() || "{}");
   useEffect(() => {
     const menu: HTMLElement | null = document.getElementById("menu");
     const mostrar: HTMLElement | null = document.getElementById("mostrar");
