@@ -14,13 +14,6 @@ const config: DataSourceOptions = {
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-
-  //host: process.env.DB_HOST_RENDER,
-  //port: parseInt(process.env.DB_PORT_RENDER,10),
-  //username: process.env.DB_USERNAME_RENDER, 
-  //password: process.env.DB_PASSWORD_RENDER,
-  //database: process.env.DB_NAME_RENDER,
-
   synchronize: true,
   //dropSchema: true,
   logging: ['error'],
