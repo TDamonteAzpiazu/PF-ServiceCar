@@ -18,7 +18,7 @@ const Reservations: React.FC = () => {
   const dataUser: IUser = useSelector((state: any) => state.user.user);
   const token = Cookies.get("token");
   const url = process.env.NEXT_PUBLIC_URL;
-  const now = new Date("2024-09-25T00:00:00Z");
+  const now = new Date();
 
   const filterAppointmentsDate = async (
     appointments: IAppointmentUser[] | void

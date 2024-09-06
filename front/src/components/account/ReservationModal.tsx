@@ -3,10 +3,12 @@ import PATHROUTES from "@/helpers/PathRoutes";
 import { IAppointmentUser, IService } from "@/helpers/types/types";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { CSSTransition } from "react-transition-group";
 import "../../styles/modalReservations.css";
+import WalletMP from "../WalletMP";
+import { fetchMp } from "@/helpers/fetchMp";
 
 const ReservationModal: React.FC<{
   viewIappointmentDetail: boolean;
@@ -15,6 +17,16 @@ const ReservationModal: React.FC<{
 }> = ({ setViewIappointmentDetail, viewIappointmentDetail, appointment }) => {
   const appointmentDate = new Date(appointment.date);
   const now = new Date();
+  const url = process.env.NEXT_PUBLIC_URL;
+  const [preferenceId, setPreferenceId] = useState<string | null>(null);
+  useEffect(() => {
+    if (appointment.pago === "Pendiente") {
+      fetchMp(url, appointment.service[0], appointment.id).then((res) => {
+        setPreferenceId(res.preferenceId);
+      });
+    }
+  }, []);
+
   return (
     <CSSTransition
       in={viewIappointmentDetail}
@@ -56,6 +68,18 @@ const ReservationModal: React.FC<{
                   ? "Vigente"
                   : "Eliminada"}
               </p>
+              <p
+                className={`font-semibold ${
+                  appointment.pago === "Pendiente"
+                    ? "text-red-600"
+                    : "text-green-700"
+                }`}
+              >
+                <span className="font-extralight pr-1 text-custom-white">
+                  Status de pago:
+                </span>
+                {appointment.pago}
+              </p>
               <p className="font-semibold">
                 <span className="font-extralight pr-1">Fecha:</span>
                 {new Date(appointment.date).toLocaleDateString()}
@@ -63,6 +87,10 @@ const ReservationModal: React.FC<{
               <p className="font-semibold">
                 <span className="font-extralight pr-1">Hora:</span>
                 {appointment.time} Hrs.
+              </p>
+              <p className="font-semibold">
+                <span className="font-extralight pr-1">Sucursal:</span>
+                {appointment.sucursal.name}
               </p>
             </div>
             <div>
@@ -96,6 +124,7 @@ const ReservationModal: React.FC<{
               </div>
             </div>
           </div>
+          {preferenceId && <WalletMP preferenceId={preferenceId} />}
           <div className="flex justify-center pt-3">
             <button
               onClick={() => setViewIappointmentDetail(false)}

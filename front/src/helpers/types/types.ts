@@ -69,9 +69,9 @@ export interface IAppointmentUser {
   date: string;
   time: string;
   status: string;
-  pago?: string;
+  pago: string;
   user: IUser;
-  sucursal?: string;
+  sucursal: ISucursales;
   service: IService[];
 }
 
@@ -119,6 +119,6 @@ export interface ISucursales {
   latitud: string;
   longitud: string;
   details: string;
-  services: IService[];
+  services?: IService[];
   status: string;
 }

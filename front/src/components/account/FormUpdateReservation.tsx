@@ -29,7 +29,7 @@ const FormUpdateReservation: React.FC<{
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [selectedService, setSelectedService] = useState<string | null>(null);
   const [sucursales, setSucursales] = useState<string[]>([]);
-  const token = Cookies.get("token")
+  const token = Cookies.get("token");
   const url = process.env.NEXT_PUBLIC_URL;
 
   const formatDate = (dateString: string) => {
@@ -174,10 +174,13 @@ const FormUpdateReservation: React.FC<{
 
             {appointment.service.map((option, index) => (
               <div key={index}>
-                <p className="text-custom-grey py-1">
+                <h4 className="text-custom-white text-lg font-semibold py-1">
                   Sus servicios actualmente:
-                </p>
-                <h4 className="font-extralight pb-2 text-lg">{option.type}</h4>
+                </h4>
+                <p className="font-extralight pb-1 text-base">{option.type}</p>
+                <p className="font-normal pb-2 text-base text-custom-grey">
+              {appointment.sucursal.name}
+            </p>
                 <Link href={`${PATHROUTES.SERVICES}/${option.id}`}>
                   <Image
                     alt={option.type}
@@ -188,6 +191,7 @@ const FormUpdateReservation: React.FC<{
                 </Link>
               </div>
             ))}
+           
           </div>
           {error ? <p className="text-red-600">¡{error}!</p> : ""}
           <div className="flex h-10 mt-4 justify-center w-full">
