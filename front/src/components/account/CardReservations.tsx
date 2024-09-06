@@ -31,16 +31,23 @@ const CardReservations: React.FC<{
 
   return (
     <div className="flex items-center px-3 py-6 bg-black bg-opacity-40 rounded justify-between">
-      <div className=" flex sm:flex-row flex-col gap-4">
+      <div className=" flex sm:flex-row flex-col gap-4 items-center">
         <h2 className="lg:text-base sm:text-sm text-base">
           {appointment.service[0].type}
         </h2>
         <p className="text-custom-grey lg:text-base sm:text-sm text-base">
           {formatDate(appointment.date)}
         </p>
-        <p className="lg:text-base sm:text-sm text-base">
-          {appointment.time}Hr.
-        </p>
+        {appointment.pago === "Pendiente" ? (
+          <p className=" lg:text-lg sm:text-sm font-semibold text-base text-red-600">
+            IMPAGO
+          </p>
+        ) : (
+          <p className="lg:text-base sm:text-sm text-base">
+            {appointment.time}Hr.
+          </p>
+        )}
+
         <p className="text-custom-grey lg:text-base sm:text-sm text-base">
           US ${appointment.service[0].price}
         </p>

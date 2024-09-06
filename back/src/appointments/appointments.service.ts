@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException, InternalServerErrorException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  InternalServerErrorException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Not, Repository } from 'typeorm';
 import { Appointment } from './appointments.entity';
@@ -27,7 +32,10 @@ export class AppointmentsService {
   }
 
   async findAllByUser(id: string): Promise<Appointment[]> {
-    return this.appointmentRepository.find({ where: { user: { id } }, relations: ['user', 'service'] });
+    return this.appointmentRepository.find({
+      where: { user: { id } },
+      relations: ['user', 'service', 'sucursal'],
+    });
   }
 
   async findOne(id: string): Promise<Appointment> {
@@ -43,8 +51,16 @@ export class AppointmentsService {
     return appointment;
   }
 
-  async create(createAppointmentDto: CreateAppointmentDto): Promise<Appointment> {
-    const { user: userId, service: serviceIds, date, time, sucursal } = createAppointmentDto;
+  async create(
+    createAppointmentDto: CreateAppointmentDto,
+  ): Promise<Appointment> {
+    const {
+      user: userId,
+      service: serviceIds,
+      date,
+      time,
+      sucursal,
+    } = createAppointmentDto;
 
     // Verificar existencia de User
     const user = await this.userRepository.findOne({ where: { id: userId } });
@@ -64,7 +80,9 @@ export class AppointmentsService {
       throw new BadRequestException('No puedes tener más de 4 turnos activos');
     }
 
-    const idSucursal = await this.sucursalRepository.findOne({ where: { name: sucursal } });
+    const idSucursal = await this.sucursalRepository.findOne({
+      where: { name: sucursal },
+    });
 
     if (!idSucursal) {
       throw new NotFoundException(`Sucursal with name: ${sucursal} not found`);
@@ -78,22 +96,32 @@ export class AppointmentsService {
     // Validación de servicios duplicados
     const uniqueServiceIds = [...new Set(serviceIds)];
     if (uniqueServiceIds.length !== serviceIds.length) {
-      throw new BadRequestException('No puedes agregar el mismo servicio más de una vez');
+      throw new BadRequestException(
+        'No puedes agregar el mismo servicio más de una vez',
+      );
     }
 
     // Verificar existencia de Services
-    const services = await this.serviceRepository.findBy({ id: In(serviceIds) });
-    const foundServiceIds = services.map(service => service.id);
+    const services = await this.serviceRepository.findBy({
+      id: In(serviceIds),
+    });
+    const foundServiceIds = services.map((service) => service.id);
 
     // Verificar si todos los servicios fueron encontrados
-    const notFoundIds = serviceIds.filter(id => !foundServiceIds.includes(id));
+    const notFoundIds = serviceIds.filter(
+      (id) => !foundServiceIds.includes(id),
+    );
     if (notFoundIds.length > 0) {
-      throw new NotFoundException(`Los siguientes servicios no fueron encontrados: ${notFoundIds.join(', ')}`);
+      throw new NotFoundException(
+        `Los siguientes servicios no fueron encontrados: ${notFoundIds.join(', ')}`,
+      );
     }
 
     // Validación de no más de dos servicios por cita
     if (serviceIds.length > 2) {
-      throw new BadRequestException('Solo puedes agregar hasta 2 servicios por cita');
+      throw new BadRequestException(
+        'Solo puedes agregar hasta 2 servicios por cita',
+      );
     }
 
     // Crear nueva cita
@@ -112,7 +140,10 @@ export class AppointmentsService {
     }
   }
 
-  async update(id: string, updateAppointmentDto: Partial<CreateAppointmentDto>): Promise<Appointment> {
+  async update(
+    id: string,
+    updateAppointmentDto: Partial<CreateAppointmentDto>,
+  ): Promise<Appointment> {
     const appointment = await this.appointmentRepository.findOne({
       where: { id },
       relations: ['user', 'service'],
@@ -134,38 +165,57 @@ export class AppointmentsService {
     });
 
     if (activeAppointmentsCount >= 4) {
-      throw new BadRequestException('El usuario ya tiene 4 turnos activos, no se pueden agregar más');
+      throw new BadRequestException(
+        'El usuario ya tiene 4 turnos activos, no se pueden agregar más',
+      );
     }
 
     // Asignar User si se proporciona el ID del usuario
     if (updateAppointmentDto.user) {
-      const user = await this.userRepository.findOne({ where: { id: updateAppointmentDto.user } });
+      const user = await this.userRepository.findOne({
+        where: { id: updateAppointmentDto.user },
+      });
       if (!user) {
-        throw new NotFoundException(`User with ID ${updateAppointmentDto.user} not found`);
+        throw new NotFoundException(
+          `User with ID ${updateAppointmentDto.user} not found`,
+        );
       }
       appointment.user = user;
     }
 
     // Asignar Services si se proporcionan los IDs de los servicios
-    if (updateAppointmentDto.service && updateAppointmentDto.service.length > 0) {
+    if (
+      updateAppointmentDto.service &&
+      updateAppointmentDto.service.length > 0
+    ) {
       if (updateAppointmentDto.service.length > 2) {
-        throw new BadRequestException('Solo puedes agregar hasta 2 servicios por cita');
+        throw new BadRequestException(
+          'Solo puedes agregar hasta 2 servicios por cita',
+        );
       }
 
       // Buscar todos los servicios por sus IDs
-      const services = await this.serviceRepository.findBy({ id: In(updateAppointmentDto.service) });
+      const services = await this.serviceRepository.findBy({
+        id: In(updateAppointmentDto.service),
+      });
       // Verificar si todos los servicios fueron encontrados
       if (services.length !== updateAppointmentDto.service.length) {
-        throw new NotFoundException('Uno o más servicios no fueron encontrados');
+        throw new NotFoundException(
+          'Uno o más servicios no fueron encontrados',
+        );
       }
       appointment.service = services;
     }
 
     // Asignar Sucursal
     if (updateAppointmentDto.sucursal) {
-      const sucursal = await this.sucursalRepository.findOne({ where: { name: updateAppointmentDto.sucursal } });
+      const sucursal = await this.sucursalRepository.findOne({
+        where: { name: updateAppointmentDto.sucursal },
+      });
       if (!sucursal) {
-        throw new NotFoundException(`Sucursal with name: ${updateAppointmentDto.sucursal} not found`);
+        throw new NotFoundException(
+          `Sucursal with name: ${updateAppointmentDto.sucursal} not found`,
+        );
       }
       appointment.sucursal = sucursal;
     }
@@ -186,7 +236,9 @@ export class AppointmentsService {
   }
 
   async remove(id: string): Promise<void> {
-    const appointment = await this.appointmentRepository.findOne({ where: { id } });
+    const appointment = await this.appointmentRepository.findOne({
+      where: { id },
+    });
 
     if (!appointment) {
       throw new NotFoundException(`Appointment with ID ${id} not found`);
@@ -201,12 +253,14 @@ export class AppointmentsService {
   }
 
   async updatePayment(id: string): Promise<Appointment> {
-    console.log("segunda funcion:", id)
-    const appointment = await this.appointmentRepository.findOne({ where: { id } });
+    console.log('segunda funcion:', id);
+    const appointment = await this.appointmentRepository.findOne({
+      where: { id },
+    });
     if (!appointment) {
       throw new NotFoundException(`Appointment with ID ${id} not found`);
     }
-    
+
     try {
       appointment.pago = Pago.Realizado;
       return await this.appointmentRepository.save(appointment);

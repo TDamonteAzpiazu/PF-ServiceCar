@@ -1,6 +1,35 @@
 import Swal from "sweetalert2";
 import { IAppointment, IService } from "./types/types";
 
+export const fetchMp = async (
+  url: string | undefined,
+  service: IService,
+  id: string
+) => {
+  try {
+    const res = await fetch(`${url}/mercadopago`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        items: [
+          {
+            id: service.id,
+            service: service.type,
+            price: service.price,
+          },
+        ],
+        idAppointment: id,
+      }),
+    });
+    const dataRes = await res.json();
+    return dataRes;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const createPreference = async (
   url: string | undefined,
   service: IService,
@@ -31,24 +60,8 @@ export const createPreference = async (
         text: `Por favor proceda al pago para confirmar la reserva.`,
         icon: "success",
       });
-      const res = await fetch(`${url}/mercadopago`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          items: [
-            {
-              id: service.id,
-              service: service.type,
-              price: service.price,
-            },
-          ],
-          idAppointment: appointmentRes.id,
-        }),
-      });
-      const dataRes = await res.json();
-      return dataRes;
+      const data = await fetchMp(url, service, appointmentRes.id);
+      return data;
     }
   } catch (error: any) {
     console.error("Error creating preference:", error.message);
