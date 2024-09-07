@@ -18,12 +18,11 @@ const ServiceCall: React.FC = () => {
       }
     };
 
-    fetchData(); // Llamamos a la función asíncrona dentro de useEffect
-  }, []); // El array vacío asegura que se ejecute solo una vez al montarse el componente
+    fetchData(); 
+  }, []); 
 
   return (
     <div>
-      {/* Enviamos la lista de servicios por props a ServicioView */}
       <ServiceView servicios={servicios} />
     </div>
   );

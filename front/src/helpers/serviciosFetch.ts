@@ -48,3 +48,25 @@ export const FetchSucursales = async () => {
     throw new Error(error);
   }
 };
+//nuevo
+
+export const UpdateServiceStatus = async (id: string, newStatus: string) => {
+  try {
+    const res = await fetch(`${apiURL}/services/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status: newStatus }),
+    });
+    if (!res.ok) {
+      throw new Error(`Error actualizando el servicio: ${res.status}`);
+    }
+    const updatedService: IService = await res.json();
+    return updatedService;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+};
+
+

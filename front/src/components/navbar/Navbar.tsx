@@ -1,5 +1,4 @@
 "use client";
-import PATHROUTES from "@/helpers/PathRoutes";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useRef } from "react";
@@ -9,64 +8,70 @@ import { FaRegCircleUser } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { IUser } from "@/helpers/types/types";
+import PATHROUTES from "@/helpers/PathRoutes";
 
 const Navbar: React.FC = () => {
   const headerRef = useRef<HTMLDivElement>(null);
-  const dataUser:IUser = useSelector((state: any) => state.user.user);
-  const token = Cookies.get("token")
+  const dataUser: IUser = useSelector((state: any) => state.user.user);
+  const token = Cookies.get("token");
+
   useEffect(() => {
     const menu: HTMLElement | null = document.getElementById("menu");
     const mostrar: HTMLElement | null = document.getElementById("mostrar");
     const cerrar: HTMLElement | null = document.getElementById("cerrar");
     const enlaces: NodeListOf<Element> = document.querySelectorAll(".enlaces");
 
-    mostrar?.addEventListener("click", () => {
+    const handleMostrarClick = () => {
       if (menu) {
         menu.classList.add("visible");
         menu.style.transition = "0.6s";
-        mostrar.style.visibility = "hidden";
+        mostrar && (mostrar.style.visibility = "hidden");
       }
-    });
+    };
 
-    cerrar?.addEventListener("click", () => {
+    const handleCerrarClick = () => {
       if (menu) {
         menu.classList.remove("visible");
-
         mostrar && (mostrar.style.visibility = "visible");
       }
-    });
+    };
+
+    mostrar?.addEventListener("click", handleMostrarClick);
+    cerrar?.addEventListener("click", handleCerrarClick);
 
     enlaces.forEach((enlace) => {
-      enlace.addEventListener("click", () => {
+      const handleEnlaceClick = () => {
         if (menu) {
           menu.classList.remove("visible");
-
           mostrar && (mostrar.style.visibility = "visible");
         }
-      });
+      };
+      enlace.addEventListener("click", handleEnlaceClick);
+
+      // Cleanup listener on unmount
+      return () => {
+        enlace.removeEventListener("click", handleEnlaceClick);
+      };
     });
 
     return () => {
-      mostrar?.removeEventListener("click", () => {});
-      cerrar?.removeEventListener("click", () => {});
-      enlaces.forEach((enlace) => {
-        enlace.removeEventListener("click", () => {});
-      });
+      mostrar?.removeEventListener("click", handleMostrarClick);
+      cerrar?.removeEventListener("click", handleCerrarClick);
     };
   }, [token]);
 
   return (
     <header
       ref={headerRef}
-      className={`flex bg-black bg-opacity-20 backdrop-blur-xl shadow-lg justify-around items-center fixed w-full py-3 px-6 z-50 transition-colors duration-300 `}
+      className="flex bg-black bg-opacity-20 backdrop-blur-xl shadow-lg justify-around items-center fixed w-full py-3 px-6 z-50 transition-colors duration-300"
     >
-      <div className="pl-3 flex w-3/5 gap-4"
-        <Image src={"/garagejs.svg"} alt="Garagejs" width={110} height={10}  
-
+      <div className="pl-3 flex w-3/5 gap-4">
+        <Image src="/garagejs.svg" alt="Garagejs" width={110} height={10} />
         <div className="flex items-center">
-          <SubNav typeClass={true} dataUser={dataUser}/>
+          <SubNav typeClass={true} dataUser={dataUser} />
         </div>
       </div>
+
       <div className="w-2/5 flex justify-end">
         <span
           id="mostrar"
@@ -92,11 +97,11 @@ const Navbar: React.FC = () => {
               href={PATHROUTES.LOGIN}
               className="text-custom-white bg-custom-red py-1 px-3 rounded w-24 text-center hover:bg-red-600"
             >
-              Acceder 
+              Acceder
             </Link>
             <Link
               href={PATHROUTES.REGISTER}
-              className={`text-custom-red  bg-custom-white  py-1 px-3 w-24 rounded-md border hover:text-custom-white hover:bg-transparent hover:border-custom-white`}
+              className="text-custom-red bg-custom-white py-1 px-3 w-24 rounded-md border hover:text-custom-white hover:bg-transparent hover:border-custom-white"
             >
               Registro
             </Link>
