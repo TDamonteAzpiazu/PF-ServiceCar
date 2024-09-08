@@ -14,7 +14,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MercadopagoModule } from './mercadopago/mercadopago.module';
 import { SucursalesModule } from './sucursales/sucursales.module';
-
+import { AdminDashModule } from './adminDash/adminDash.module';
 dotenvConfig({ path: '.env.development' });
 @Module({
   imports: [
@@ -36,6 +36,7 @@ dotenvConfig({ path: '.env.development' });
     SucursalesModule,
     CloudinaryModule,
     MercadopagoModule,
+    AdminDashModule,
     JwtModule.register({
       global: true,
       signOptions: { expiresIn: '1h' },
