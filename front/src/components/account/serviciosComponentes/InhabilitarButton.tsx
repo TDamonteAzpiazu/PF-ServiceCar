@@ -2,12 +2,13 @@ import { UpdateServiceStatus } from "@/helpers/serviciosFetch";
 import { useState } from "react";
 import Swal from "sweetalert2";
 
-const InhabilitarButton: React.FC<{ id: string; status: string; onStatusChange: () => void }> = ({ id, status, onStatusChange }) => {
+const StatusButton: React.FC<{ id: string; status: string; onStatusChange: () => void }> = ({ id, status, onStatusChange }) => {
   const [loading, setLoading] = useState(false);
   const isInactive = status === "inactive";
 
   const handleStatusChange = async () => {
     const action = isInactive ? "habilitar" : "inhabilitar";
+    const newStatus = isInactive ? "active" : "inactive";
     Swal.fire({
       title: `¿Estás seguro de ${action} este servicio?`,
       icon: "warning",
@@ -18,7 +19,6 @@ const InhabilitarButton: React.FC<{ id: string; status: string; onStatusChange: 
       if (result.isConfirmed) {
         try {
           setLoading(true);
-          const newStatus = isInactive ? "active" : "inactive";
           await UpdateServiceStatus(id, newStatus);
           Swal.fire("¡Éxito!", `El servicio ha sido ${action} correctamente.`, "success");
           onStatusChange();  // Refrescar estado del servicio
@@ -42,4 +42,4 @@ const InhabilitarButton: React.FC<{ id: string; status: string; onStatusChange: 
   );
 };
 
-export default InhabilitarButton;
+export default StatusButton;

@@ -1,4 +1,5 @@
 import { IService, ISucursales } from "./types/types";
+import Swal from "sweetalert2";
 
 const apiURL = process.env.NEXT_PUBLIC_URL;
 
@@ -70,3 +71,45 @@ export const UpdateServiceStatus = async (id: string, newStatus: string) => {
 };
 
 
+export const addService = async (
+  url: string | undefined,
+  token: string,
+  setError: React.Dispatch<React.SetStateAction<string | null>>,
+  serviceData: {
+    type: string;
+    description: string;
+    price: number;
+    vehiculo: string;
+    sucursales: string[];
+  }
+) => {
+  try {
+    const response = await fetch(`${url}/services`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(serviceData),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      Swal.fire({
+        title: "Servicio agregado",
+        text: "El servicio ha sido agregado correctamente.",
+        icon: "success",
+      });
+      return data;
+    } else {
+      Swal.fire({
+        title: "Error",
+        text: data.message || "No se pudo agregar el servicio.",
+        icon: "error",
+      });
+      return;
+    }
+  } catch (error: any) {
+    setError(error.message);
+  }
+};

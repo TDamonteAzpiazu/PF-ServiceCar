@@ -1,6 +1,6 @@
 import React from 'react';
 import ServiceCall from './serviciosComponentes/ServiceCall';
-import ServiceAdd from './serviciosComponentes/ServiceAdd';
+import ServiceAddDelete from './serviciosComponentes/ServiceAdd';
 
 const Services: React.FC = () => {
   return (
@@ -11,7 +11,7 @@ const Services: React.FC = () => {
           <ServiceCall />
         </div>
         <div className="col-span-1">
-          <ServiceAdd />
+          <ServiceAddDelete /> 
         </div>
       </div>
     </section>
