@@ -28,18 +28,18 @@ export class UsersController {
     async getUserById(@Param('id', ParseUUIDPipe) id: string) : Promise<Omit<User, 'password'>> {
         return await this.userService.getUserById(id);
     }
+    
+    @Put('status/:id')
+    @UseGuards(AuthGuard)
+    @ApiOperation({ summary: 'Eliminar usuario' })
+    async deleteUser(@Param('id', ParseUUIDPipe) id: string): Promise<{message: string, user: User}> {
+        return await this.userService.deleteUser(id);
+    }
 
     @Put(':id')
     @UseGuards(AuthGuard)
     @ApiOperation({ summary: 'Actualizar usuario' })
     async updateUser(@Param('id', ParseUUIDPipe) id: string, @Body() data: Partial<CreateUserDto>): Promise<User> {
         return await this.userService.updateUser(id, data);
-    }
-
-    @Put('delete/:id')
-    @UseGuards(AuthGuard)
-    @ApiOperation({ summary: 'Eliminar usuario' })
-    async deleteUser(@Param('id', ParseUUIDPipe) id: string): Promise<{message: string, user: User}> {
-        return await this.userService.deleteUser(id);
     }
 }

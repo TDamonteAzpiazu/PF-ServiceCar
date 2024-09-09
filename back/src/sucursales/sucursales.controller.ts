@@ -31,17 +31,17 @@ export class SucursalesController {
   async create(@Body() createSucursalDto: CreateSucursalDto): Promise<Sucursal> {
     return await this.sucursalesService.create(createSucursalDto);
   }
+  
+    @Put('status/:id')
+    @ApiOperation({ summary: 'Eliminar una sucursal (cambia el estado a inactivo)' })
+    async delete(@Param('id') id: string): Promise<{ message: string }> {
+      await this.sucursalesService.softDelete(id);
+      return { message: 'Status de sucursal modificado correctamente' };
+    }
 
   @Put(':id')
   @ApiOperation({ summary: 'Actualizar una sucursal existente' })
   async update(@Param('id') id: string, @Body() updateSucursalDto: UpdateSucursalDto): Promise<Sucursal> {
     return await this.sucursalesService.update(id, updateSucursalDto);
-  }
-
-  @Delete(':id')
-  @ApiOperation({ summary: 'Eliminar una sucursal (cambia el estado a inactivo)' })
-  async delete(@Param('id') id: string): Promise<{ message: string }> {
-    await this.sucursalesService.softDelete(id);
-    return { message: 'Sucursal eliminada correctamente' };
   }
 }

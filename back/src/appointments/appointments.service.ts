@@ -130,7 +130,11 @@ export class AppointmentsService {
     }
 
     try {
-      appointment.status = Status.Inactive;
+      if (appointment.status === Status.Active) {
+        appointment.status = Status.Inactive;
+      } else {
+        appointment.status = Status.Active;
+      }
       await this.appointmentRepository.save(appointment);
     } catch (error) {
       throw new InternalServerErrorException('Failed to delete appointment');
