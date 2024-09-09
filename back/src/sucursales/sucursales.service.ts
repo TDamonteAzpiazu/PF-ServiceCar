@@ -43,8 +43,11 @@ export class SucursalesService {
     if (!sucursal) {
       throw new NotFoundException('Sucursal no encontrada');
     }
-
-    sucursal.status = Status.Inactive;
+    if(sucursal.status === Status.Inactive) {
+      sucursal.status = Status.Active;
+    } else {
+      sucursal.status = Status.Inactive;
+    }
     await this.sucursalRepository.save(sucursal);
   }
 

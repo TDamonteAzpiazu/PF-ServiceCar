@@ -79,9 +79,13 @@ export class UsersService implements OnModuleInit{
             if(!userFound) {
                 throw new NotFoundException('User not found');
             }
-            userFound.status = Status.Inactive;
+            if(userFound.status === Status.Inactive) {
+                userFound.status = Status.Active;
+            } else {
+                userFound.status = Status.Inactive;
+            }
             await this.userRepository.save(userFound);
-            return {message:'User deleted successfully', user: userFound};
+            return {message:'User status updated successfully', user: userFound};
         } catch (error) {
             if(error instanceof NotFoundException) {
                 throw error;
