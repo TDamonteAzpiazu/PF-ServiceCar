@@ -48,6 +48,16 @@ export class AppointmentsController {
   async create(@Body() createAppointmentDto: CreateAppointmentDto): Promise<Appointment> {
     return this.appointmentsService.create(createAppointmentDto);
   }
+  
+  @Put('status/:id')
+  @UseGuards(AuthGuard)
+  @ApiOperation({ summary: 'Eliminar una cita por ID' })
+  @ApiResponse({ status: 204, description: 'La cita ha sido eliminada exitosamente.' })
+  @ApiResponse({ status: 401, description: 'No autorizado.' })
+  @ApiResponse({ status: 404, description: 'Cita no encontrada.' })
+  async remove(@Param('id') id: string): Promise<void> {
+    return this.appointmentsService.remove(id);
+  }
 
   @Put(':id')
   @UseGuards(AuthGuard)
@@ -60,15 +70,5 @@ export class AppointmentsController {
     @Body() updateAppointmentDto: Partial<CreateAppointmentDto>,
   ): Promise<Appointment> {
     return this.appointmentsService.update(id, updateAppointmentDto);
-  }
-
-  @Delete(':id')
-  @UseGuards(AuthGuard)
-  @ApiOperation({ summary: 'Eliminar una cita por ID' })
-  @ApiResponse({ status: 204, description: 'La cita ha sido eliminada exitosamente.' })
-  @ApiResponse({ status: 401, description: 'No autorizado.' })
-  @ApiResponse({ status: 404, description: 'Cita no encontrada.' })
-  async remove(@Param('id') id: string): Promise<void> {
-    return this.appointmentsService.remove(id);
   }
 }

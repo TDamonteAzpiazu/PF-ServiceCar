@@ -59,6 +59,18 @@ import { SucursalesService } from '../sucursales/sucursales.service';
     };
   }
   
+  @Put('status/:id')
+  //@UseGuards(AuthGuard)
+  @ApiOperation({ summary: 'eliminar un servicio' })
+  async disable(@Param('id', ParseUUIDPipe) id: string) {
+    const serviceId = await this.servicesService.disableService(id);
+
+    return {
+      message: 'Service disabled successfully',
+      id: serviceId,
+    };
+  }
+
   @Put(':id')
   @ApiOperation({ summary: 'Actualizar un servicio' })
   async update(
@@ -86,16 +98,4 @@ import { SucursalesService } from '../sucursales/sucursales.service';
       id: serviceId,
     };
   }
-  
-    @Delete(':id')
-    //@UseGuards(AuthGuard)
-    @ApiOperation({ summary: 'eliminar un servicio' })
-    async disable(@Param('id', ParseUUIDPipe) id: string) {
-      const serviceId = await this.servicesService.disableService(id);
-  
-      return {
-        message: 'Service disabled successfully',
-        id: serviceId,
-      };
-    }
   }
