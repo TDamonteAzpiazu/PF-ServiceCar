@@ -1,0 +1,47 @@
+main {
+  padding-top: 100px;
+  height: 100%;
+  min-height: 70vh;
+}
+
+.container-proyect .proyecto-banner {
+  min-width: 100%;
+  transition: 2s ease all;
+}
+
+.flecha-izquierda:hover,
+.flecha-derecha:hover {
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.863) !important;
+}
+
+.truncate-description {
+  display: -webkit-box;
+ 
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 1.2rem; 
+}
+
+
+
+
+@media (max-width: 768px) {
+  nav.visible {
+    transform: translateX(0);
+    background-color: #2b2b2b;
+    visibility: visible;
+    transition: 0.6s;
+    height: 100vh;
+  }
+  .truncate-description {
+   
+    max-height: 2.4rem; 
+  }
+  
+  header nav a {
+    margin: 12px 0;
+    display: block;
+    width: auto !important;
+  }
+}

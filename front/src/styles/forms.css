@@ -1,0 +1,39 @@
+.cont-input {
+  @apply relative w-full;
+}
+.label {
+  @apply font-medium md:text-base absolute left-4 pointer-events-none text-sm;
+}
+.input {
+  @apply mt-1 outline-none w-full p-2 sm:h-12 h-9 rounded-xl border-2 border-custom-white bg-transparent text-custom-white;
+}
+.input-contact {
+  @apply mt-1 outline-none w-full p-2 h-12 rounded-xl border border-custom-grey bg-transparent;
+}
+.error {
+  border: 1px solid red;
+}
+.errorLabel {
+  color: red;
+}
+.span {
+  @apply flex justify-start sm:my-1 md:text-base text-xs min-h-6;
+}
+
+.input:focus ~ .label,
+.input:not(:placeholder-shown) ~ .label {
+  top: 4px !important;
+  left: 15px;
+  font-size: 14px;
+  padding: 0 2px;
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.input-contact:focus ~ .label,
+.input-contact:not(:placeholder-shown) ~ .label {
+  top: 4px !important;
+  left: 15px;
+  font-size: 14px;
+  padding: 0 2px;
+  background-color: #f6f6f6;
+}
