@@ -5,7 +5,6 @@ import { IAppointmentUser, IUser } from "@/helpers/types/types";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-
 import Cookies from "js-cookie";
 import CardReservations from "./CardReservations";
 import { deleteAppointment } from "@/helpers/fetchReservations";
@@ -19,9 +18,9 @@ const Reservations: React.FC = () => {
   const dataUser: IUser = useSelector((state: any) => state.user.user);
   const token = Cookies.get("token");
   const url = process.env.NEXT_PUBLIC_URL;
-  const now = new Date( );
+  const now = new Date();
 
-  const filterAppointmentsPay = async (
+  const filterAppointmentsDate = async (
     appointments: IAppointmentUser[] | void
   ) => {
     if (appointments) {
@@ -57,7 +56,7 @@ const Reservations: React.FC = () => {
         token!
       );
       filterAppointmentsActive(appointments);
-      filterAppointmentsPay(appointments);
+      filterAppointmentsDate(appointments);
     } catch (error) {
       console.log(error);
     }
@@ -78,7 +77,6 @@ const Reservations: React.FC = () => {
       fetchAppointments();
     }
   }, [dataUser]);
-  console.log(history);
 
   return (
     <section className="py-3 w-full text-custom-white">

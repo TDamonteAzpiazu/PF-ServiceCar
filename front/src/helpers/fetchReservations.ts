@@ -9,7 +9,6 @@ export const getAppointments = async (url: string, token: string) => {
       },
     });
     const data = await response.json();
-
     return data;
   } catch (error) {
     console.log(error);

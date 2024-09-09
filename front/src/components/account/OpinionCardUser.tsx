@@ -1,5 +1,4 @@
 import { IOpinionUser } from "@/helpers/types/types";
-import Image from "next/image";
 import React from "react";
 import { FaQuoteLeft, FaStar } from "react-icons/fa";
 
@@ -7,6 +6,13 @@ const OpinionCard: React.FC<{ opinion: IOpinionUser; index: number }> = ({
   index,
   opinion,
 }) => {
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
   return (
     <div
       key={index}
@@ -14,28 +20,20 @@ const OpinionCard: React.FC<{ opinion: IOpinionUser; index: number }> = ({
         index === 1 ? "bg-red-700" : "bg-custom-grey"
       }`}
     >
-      <div className="flex justify-center mb-4">
-        <Image
-          width={80}
-          height={80}
-          src={opinion.icono}
-          alt="Icono de la persona"
-          className="w-20 h-20 rounded-full"
-        />
-      </div>
       <div className="flex justify-center mb-2">
         {Array.from({ length: opinion.estrellas }).map((_, starIndex) => (
           <FaStar key={starIndex} className="text-yellow-500 mr-1" />
         ))}
       </div>
       <h3 className="text-xl font-bold text-center">{opinion.service}</h3>
-   
+
       <div className="flex justify-center mb-4">
         <FaQuoteLeft className="text-white text-3xl" />
       </div>
       <p className="text-center">{opinion.opinion}</p>
-      <p className="text-gray-400 text-center mb-4">{opinion.date}</p>
-      
+      <p className="text-gray-400 text-center mb-4">
+        {formatDate(opinion.date)}
+      </p>
     </div>
   );
 };
