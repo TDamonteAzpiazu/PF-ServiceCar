@@ -46,9 +46,9 @@ const ServiceForm = ({
   }, []);
 
   const handleSelectSucursal = (sucursal: ISucursales) => {
-    if (selectedSucursales.some((s) => s.id === sucursal.id)) {
+    if (selectedSucursales.some((s) => s.name === sucursal.name)) {
       setSelectedSucursales(
-        selectedSucursales.filter((s) => s.id !== sucursal.id)
+        selectedSucursales.filter((s) => s.name !== sucursal.name)
       );
     } else if (selectedSucursales.length < 3) {
       setSelectedSucursales([...selectedSucursales, sucursal]);
@@ -84,7 +84,7 @@ const ServiceForm = ({
       try {
         const serviceData = {
           ...values,
-          sucursales: selectedSucursales.map((sucursal) => sucursal.id),
+          sucursales: selectedSucursales.map((sucursal) => sucursal.name),
         };
 
         console.log("Datos del servicio a agregar:", serviceData);
@@ -204,7 +204,7 @@ const ServiceForm = ({
                     key={sucursal.id}
                     onClick={() => handleSelectSucursal(sucursal)}
                     className={`cursor-pointer p-2 ${
-                      selectedSucursales.some((s) => s.id === sucursal.id)
+                      selectedSucursales.some((s) => s.name === sucursal.name)
                         ? "bg-gray-200"
                         : ""
                     }`}

@@ -113,3 +113,26 @@ export const addService = async (
     setError(error.message);
   }
 };
+
+export const updateService = async (id: string, updatedData: any) => {
+  try {
+    const res = await fetch(`${apiURL}/services/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedData),
+    });
+
+    if (!res.ok) {
+      throw new Error(`Error al actualizar el servicio: ${res.status}`);
+    }
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Error actualizando servicio:", error);
+    return null;
+  }
+};
+
+
