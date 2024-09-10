@@ -132,7 +132,12 @@ export class ServicesService implements OnModuleInit {
     if (!service)
       throw new NotFoundException(`Couldn't find service with id '${id}'`);
 
-    service.status = Status.Inactive;
+    if(service.status === Status.Inactive){
+      service.status = Status.Active;
+    } else {
+      service.status = Status.Inactive;
+    }
+
     await this.servicesRepository.save(service);
 
     return service.id;
