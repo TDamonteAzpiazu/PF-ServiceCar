@@ -13,7 +13,7 @@ import {
   import { ApiOperation, ApiTags } from '@nestjs/swagger';
   import { ServicesService } from './services.service';
 import { AuthGuard } from 'src/auth/auth.guard';
-import { CreateServiceDto } from '../dto/create-service.dto';
+import { CreateServiceDto, UpdateServiceDto } from '../dto/create-service.dto';
 import { SucursalesService } from '../sucursales/sucursales.service';
   
   @ApiTags('services')
@@ -75,27 +75,13 @@ import { SucursalesService } from '../sucursales/sucursales.service';
   @ApiOperation({ summary: 'Actualizar un servicio' })
   async update(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body() body: Partial<CreateServiceDto>,
+    @Body() body: UpdateServiceDto, // Cambiado a UpdateServiceDto
   ) {
-    const { type, description, price, sucursales, vehiculo } = body;
-
-    // Convert sucursales names to instances
-    const sucursalesEntities = await this.sucursalesService.findByNames(sucursales);
-    if (sucursalesEntities.length !== sucursales.length) {
-      throw new BadRequestException('Some of the provided branch names are invalid');
-    }
-
-    const serviceId = await this.servicesService.updateService(id, {
-      type,
-      description,
-      price,
-      sucursales: sucursalesEntities,
-      vehiculo,
-    });
-
+    const updatedService = await this.servicesService.updateService(id, body);
+    
     return {
       message: 'Service updated successfully',
-      id: serviceId,
+      service: updatedService,
     };
   }
   }

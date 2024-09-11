@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { IsString, IsNumber, IsNotEmpty, IsArray, ArrayNotEmpty, IsEnum } from 'class-validator';
 import { Vehiculos } from '../enum/vehiculos.enum'; // Importa la enumeración Vehiculos
 
@@ -45,3 +45,6 @@ export class CreateServiceDto {
   @IsNotEmpty()
   vehiculo: Vehiculos;
 }
+
+
+export class UpdateServiceDto extends PartialType(CreateServiceDto) {}
