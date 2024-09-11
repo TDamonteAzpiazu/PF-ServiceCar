@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import { IService } from "@/helpers/types/types";
-import { updateService } from "@/helpers/serviciosFetch";
+// import { updateService } from "@/helpers/serviciosFetch";
 
 interface ModalServiceFormProps {
   service: IService;
@@ -37,19 +37,19 @@ const ServiceEditModal: React.FC<ModalServiceFormProps> = ({ service, onClose })
               updatedData.price = values.price;
             }
 
-            try {
-              if (Object.keys(updatedData).length > 0) {
-                const response = await updateService(service.id, updatedData);
-                if (response) {
-                  console.log("Servicio actualizado:", response);
-                  onClose(); // Cierra el modal después de la actualización
-                } else {
-                  setErrorMessage("No se pudo actualizar el servicio. Intenta nuevamente.");
-                }
-              }
-            } catch (error) {
-              setErrorMessage((error as Error).message); // Muestra el mensaje de error
-            }
+            // try {
+            //   if (Object.keys(updatedData).length > 0) {
+            //     const response = await updateService(service.id, updatedData);
+            //     if (response) {
+            //       console.log("Servicio actualizado:", response);
+            //       onClose(); // Cierra el modal después de la actualización
+            //     } else {
+            //       setErrorMessage("No se pudo actualizar el servicio. Intenta nuevamente.");
+            //     }
+            //   }
+            // } catch (error) {
+            //   setErrorMessage((error as Error).message); // Muestra el mensaje de error
+            // }
           }}
         >
           {({ values, handleChange, handleSubmit, errors, touched }) => {

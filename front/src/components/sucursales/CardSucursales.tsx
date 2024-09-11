@@ -1,51 +1,72 @@
-"use client";
+'use client'
 import { ISucursales } from "@/helpers/types/types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Map from "../services/Map";
+import { FetchSucursales } from "@/helpers/serviciosFetch";
 
-const CardSucursales: React.FC<{ sucursales: ISucursales[] }> = ({
-  sucursales,
-}) => {
-  const [activeTab, setActiveTab] = useState(0);
+const CardSucursales: React.FC = () => {
+  const [sucursales, setSucursales] = useState<ISucursales[]>([]);
+  const [selectedSucursal, setSelectedSucursal] = useState<ISucursales | null>(
+    null
+  );
+
+  useEffect(() => {
+    FetchSucursales()
+      .then((res) => {
+        setSucursales(res);
+        setSelectedSucursal(res[0]);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
   return (
     <div className="max-w-4xl mx-auto bg-black rounded-lg overflow-hidden">
-      <div className="flex justify-around bg-black">
-        {sucursales.map((sucursal, index) => (
-          <button
-            key={index}
-            className={`py-4 px-6 text-lg font-semibold ${
-              activeTab === index ? "bg-red-600 text-white" : "text-white"
-            }`}
-            onClick={() => setActiveTab(index)}
-          >
-            {sucursal.name}
-          </button>
+      <div className="flex justify-around bg-black rounded">
+        {sucursales.map((sucursal) => (
+          sucursal.status === "active" ? (
+            <button
+              key={sucursal.id} 
+              onClick={() => setSelectedSucursal(sucursal)}
+              className={`py-2 px-4 w-full ${
+                selectedSucursal?.id === sucursal.id
+                  ? "bg-custom-red text-white"
+                  : "bg-custom-grey"
+              }`}
+            >
+              {sucursal.name}
+            </button>
+          ) : null
         ))}
       </div>
-      <div className="p-6">
-        <h3 className="text-2xl font-bold mb-4">
-          {sucursales[activeTab].name}
-        </h3>
-        <p className="text-gray-400 mb-2">{sucursales[activeTab].address}</p>
-        <p className="pb-4">{sucursales[activeTab].details}</p>
-        <Map
-          apiKey={apiKey!}
-          center={{
-            lat: Number(sucursales[activeTab].latitud),
-            lng: Number(sucursales[activeTab].longitud),
-          }}
-          zoom={14}
-          markers={[
-            {
-              lat: Number(sucursales[activeTab].latitud),
-              lng: Number(sucursales[activeTab].longitud),
-              name: sucursales[activeTab].name,
-            },
-          ]}
-        />
-      </div>
+      {selectedSucursal && selectedSucursal.status === "active" ? (
+        <div className="p-6">
+          <h3 className="text-2xl font-bold mb-4">{selectedSucursal.name}</h3>
+          <p className="text-gray-400 mb-2">{selectedSucursal.address}</p>
+          <p className="pb-4">{selectedSucursal.details}</p>
+          {/* Uncomment and configure the Map component as needed */}
+          {/* 
+          <Map
+            apiKey={apiKey!}
+            center={{
+              lat: Number(selectedSucursal.latitud),
+              lng: Number(selectedSucursal.longitud),
+            }}
+            zoom={14}
+            markers={[
+              {
+                lat: Number(selectedSucursal.latitud),
+                lng: Number(selectedSucursal.longitud),
+                name: selectedSucursal.name,
+              },
+            ]}
+          />
+          */}
+        </div>
+      ) : null}
     </div>
   );
 };

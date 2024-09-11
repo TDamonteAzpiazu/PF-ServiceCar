@@ -1,21 +1,24 @@
 "use client";
 import React from "react";
 import Cookies from "js-cookie";
-import { FaCalendarCheck, FaRegCircleUser, FaWrench} from "react-icons/fa6";
-import { MdLogout } from "react-icons/md";
+import { FaCalendarCheck, FaRegCircleUser } from "react-icons/fa6";
+import { MdLogout, MdMiscellaneousServices } from "react-icons/md";
 import { usePathname, useRouter } from "next/navigation";
 import PATHROUTES from "@/helpers/PathRoutes";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { logout, setToken } from "@/redux/userSlice";
 import { signOut } from "next-auth/react";
-import { RxPencil2, RxGear} from "react-icons/rx";
+import { RxPencil2 } from "react-icons/rx";
+import { GoGitBranch } from "react-icons/go";
+import { IUser } from "@/helpers/types/types";
 
 const UserLinks: React.FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const pathName = usePathname();
+  const dataUser: IUser = useSelector((state: any) => state.user.user);
 
   const handleLogout = () => {
     Swal.fire({
@@ -91,24 +94,40 @@ const UserLinks: React.FC = () => {
             Mis opiniones
           </Link>
         </div>
-        {/* condicionar Servicios para admin */}
-        <div className="flex gap-2 items-center">
-          <span className="text-xl">
-            {/* <FaWrench/> */}
-            <RxGear/>
-          </span>
-          <Link
-            href={`${PATHROUTES.DASHBOARD}/services`}
-            className={`hover:text-custom-white ${
-              pathName === `${PATHROUTES.DASHBOARD}/services`
-                ? "text-custom-white"
-                : ""
-            }`}
-          >
-            Servicios
-          </Link>
-        </div>
-
+        {dataUser && dataUser.role === "admin" && (
+          <>
+            <div className="flex gap-2 items-center">
+              <span className="text-xl">
+                <MdMiscellaneousServices />
+              </span>
+              <Link
+                href={`${PATHROUTES.DASHBOARD}/services`}
+                className={`hover:text-custom-white ${
+                  pathName === `${PATHROUTES.DASHBOARD}/services`
+                    ? "text-custom-white"
+                    : ""
+                }`}
+              >
+                Mis servicios
+              </Link>
+            </div>
+            <div className="flex gap-2 items-center">
+              <span className="text-xl">
+                <GoGitBranch />
+              </span>
+              <Link
+                href={`${PATHROUTES.DASHBOARD}/sucursales`}
+                className={`hover:text-custom-white ${
+                  pathName === `${PATHROUTES.DASHBOARD}/sucursales`
+                    ? "text-custom-white"
+                    : ""
+                }`}
+              >
+                Mis sucursales
+              </Link>
+            </div>
+          </>
+        )}
       </div>
       <button
         onClick={handleLogout}

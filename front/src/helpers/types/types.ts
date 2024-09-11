@@ -122,3 +122,13 @@ export interface ISucursales {
   services?: IService[];
   status: string;
 }
+
+export interface ISucursalesDto {
+
+  name: string;
+  address: string;
+  latitud: string;
+  longitud: string;
+  details: string;
+  
+}
