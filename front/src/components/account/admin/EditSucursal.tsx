@@ -2,24 +2,21 @@ import { ISucursales } from "@/helpers/types/types";
 import React from "react";
 import { IoMdClose } from "react-icons/io";
 import { CSSTransition } from "react-transition-group";
-import FormCreateSucursal from "./FormCreateSucursal";
-
-const CreateSucursal: React.FC<{
-  setViewCreateSucursal: React.Dispatch<React.SetStateAction<boolean>>;
-  viewCreateSucursal: boolean;
+import EditFormSucursal from "./EditFormSucursal";
+const EditSucursal: React.FC<{
+  setViewEditSucursal: React.Dispatch<React.SetStateAction<boolean>>;
+  viewEditSucursal: boolean;
   FetchSucursales: () => Promise<ISucursales[]>;
-}> = ({ setViewCreateSucursal, viewCreateSucursal, FetchSucursales }) => {
+  sucursal: ISucursales;
+}> = ({ FetchSucursales, setViewEditSucursal, viewEditSucursal, sucursal }) => {
   return (
     <CSSTransition
-      in={viewCreateSucursal}
+      in={viewEditSucursal}
       timeout={200}
       classNames="modal"
       unmountOnExit
     >
-      <div
-        className="modal-overlay z-50"
-        onClick={() => setViewCreateSucursal(false)}
-      >
+      <div className="modal-overlay z-50" onClick={()=>setViewEditSucursal(false)}>
         <div
           className="modal-content-sucursal"
           style={{
@@ -28,18 +25,19 @@ const CreateSucursal: React.FC<{
           }}
         >
           <div className="flex items-center mb-5 pb-5 border-b border-custom-grey w-full">
-            <h3 className="font-semibold text-2xl">Crear sucursal</h3>
+            <h3 className="font-semibold text-2xl">Editar sucursal</h3>
           </div>
           <button
-            onClick={() => setViewCreateSucursal(false)}
+            onClick={() => setViewEditSucursal(false)}
             className="absolute top-5 right-5 py-1 px-1.5 transition-all border-2 border-custom-red bg-transparent rounded-md hover:bg-custom-red text-custom-white hover:cursor-pointer"
           >
             <IoMdClose />
           </button>
-
-          <FormCreateSucursal
+          <EditFormSucursal
+            sucursal={sucursal}
             FetchSucursales={FetchSucursales}
-            setViewCreateSucursal={setViewCreateSucursal}
+            setViewEditSucursal={setViewEditSucursal}
+            
           />
         </div>
       </div>
@@ -47,4 +45,4 @@ const CreateSucursal: React.FC<{
   );
 };
 
-export default CreateSucursal;
+export default EditSucursal;

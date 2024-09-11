@@ -14,11 +14,7 @@ const SucursalesAdmin: React.FC = () => {
   const [sucursales, setSucursales] = useState<ISucursales[]>([]);
   const router = useRouter();
   const token = Cookies.get("token");
-  const url = process.env.NEXT_PUBLIC_URL;
   const [viewCreateSucursal, setViewCreateSucursal] = useState<boolean>(false);
-  const toggleMenu = () => {
-    setViewCreateSucursal(!viewCreateSucursal);
-  };
 
   if (dataUser && dataUser.role !== "admin") {
     router.push(`${PATHROUTES.DASHBOARD}/user`);
@@ -34,9 +30,9 @@ const SucursalesAdmin: React.FC = () => {
       });
   }, [sucursales]);
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (sucursal: ISucursales) => {
     try {
-      const response = await deleteSucursal(token!, id);
+      const response = await deleteSucursal(token!, sucursal);
 
       if (response.message === "Sucursal eliminada correctamente") {
         await FetchSucursales();
@@ -64,16 +60,15 @@ const SucursalesAdmin: React.FC = () => {
             <CardSucursalesAdmin
               sucursal={sucursal}
               key={sucursal.id}
-              onDelete={() => handleDelete(sucursal.id)}
+              onDelete={() => handleDelete(sucursal)}
+              FetchSucursales={FetchSucursales}
             />
           ))}
         </div>
         {viewCreateSucursal && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-55 z-40"
-            onClick={toggleMenu}
-          ></div>
+          <div className="fixed inset-0 bg-black bg-opacity-55 z-40"></div>
         )}
+
         <CreateSucursal
           FetchSucursales={FetchSucursales}
           setViewCreateSucursal={setViewCreateSucursal}

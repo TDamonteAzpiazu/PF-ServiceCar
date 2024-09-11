@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import { IService, ISucursales } from "./types/types";
+import { IService, ISucursales, ISucursalesDto } from "./types/types";
 
 const apiURL = process.env.NEXT_PUBLIC_URL;
 
@@ -50,47 +50,71 @@ export const FetchSucursales = async () => {
   }
 };
 
-export const deleteSucursal = async (token: string, id: string) => {
+export const deleteSucursal = async (token: string, sucursal: ISucursales) => {
   try {
     const result = await Swal.fire({
-      title: "¿Está seguro/a de deshabilitar la sucursal?",
-      text: "El usuario ya no podra visualizar la misma en la plataforma.",
+      title: `${
+        sucursal.status === "active"
+          ? "¿Está seguro/a de deshabilitar la sucursal?"
+          : "¿Está seguro/a de Habilitar la sucursal nuevamente?"
+      }`,
+      text: `${
+        sucursal.status === "active"
+          ? "El usuario ya no podra visualizar la misma en la plataforma."
+          : "El usuario podra visualizarla nuevamente en la plataforma."
+      }
+       `,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, deshabilitar.",
+      confirmButtonText: `Sí, ${
+        sucursal.status === "active" ? "deshabilitar" : "habilitar"
+      }.`,
       cancelButtonText: "Cancelar",
     });
 
     if (result.isConfirmed) {
-      const response = await fetch(`${apiURL}/sucursales/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `${apiURL}/sucursales/status/${sucursal.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       const data = await response.json();
       if (response.ok) {
         Swal.fire({
-          title: "Deshabilitada",
-          text: "La sucursal ha sido deshabilitada.",
+          title: `${
+            sucursal.status === "active" ? "Deshabilitada" : "Habilitada"
+          }.`,
+          text: `La sucursal ha sido ${
+            sucursal.status === "active" ? "deshabilitada" : "habilitada"
+          }.`,
           icon: "success",
         });
         return data;
       } else {
         Swal.fire({
           title: "Error",
-          text: data.message || "No se pudo deshabilitar la sucursal.",
+          text:
+            data.message ||
+            `No se pudo ${
+              sucursal.status === "active" ? "deshabilitar" : "habilitar"
+            } la sucursal.`,
           icon: "error",
         });
       }
     } else {
       Swal.fire({
         title: "Operación cancelada",
-        text: "¡La sucursal sigue habilitada!.",
+        text: `¡La sucursal sigue ${
+          sucursal.status === "active" ? "habilitada" : "deshabilitada"
+        }!.`,
         icon: "info",
       });
     }
@@ -98,8 +122,63 @@ export const deleteSucursal = async (token: string, id: string) => {
     console.error("Error al deshabilitar la sucursal:", error);
     Swal.fire({
       title: "Error",
-      text: "No se pudo deshabilitar la sucursal.",
+      text: `No se pudo ${
+        sucursal.status === "active" ? "deshabilitar" : "habilitar"
+      } la sucursal.`,
       icon: "error",
     });
+  }
+};
+
+export const createSucursal = async (
+  token: string,
+  setError: React.Dispatch<React.SetStateAction<string | null>>,
+  values: ISucursalesDto
+) => {
+  try {
+    const response = await fetch(`${apiURL}/sucursales`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    });
+    const data = await response.json();
+    if (response.ok) {
+      Swal.fire({
+        title: "Sucursal creada exitosamente",
+        text: `Ya puede visualizarla en su dashboard.`,
+        icon: "success",
+      });
+    }
+    return data;
+  } catch (error: any) {
+    console.log(error);
+    setError(error);
+  }
+};
+
+export const editSucursal = async (
+  token: string,
+  setError: React.Dispatch<React.SetStateAction<string | null>>,
+  values: ISucursalesDto,
+  id:string
+) => {
+  try {
+    const response = await fetch(`${apiURL}/sucursales/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    });
+    const data = await response.json();
+    if (response.ok) {
+      Swal.fire({
+        title: "Sucursal editada exitosamente",
+        text: `Ya puede visualizar los cambios.`,
+        icon: "success",
+      });
+    }
+    return data;
+  } catch (error: any) {
+    console.log(error);
+    setError(error);
   }
 };

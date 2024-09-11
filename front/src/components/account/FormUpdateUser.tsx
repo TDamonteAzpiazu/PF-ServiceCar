@@ -7,6 +7,7 @@ import { updateUser } from "@/helpers/fetchDataUser";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { setUserData } from "@/redux/userSlice";
+import "../../styles/forms.css";
 
 const FormUpdateUser: React.FC<{
   dataUser: IUser;
@@ -15,7 +16,7 @@ const FormUpdateUser: React.FC<{
 }> = ({ dataUser, setViewUpdateUser, viewUpdateUser }) => {
   const dispatch = useDispatch();
   const [error, setError] = useState<string | null>(null);
-  const token = Cookies.get("token")
+  const token = Cookies.get("token");
   const url = process.env.NEXT_PUBLIC_URL;
 
   const handlerUpdateUser = async (values: {
@@ -51,15 +52,17 @@ const FormUpdateUser: React.FC<{
         await handlerUpdateUser(values);
       }}
     >
-      {({ dirty, handleChange, errors, touched, setFieldValue }) => (
+      {({ dirty, errors, touched }) => (
         <Form className="flex w-full gap-3 h-full flex-col">
           <div className="flex gap-2 w-full">
             <div className="w-1/2 flex flex-col">
-              <span className="text-custom-grey text-sm">Nombre completo:</span>
+              <span className="text-custom-white text-sm">
+                Nombre completo:
+              </span>
               <Field
                 type="text"
                 name="name"
-                className={`border text-custom-white border-custom-red bg-transparent outline-none py-2 px-3 rounded w-full ${
+                className={`border text-custom-white border-custom-grey bg-transparent outline-none py-2 px-3 rounded w-full ${
                   (errors.name && touched.name) || error ? "error" : ""
                 }`}
               />
@@ -68,11 +71,11 @@ const FormUpdateUser: React.FC<{
               </span>
             </div>
             <div className="w-1/2 flex flex-col">
-              <span className="text-custom-grey text-sm">Email:</span>
+              <span className="text-custom-white text-sm">Email:</span>
               <Field
                 type="text"
                 name="email"
-                className={`border text-custom-white border-custom-red bg-transparent outline-none py-2 px-3 rounded w-full ${
+                className={`border text-custom-white border-custom-grey bg-transparent outline-none py-2 px-3 rounded w-full ${
                   (errors.email && touched.email) || error ? "error" : ""
                 }`}
               />
@@ -83,11 +86,11 @@ const FormUpdateUser: React.FC<{
             </div>
           </div>
           <div className="w-full flex flex-col">
-            <span className="text-custom-grey text-sm">Dirección:</span>
+            <span className="text-custom-white text-sm">Dirección:</span>
             <Field
               type="text"
               name="address"
-              className={`border text-custom-white border-custom-red bg-transparent outline-none py-2 px-3 rounded w-full ${
+              className={`border text-custom-white border-custom-grey bg-transparent outline-none py-2 px-3 rounded w-full ${
                 (errors.address && touched.address) || error ? "error" : ""
               }`}
             />
