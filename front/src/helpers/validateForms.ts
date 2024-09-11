@@ -220,3 +220,23 @@ export const validateAppointmentUpdate = async (input: FormikValues) => {
   }
   return errors;
 };
+
+export const validateCreateSucursal = async (input: FormikValues)=>{
+  const errors: Partial<FormikValues> = {};
+  if (!input.name) {
+    errors.name = "El nombre es requerido";
+  }
+  if (!input.address) {
+    errors.address = "La dirección es requerida";
+  }
+  if (!input.latitud) {
+    errors.latitud = "La latitud es requerida";
+  }
+  if (!input.longitud) {
+    errors.longitud = "La longitud es requerida";
+  }
+  if (!input.details) {
+    errors.details = "El detalle es requerido";
+  }
+  return errors;
+} 
