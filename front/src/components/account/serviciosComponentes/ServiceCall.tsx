@@ -7,6 +7,7 @@ import ServiceView from "./ServiceView";
 
 const ServiceCall: React.FC = () => {
   const [servicios, setServicios] = useState<IService[]>([]);
+  const [updateFlag, setUpdateFlag] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,12 +19,16 @@ const ServiceCall: React.FC = () => {
       }
     };
 
-    fetchData(); 
-  }, []); 
+    fetchData();
+  }, [updateFlag]); // Dependencia en `updateFlag` para actualizar cuando se edite un servicio
+
+  const handleUpdate = () => {
+    setUpdateFlag(prev => !prev); // Alternar el estado para desencadenar la actualización
+  };
 
   return (
     <div>
-      <ServiceView servicios={servicios} />
+      <ServiceView servicios={servicios} handleUpdate={handleUpdate} />
     </div>
   );
 };

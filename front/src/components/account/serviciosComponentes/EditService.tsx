@@ -5,24 +5,21 @@ import { CSSTransition } from "react-transition-group";
 import EditFormService from "./EditFormService";
 
 interface EditServiceProps {
-  FetchServices: () => Promise<IService[]>;
   setViewEditService: React.Dispatch<React.SetStateAction<boolean>>;
   viewEditService: boolean;
   service: IService;
+  handleUpdate: () => void; // Añadir prop para manejar la actualización
 }
 
 const EditService: React.FC<EditServiceProps> = ({
-  FetchServices,
   setViewEditService,
   viewEditService,
   service,
+  handleUpdate,
 }) => {
-  // Crear una referencia para el contenedor del contenido del modal
   const modalContentRef = useRef<HTMLDivElement>(null);
 
-  // Manejar clics en el overlay
   const handleOverlayClick = (event: React.MouseEvent) => {
-    // Cerrar el modal solo si el clic es fuera del contenedor del modal
     if (modalContentRef.current && !modalContentRef.current.contains(event.target as Node)) {
       setViewEditService(false);
     }
@@ -55,8 +52,8 @@ const EditService: React.FC<EditServiceProps> = ({
           </button>
           <EditFormService
             service={service}
-            FetchServices={FetchServices}
             setViewEditService={setViewEditService}
+            handleUpdate={handleUpdate} // Pasar la función de actualización
           />
         </div>
       </div>

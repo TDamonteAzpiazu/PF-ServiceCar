@@ -1,11 +1,11 @@
+"use client"
 import { IService } from "@/helpers/types/types";
 import Link from "next/link";
 import InhabilitarButton from "./InhabilitarButton";
 import EditarButton from "./EditarButton";
 import { useState } from "react";
-import { FetchServicio } from "@/helpers/serviciosFetch";
 
-const ServiceCardView: React.FC<IService> = ({ id, type, description, price, status, sucursales, image, vehiculo }) => {
+const ServiceCardView: React.FC<IService & { handleUpdate: () => void }> = ({ id, type, description, price, status, sucursales, image, vehiculo, handleUpdate }) => {
   const [serviceStatus, setServiceStatus] = useState(status);
 
   const handleStatusChange = () => {
@@ -24,12 +24,11 @@ const ServiceCardView: React.FC<IService> = ({ id, type, description, price, sta
           </div>
           <div className="flex items-center gap-2">
             <p className="text-custom-grey lg:text-base sm:text-sm text-base">${price}</p>
-
           </div>
         </div>
       </Link>
       <div className="flex gap-2 mx-4 mb-4">
-        <EditarButton service={serviceData} FetchServices={FetchServicio} />
+        <EditarButton service={serviceData} handleUpdate={handleUpdate} />
         <InhabilitarButton id={id} status={serviceStatus} onStatusChange={handleStatusChange} />
       </div>
     </div>
