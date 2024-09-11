@@ -1,26 +1,24 @@
-import React, { useState } from "react";
-import ServiceEditModal from "./ServiceEditModal"; // El nombre del modal actualizado
-import { IService } from "@/helpers/types/types";
+import React, { useState } from 'react';
+import { IService } from '@/helpers/types/types';
+import EditService from './EditService'; // Asegúrate de que la ruta sea correcta
 
-const EditarButton: React.FC<{ service: IService }> = ({ service }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleOpenModal = () => setIsModalOpen(true);
-  const handleCloseModal = () => setIsModalOpen(false);
+const EditarButton: React.FC<{ service: IService; FetchServices: () => Promise<IService[]> }> = ({ service, FetchServices }) => {
+  const [viewEditService, setViewEditService] = useState<boolean>(false);
 
   return (
     <>
       <button
-        onClick={handleOpenModal}
-        className="text-white border py-2 px-4 rounded hover:bg-custom-red transition duration-300"
+        onClick={() => setViewEditService(true)}
+        className="border border-blue-600 text-blue-600 rounded-lg p-2 text-base hover:bg-blue-600 hover:text-custom-white"
       >
         Editar
       </button>
-
-      {isModalOpen && (
-        <ServiceEditModal
+      {viewEditService && (
+        <EditService
+          FetchServices={FetchServices}
+          setViewEditService={setViewEditService}
+          viewEditService={viewEditService}
           service={service}
-          onClose={handleCloseModal} // Este cierra el modal tras la edición
         />
       )}
     </>

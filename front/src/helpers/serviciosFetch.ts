@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import { IService, ISucursales, ISucursalesDto } from "./types/types";
+import { IService, IServiceDto, ISucursales, ISucursalesDto } from "./types/types";
 
 const apiURL = process.env.NEXT_PUBLIC_URL;
 
@@ -180,5 +180,43 @@ export const editSucursal = async (
   } catch (error: any) {
     console.log(error);
     setError(error);
+  }
+};
+
+
+export const updateService = async (
+  token: string,
+  setError: React.Dispatch<React.SetStateAction<string | null>>,
+  values: IServiceDto,
+  id: string
+) => {
+  try {
+    const response = await fetch(`${apiURL}/services/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify(values),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      Swal.fire({
+        title: 'Servicio actualizado exitosamente',
+        text: 'Ya puede visualizar los cambios.',
+        icon: 'success',
+      });
+      return data;
+    } else {
+      // Manejo de errores basados en el estado de respuesta
+      setError(data.message || 'Error al actualizar el servicio. Inténtalo de nuevo.');
+      return null;
+    }
+  } catch (error: any) {
+    console.log(error);
+    setError(error.message || 'Error de red. Inténtalo de nuevo.');
+    return null;
   }
 };

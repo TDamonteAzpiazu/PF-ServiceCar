@@ -1,7 +1,7 @@
 import React from "react";
 import { IoMdClose } from "react-icons/io";
 import { CSSTransition } from "react-transition-group";
-import ServiceForm from "./ServiceForm";
+// import ServiceForm from "./ServiceForm";
 
 interface ServiceFormModalProps {
   isModalOpen: boolean;
@@ -29,7 +29,7 @@ const ServiceFormModal: React.FC<ServiceFormModalProps> = ({
           >
             <IoMdClose size={24} />
           </button>
-          <ServiceForm setIsModalOpen={setIsModalOpen} />
+          {/* <ServiceForm setIsModalOpen={setIsModalOpen} /> */}
         </div>
       </div>
     </CSSTransition>

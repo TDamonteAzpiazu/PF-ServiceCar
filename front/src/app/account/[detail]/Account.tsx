@@ -13,7 +13,7 @@ const Account: React.FC<{ params: { detail: string } }> = ({ params }) => {
     detail !== "user" &&
     detail !== "reservations" &&
     detail !== "opinions" &&
-    detail !== "services" &&
+    detail !== "servicios" &&
     detail !== "sucursales"
   ) {
     return <div>Invalid detail parameter.</div>;
@@ -24,6 +24,7 @@ const Account: React.FC<{ params: { detail: string } }> = ({ params }) => {
       {detail === "user" && <InfoAccount />}
       {detail === "reservations" && <Reservations />}
       {detail === "opinions" && <Opinions />}
+      {detail == "servicios" && <Services/>}
       {detail === "sucursales" && <SucursalesAdmin />}
     </main>
   );
