@@ -97,6 +97,16 @@ export interface IService {
   status: string;
   vehiculo: string;
 }
+
+export interface IServiceDto{
+  type: string;
+  description: string;
+  price: number;
+  status: string,
+  vehiculo: string,
+  sucursales: string[]
+}
+
 export interface IOpinion {
   estrellas: number;
   nombre: string;

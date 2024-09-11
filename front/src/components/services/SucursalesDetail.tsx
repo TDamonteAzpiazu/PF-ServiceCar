@@ -78,7 +78,7 @@ const SucursalesDetail: React.FC<{ service: IService }> = ({ service }) => {
           <p className="text-custom-grey font-extralight pb-4">
             {selectedSucursal.details}
           </p>
-          {/* <Map
+          <Map
             apiKey={apiKey!}
             center={{
               lat: Number(selectedSucursal.latitud),
@@ -86,7 +86,7 @@ const SucursalesDetail: React.FC<{ service: IService }> = ({ service }) => {
             }}
             zoom={14}
             markers={markers}
-          /> */}
+          />
         </div>
       ) : (
         ""

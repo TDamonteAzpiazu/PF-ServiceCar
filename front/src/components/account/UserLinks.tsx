@@ -101,9 +101,9 @@ const UserLinks: React.FC = () => {
                 <MdMiscellaneousServices />
               </span>
               <Link
-                href={`${PATHROUTES.DASHBOARD}/services`}
+                href={`${PATHROUTES.DASHBOARD}/servicios`}
                 className={`hover:text-custom-white ${
-                  pathName === `${PATHROUTES.DASHBOARD}/services`
+                  pathName === `${PATHROUTES.DASHBOARD}/servicios`
                     ? "text-custom-white"
                     : ""
                 }`}
