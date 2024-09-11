@@ -62,6 +62,7 @@ const Navbar: React.FC = () => {
     >
       <div className="pl-3 flex w-3/5 gap-4" >
         <Image src={"/garagejs.svg"} alt="Garagejs" width={110} height={10} /> 
+  
 
         <div className="flex items-center">
           <SubNav typeClass={true} dataUser={dataUser}/>
