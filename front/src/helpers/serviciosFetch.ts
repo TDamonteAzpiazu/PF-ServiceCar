@@ -50,6 +50,25 @@ export const FetchSucursales = async () => {
   }
 };
 
+export const UpdateServiceStatus = async (id: string, newStatus: string) => {
+  try {
+    const res = await fetch(`${apiURL}/services/status/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status: newStatus }),
+    });
+    if (!res.ok) {
+      throw new Error(`Error actualizando el servicio: ${res.status}`);
+    }
+    const updatedService: IService = await res.json();
+    return updatedService;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+};
+
 export const deleteSucursal = async (token: string, sucursal: ISucursales) => {
   try {
     const result = await Swal.fire({
