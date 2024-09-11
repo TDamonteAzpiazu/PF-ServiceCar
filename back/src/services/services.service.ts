@@ -10,7 +10,7 @@ import { Service } from './services.entity';
 import { Status } from '../enum/status.enum';
 import { predefinedServices } from '../helpers/services';
 import { Appointment } from '../appointments/appointments.entity';
-import { CreateServiceDto } from 'src/dto/create-service.dto';
+import { CreateServiceDto, UpdateServiceDto } from 'src/dto/create-service.dto';
 import { Sucursal } from '../sucursales/sucursales.entity';
 import { predefinedSucursales } from '../helpers/sucursales';
 
@@ -104,20 +104,29 @@ export class ServicesService implements OnModuleInit {
     return service.id;
   }
 
-  async updateService(id: string, serviceData: Partial<Omit<Service, 'id' | 'status'>>) {
+  async updateService(id: string, updateData: UpdateServiceDto): Promise<Service> {
+    const { sucursales, ...rest } = updateData;
+
+    // Buscar el servicio a actualizar
     const service = await this.servicesRepository.findOne({ where: { id } });
 
     if (!service) {
-      throw new NotFoundException(`Couldn't find service with id '${id}'`);
-    }
-    
-    if (service.status === Status.Inactive) {
-      throw new BadRequestException(`Service with id '${id}' is inactive`);
+      throw new NotFoundException('Service not found');
     }
 
-    // Update service with provided data
-    await this.servicesRepository.update(id, serviceData);
-    return id;
+    // Si se proporcionan nombres de sucursales, convertirlos en entidades
+    if (sucursales && sucursales.length > 0) {
+      const sucursalesEntities = await this.findSucursalesByNames(sucursales);
+      if (sucursalesEntities.length !== sucursales.length) {
+        throw new BadRequestException('Some of the provided branch names are invalid');
+      }
+      service.sucursales = sucursalesEntities;
+    }
+
+    // Actualizar solo los campos proporcionados
+    Object.assign(service, rest);
+
+    return await this.servicesRepository.save(service);
   }
 
   async findSucursalesByNames(names: string[]): Promise<Sucursal[]> {
