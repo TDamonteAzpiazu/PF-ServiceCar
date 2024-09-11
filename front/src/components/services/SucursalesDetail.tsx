@@ -45,22 +45,28 @@ const SucursalesDetail: React.FC<{ service: IService }> = ({ service }) => {
     <div className="my-5">
       <h2 className="text-custom-white text-2xl mb-3">Nuestras sucursales</h2>
       <div className="flex space-x-4 mb-4">
-        {filterSucursales.map((sucursal) => (
-          <button
-            key={sucursal.id}
-            onClick={() => setSelectedSucursal(sucursal)}
-            className={`py-2 px-4 rounded ${
-              selectedSucursal?.id === sucursal.id
-                ? "bg-custom-red text-white"
-                : "bg-custom-grey"
-            }`}
-          >
-            {sucursal.name}
-          </button>
+        {filterSucursales.map((sucursal: ISucursales) => (
+          <>
+            {sucursal.status !== "active" ? (
+              ""
+            ) : (
+              <button
+                key={sucursal.id}
+                onClick={() => setSelectedSucursal(sucursal)}
+                className={`py-2 px-4 rounded ${
+                  selectedSucursal?.id === sucursal.id
+                    ? "bg-custom-red text-white"
+                    : "bg-custom-grey"
+                }`}
+              >
+                {sucursal.name}
+              </button>
+            )}
+          </>
         ))}
       </div>
 
-      {selectedSucursal && (
+      {selectedSucursal && selectedSucursal.status === "active" ? (
         <div>
           <h3 className="text-lg ">{selectedSucursal.name}</h3>
           <p className="text-custom-grey py-3 flex items-center">
@@ -82,6 +88,8 @@ const SucursalesDetail: React.FC<{ service: IService }> = ({ service }) => {
             markers={markers}
           /> */}
         </div>
+      ) : (
+        ""
       )}
     </div>
   );

@@ -2,7 +2,7 @@ import { IOpinionUser } from "@/helpers/types/types";
 import React from "react";
 import { FaQuoteLeft, FaStar } from "react-icons/fa";
 
-const OpinionCard: React.FC<{ opinion: IOpinionUser; index: number }> = ({
+const OpinionCardUser: React.FC<{ opinion: IOpinionUser; index: number }> = ({
   index,
   opinion,
 }) => {
@@ -15,7 +15,7 @@ const OpinionCard: React.FC<{ opinion: IOpinionUser; index: number }> = ({
   };
   return (
     <div
-      key={index}
+  
       className={`rounded-xl p-6 shadow-md w-full md:w-1/3 max-w-xs max-h-[600px] min-h-[500px] ${
         index === 1 ? "bg-red-700" : "bg-custom-grey"
       }`}
@@ -38,4 +38,4 @@ const OpinionCard: React.FC<{ opinion: IOpinionUser; index: number }> = ({
   );
 };
 
-export default OpinionCard;
+export default OpinionCardUser;

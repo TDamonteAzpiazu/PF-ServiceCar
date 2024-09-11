@@ -73,25 +73,31 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
         mostrarFiltros ? "flex" : "hidden"
       }`}
     >
-      <div className="p-3 " style={{minWidth:"220px"}}>
+      <div className="p-3 " style={{ minWidth: "220px" }}>
         <h3 className="font-semibold text-lg mb-2">Filtros</h3>
         <div className="mb-4">
           <h4 className="font-semibold">Sucursales</h4>
-          {sucursalesData.map((sucursal) => (
-            <div key={sucursal.name} className="flex items-center gap-1">
-              <input
-                type="checkbox"
-                id={`sucursal-${sucursal.name}`}
-                value={sucursal.name}
-                onChange={() => handleSucursalChange(sucursal.name)}
-              />
-              <label
-                htmlFor={`sucursal-${sucursal.name}`}
-                className="ml-2 md:text-base text-sm"
-              >
-                {sucursal.name}
-              </label>
-            </div>
+          {sucursalesData.map((sucursal: ISucursales) => (
+            <>
+              {sucursal.status === "active" ? (
+                <div key={sucursal.name} className="flex items-center gap-1">
+                  <input
+                    type="checkbox"
+                    id={`sucursal-${sucursal.name}`}
+                    value={sucursal.name}
+                    onChange={() => handleSucursalChange(sucursal.name)}
+                  />
+                  <label
+                    htmlFor={`sucursal-${sucursal.name}`}
+                    className="ml-2 md:text-base text-sm"
+                  >
+                    {sucursal.name}
+                  </label>
+                </div>
+              ) : (
+                ""
+              )}
+            </>
           ))}
         </div>
         <div>

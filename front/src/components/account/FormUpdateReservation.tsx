@@ -13,6 +13,7 @@ import React, { useState } from "react";
 import Cookies from "js-cookie";
 import PATHROUTES from "@/helpers/PathRoutes";
 import { updateAppointment } from "@/helpers/fetchReservations";
+import "../../styles/forms.css"
 
 const FormUpdateReservation: React.FC<{
   appointment: IAppointmentUser;
@@ -65,12 +66,12 @@ const FormUpdateReservation: React.FC<{
         <Form className="flex w-full gap-3 h-full flex-col">
           <div className="flex gap-2 w-full">
             <div className="w-1/2 flex flex-col">
-              <span className="text-custom-grey text-sm">Fecha</span>
+              <span className="text-custom-white text-sm">Fecha</span>
               <Field
                 type="date"
                 name="date"
                 min={getTomorrowDate()}
-                className={`border border-custom-red bg-transparent outline-none py-2 px-3 rounded w-full ${
+                className={`border border-custom-grey bg-transparent outline-none py-2 px-3 rounded w-full ${
                   (errors.date && touched.date) || error ? "error" : ""
                 }`}
                 onChange={(e: any) => {
@@ -83,11 +84,11 @@ const FormUpdateReservation: React.FC<{
               </span>
             </div>
             <div className="w-1/2 flex flex-col">
-              <span className="text-custom-grey text-sm">Horario</span>
+              <span className="text-custom-white text-sm">Horario</span>
               <Field
                 type="time"
                 name="time"
-                className={`border border-custom-red bg-transparent outline-none py-2 px-3 rounded w-full ${
+                className={`border border-custom-grey bg-transparent outline-none py-2 px-3 rounded w-full ${
                   (errors.time && touched.time) || error ? "error" : ""
                 }`}
                 list="time-options"
@@ -103,11 +104,11 @@ const FormUpdateReservation: React.FC<{
             </div>
           </div>
           <div className="w-full flex flex-col">
-            <span className="text-custom-grey text-sm">Servicios</span>
+            <span className="text-custom-white text-sm">Servicios</span>
             <Field
               as="select"
               name="servicios"
-              className={`border border-custom-red bg-transparent outline-none py-2 px-3 rounded w-full ${
+              className={`border border-custom-grey bg-transparent outline-none py-2 px-3 rounded w-full ${
                 (errors.servicios && touched.servicios) || error ? "error" : ""
               }`}
               onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -142,11 +143,11 @@ const FormUpdateReservation: React.FC<{
             </Field>
             {selectedService && (
               <div className="w-full flex flex-col mt-4">
-                <span className="text-custom-grey text-sm">Sucursal</span>
+                <span className="text-custom-white text-sm">Sucursal</span>
                 <Field
                   as="select"
                   name="sucursal"
-                  className={`border border-custom-red bg-transparent outline-none py-2 px-3 rounded w-full ${
+                  className={`border border-custom-grey bg-transparent outline-none py-2 px-3 rounded w-full ${
                     (errors.sucursal && touched.sucursal) || error
                       ? "error"
                       : ""
