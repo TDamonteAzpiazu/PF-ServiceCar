@@ -21,7 +21,7 @@ const StatusButton: React.FC<{ id: string; status: string; onStatusChange: () =>
           setLoading(true);
           await UpdateServiceStatus(id, newStatus);
           Swal.fire("¡Éxito!", `El servicio ha sido ${action} correctamente.`, "success");
-          onStatusChange();  // Refrescar estado del servicio
+          onStatusChange(); 
         } catch (error) {
           Swal.fire("Error", "Hubo un problema al actualizar el estado del servicio.", "error");
         } finally {

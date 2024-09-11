@@ -53,8 +53,8 @@ export const FetchSucursales = async () => {
 
 export const UpdateServiceStatus = async (id: string, newStatus: string) => {
   try {
-    const res = await fetch(`${apiURL}/services/${id}`, {
-      method: "DELETE",
+    const res = await fetch(`${apiURL}/services/status/${id}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
@@ -114,7 +114,7 @@ export const addService = async (
   }
 };
 
-export const updateService = async (id: string, updatedData: any) => {
+export const updateService = async (id: string, updatedData: Partial<Omit<IService, 'id' | 'status'>>) => {
   try {
     const res = await fetch(`${apiURL}/services/${id}`, {
       method: "PUT",
@@ -125,8 +125,20 @@ export const updateService = async (id: string, updatedData: any) => {
     });
 
     if (!res.ok) {
-      throw new Error(`Error al actualizar el servicio: ${res.status}`);
+      if (res.status === 404) {
+        throw new Error(`No se pudo encontrar el servicio con id '${id}'`);
+      }
+      if (res.status === 400) {
+        const errorData = await res.json();
+        if (errorData.message.includes('inactive')) {
+          throw new Error(`El servicio con id '${id}' está inactivo y no puede ser actualizado`);
+        }
+        throw new Error(`Error al actualizar el servicio: ${errorData.message}`);
+      }
+      throw new Error(`Error desconocido: ${res.status}`);
     }
+
+    //actualiz del servicio
     const data = await res.json();
     return data;
   } catch (error) {
@@ -134,5 +146,6 @@ export const updateService = async (id: string, updatedData: any) => {
     return null;
   }
 };
+
 
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ServiceEditModal from "./ServiceEditModal";
+import ServiceEditModal from "./ServiceEditModal"; // El nombre del modal actualizado
 import { IService } from "@/helpers/types/types";
 
 const EditarButton: React.FC<{ service: IService }> = ({ service }) => {
@@ -18,7 +18,10 @@ const EditarButton: React.FC<{ service: IService }> = ({ service }) => {
       </button>
 
       {isModalOpen && (
-        <ServiceEditModal service={service} isOpen={isModalOpen} onClose={handleCloseModal} />
+        <ServiceEditModal
+          service={service}
+          onClose={handleCloseModal} // Este cierra el modal tras la edición
+        />
       )}
     </>
   );
