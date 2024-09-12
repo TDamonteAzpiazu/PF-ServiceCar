@@ -32,7 +32,8 @@
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
     "resend": "^4.0.0",
-    "sweetalert2": "^11.12.4"
+    "sweetalert2": "^11.12.4",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@types/cookie": "^0.6.0",

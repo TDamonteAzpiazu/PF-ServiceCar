@@ -20,11 +20,13 @@ const ContainerServices: React.FC = () => {
     const fetchData = async () => {
       try {
         const fetchedServicios = await FetchServicio();
-        setServicios(fetchedServicios);
-        setServiciosOrdenados(fetchedServicios);
+        // Filtrar servicios activos
+        const serviciosActivos = fetchedServicios.filter(servicio => servicio.status === "active");
+        setServicios(serviciosActivos);
+        setServiciosOrdenados(serviciosActivos);
 
         const vehiculosUnicos = Array.from(
-          new Set(fetchedServicios.flatMap((servicio) => servicio.vehiculo))
+          new Set(serviciosActivos.flatMap((servicio) => servicio.vehiculo))
         );
 
         setVehiculos(vehiculosUnicos);
