@@ -239,3 +239,34 @@ export const updateService = async (
     return null;
   }
 };
+
+export const createService = async (
+  token: string,
+  setError: React.Dispatch<React.SetStateAction<string | null>>,
+  values: IServiceDto
+) => {
+  try {
+    const response = await fetch(`${apiURL}/services`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // Asegúrate de que el token sea enviado
+      },
+      body: JSON.stringify(values),
+    });
+    const data = await response.json();
+    
+    if (response.ok) {
+      Swal.fire({
+        title: "Servicio creado exitosamente",
+        text: `Ya puede visualizarlo en su dashboard.`,
+        icon: "success",
+      });
+    }
+    return data;
+  } catch (error: any) {
+    console.log(error);
+    setError(error);
+  }
+};
+
