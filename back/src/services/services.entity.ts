@@ -22,7 +22,7 @@ export class Service {
   @IsNotEmpty()
   description: string;
 
-  @Column()
+  @Column({default: 'https://res.cloudinary.com/dc8tneepi/image/upload/v1719586450/nnpuge2eky9kzbswxmbk.png'})
   @IsString()
   @IsNotEmpty()
   image: string;

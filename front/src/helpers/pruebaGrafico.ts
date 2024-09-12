@@ -86,3 +86,35 @@ export const valoresGrafico = {
       820
     ]
   }
+
+export const valoresGraficoUsuarios = {
+  "labels": [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre"
+  ],
+  "label": "Nuevos usuarios",
+  "data": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0
+  ]
+}

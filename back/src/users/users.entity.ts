@@ -1,4 +1,4 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsString, IsOptional, IsStrongPassword, IsUUID } from "class-validator";
+import { IsEmail, IsEnum, IsNotEmpty, IsString, IsOptional, IsStrongPassword, IsUUID, IsDate } from "class-validator";
 import { Appointment } from "../appointments/appointments.entity";
 import { Role } from "../auth/roles.enum";
 import { Status } from "../enum/status.enum";
@@ -50,5 +50,10 @@ export class User {
     @IsEnum(Status)
     @IsNotEmpty()
     status: Status; 
+
+    @Column()
+    @IsDate()
+    @IsNotEmpty()
+    registerDate: Date;
 }
 
