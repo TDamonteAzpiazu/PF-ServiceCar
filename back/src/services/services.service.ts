@@ -184,4 +184,13 @@ export class ServicesService implements OnModuleInit {
 
     return { reservations, total };
   }
+
+  async updateImage(id: string, url: string) {
+    const serviceFound = await this.servicesRepository.findOne({ where : { id: id }});
+    if(!serviceFound) {
+        throw new NotFoundException('Service not found');
+    }
+    serviceFound.image = url;
+    return await this.servicesRepository.save(serviceFound);
+}
 }
