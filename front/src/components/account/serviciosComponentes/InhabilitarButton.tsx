@@ -7,7 +7,7 @@ const StatusButton: React.FC<{ id: string; status: string; onStatusChange: () =>
   const isInactive = status === "inactive";
 
   const handleStatusChange = async () => {
-    const action = isInactive ? "habilitar" : "inhabilitar";
+    const action = isInactive ? "habilitar" : "deshabilitar";
     const newStatus = isInactive ? "active" : "inactive";
     Swal.fire({
       title: `¿Estás seguro de ${action} este servicio?`,
@@ -37,7 +37,7 @@ const StatusButton: React.FC<{ id: string; status: string; onStatusChange: () =>
       className={`py-2 px-4 rounded transition duration-300 ${isInactive ? "bg-green-500 hover:bg-green-600" : "bg-red-500 hover:bg-red-600"} text-white`}
       disabled={loading}
     >
-      {loading ? "Procesando..." : isInactive ? "Habilitar" : "Inhabilitar"}
+      {loading ? "Procesando..." : isInactive ? "Habilitar" : "Desabilitar"}
     </button>
   );
 };
