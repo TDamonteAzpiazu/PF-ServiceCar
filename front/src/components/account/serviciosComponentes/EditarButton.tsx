@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { IService } from '@/helpers/types/types';
 import EditService from './EditService'; // Asegúrate de que la ruta sea correcta
 
-const EditarButton: React.FC<{ service: IService; FetchServices: () => Promise<IService[]> }> = ({ service, FetchServices }) => {
+const EditarButton: React.FC<{ service: IService; handleUpdate: () => void }> = ({ service, handleUpdate }) => {
   const [viewEditService, setViewEditService] = useState<boolean>(false);
 
   return (
@@ -15,10 +15,10 @@ const EditarButton: React.FC<{ service: IService; FetchServices: () => Promise<I
       </button>
       {viewEditService && (
         <EditService
-          FetchServices={FetchServices}
           setViewEditService={setViewEditService}
           viewEditService={viewEditService}
           service={service}
+          handleUpdate={handleUpdate} // Pasar la función de actualización
         />
       )}
     </>

@@ -102,7 +102,6 @@ export interface IServiceDto{
   type: string;
   description: string;
   price: number;
-  status: string,
   vehiculo: string,
   sucursales: string[]
 }
