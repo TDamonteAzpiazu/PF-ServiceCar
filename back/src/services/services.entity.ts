@@ -1,10 +1,11 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn, JoinTable } from 'typeorm';
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn, JoinTable, OneToMany } from 'typeorm';
 import { Status } from '../enum/status.enum';
 import { IsEnum, IsNotEmpty, IsNumber, IsPositive, IsString, IsUUID } from 'class-validator';
 import { v4 as uuid } from 'uuid';
 import { Appointment } from 'src/appointments/appointments.entity';
 import { Sucursal } from '../sucursales/sucursales.entity';
 import { Vehiculos } from '../enum/vehiculos.enum';
+import { Review } from 'src/reviews/reviews.entity';
 
 @Entity({ name: 'services' })
 export class Service {
@@ -49,4 +50,7 @@ export class Service {
   @ManyToMany(() => Sucursal, (sucursal) => sucursal.services)
   @JoinTable()
   sucursales: Sucursal[];
+
+  @OneToMany(() => Review, (review) => review.service)
+  reviews: Review[];
 }

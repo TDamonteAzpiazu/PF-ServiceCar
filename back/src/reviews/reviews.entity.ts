@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Service } from 'src/services/services.entity';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 
 @Entity({
@@ -32,4 +33,8 @@ export class Review {
 
   @Column('timestamp')
   createdAt: Date;
+
+  @ManyToOne(() => Service, (service) => service.reviews)
+  @JoinColumn({ name: 'idService' })
+  service: Service;
 }

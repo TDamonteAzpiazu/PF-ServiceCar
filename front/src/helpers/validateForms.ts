@@ -240,3 +240,15 @@ export const validateCreateSucursal = async (input: FormikValues)=>{
   }
   return errors;
 } 
+
+export const validateCreateOpinion = async (input: FormikValues)=>{
+  const errors: Partial<FormikValues> = {};
+  if (!input.comment) {
+    errors.comment = "El comentario es requerido";
+  }
+  if (!input.rating) {
+    errors.rating = "La puntuación es requerida";
+  }
+  
+  return errors;
+} 

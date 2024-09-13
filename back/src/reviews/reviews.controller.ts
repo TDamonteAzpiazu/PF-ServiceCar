@@ -39,12 +39,13 @@ export class ReviewsController {
   @UseGuards(AuthGuard)
   @Post()
   async post(@Body() body: CreateReviewDto, @Req() request) {
-    const { rating, occupation, comment } = body;
+    const { rating, occupation, comment, idService } = body;
 
     return this.reviewsService.postReview({
       rating,
       occupation,
       comment,
+      idService,
       userId: request.user.id,
     });
   }
