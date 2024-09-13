@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { IService } from '@/helpers/types/types';
 import EditService from './EditService'; // Asegúrate de que la ruta sea correcta
+import { MdEdit } from "react-icons/md";
+
 
 const EditarButton: React.FC<{ service: IService; handleUpdate: () => void }> = ({ service, handleUpdate }) => {
   const [viewEditService, setViewEditService] = useState<boolean>(false);
@@ -11,14 +13,14 @@ const EditarButton: React.FC<{ service: IService; handleUpdate: () => void }> = 
         onClick={() => setViewEditService(true)}
         className="border border-blue-600 text-blue-600 rounded-lg p-2 text-base hover:bg-blue-600 hover:text-custom-white"
       >
-        Editar
+        <MdEdit/>
       </button>
       {viewEditService && (
         <EditService
           setViewEditService={setViewEditService}
           viewEditService={viewEditService}
           service={service}
-          handleUpdate={handleUpdate} // Pasar la función de actualización
+          handleUpdate={handleUpdate} 
         />
       )}
     </>

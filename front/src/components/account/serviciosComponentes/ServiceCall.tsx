@@ -1,5 +1,4 @@
 "use client";
-
 import { FetchServicio } from "@/helpers/serviciosFetch";
 import { IService } from "@/helpers/types/types";
 import { useEffect, useState } from "react";
@@ -20,10 +19,10 @@ const ServiceCall: React.FC = () => {
     };
 
     fetchData();
-  }, [updateFlag]); // Dependencia en `updateFlag` para actualizar cuando se edite un servicio
+  }, [updateFlag]); 
 
   const handleUpdate = () => {
-    setUpdateFlag(prev => !prev); // Alternar el estado para desencadenar la actualización
+    setUpdateFlag(prev => !prev); 
   };
 
   return (

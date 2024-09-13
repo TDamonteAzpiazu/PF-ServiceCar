@@ -25,7 +25,10 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
     const fetchAndSetSucursales = async () => {
       try {
         const data = await FetchSucursales();
-        setSucursalesData(data);
+        const sucursalesActivas = data.filter(
+          (sucursal: ISucursales) => sucursal.status === "active"
+        );
+        setSucursalesData(sucursalesActivas);
       } catch (error) {
         console.error("Error fetching sucursales:", error);
       }
