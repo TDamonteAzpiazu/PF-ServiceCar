@@ -26,6 +26,11 @@ export class ReviewsController {
     return this.reviewsService.getReviews();
   }
 
+  @Get('user/:id')
+  async getByUser(@Param('id', ParseUUIDPipe) id: string) {
+    return this.reviewsService.getReviewsByUser(id);
+  }
+
   @Get(':id')
   async getById(@Param('id', ParseUUIDPipe) id: string) {
     return this.reviewsService.getReviewById(id);
