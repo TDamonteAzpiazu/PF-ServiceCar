@@ -41,7 +41,7 @@ const ServiceCardView: React.FC<IService & { handleUpdate: () => void }> = ({
         serviceStatus === "inactive" ? "opacity-50" : ""
       }`}
     >
-      <Link href={`/services/${id}`} className="flex flex-col px-4 py-4 w-full">
+      <Link href={`/servicios/${id}`} className="flex flex-col px-4 py-4 w-full">
         <div className="flex justify-between w-full items-center">
           <div className="flex flex-col">
             <h2 className="lg:text-base sm:text-sm text-base">{type}</h2>
