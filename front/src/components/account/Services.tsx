@@ -1,20 +1,24 @@
-import React from 'react';
-import ServiceCall from './serviciosComponentes/ServiceCall';
-import ServiceAddDelete from './serviciosComponentes/ServiceAdd';
+'use client'
+import React from "react";
+import ServiceCall from "./serviciosComponentes/ServiceCall";
+import { useSelector } from "react-redux";
+import ServiceAddDelete from "./serviciosComponentes/ServiceAdd";
+import { IUser } from "@/helpers/types/types";
 
 const Services: React.FC = () => {
+  const dataUser: IUser = useSelector((state: any) => state.user.user);
   return (
-    <section className="py-3 w-full text-custom-white">
-      <h1 className="text-3xl mb-4">Servicios Disponibles</h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="col-span-2">
-          <ServiceCall />
-        </div>
-        <div className="col-span-1">
-          <ServiceAddDelete /> 
-        </div>
+    dataUser &&
+    dataUser.role === "admin" && (
+    <section className=" w-full text-custom-white ">
+      <div className="flex justify-between pt-3 pb-5 items-center">
+        <h1 className="font-semibold text-2xl">Servicios Disponibles</h1>
+        <ServiceAddDelete />
       </div>
-    </section>
+       <div className="w-full">
+        <ServiceCall />
+      </div> 
+    </section>)
   );
 };
 

@@ -125,13 +125,18 @@ const ReservationModal: React.FC<{
             </div>
           </div>
           {preferenceId && <WalletMP preferenceId={preferenceId} />}
-          <div className="flex justify-center pt-3">
+          <div className="flex justify-around gap-2 pt-3">
             <button
               onClick={() => setViewIappointmentDetail(false)}
               className="p-2 w-32 transition-all text-custom-white bg-custom-red rounded-md hover:bg-red-700"
             >
               Aceptar
             </button>
+            {appointment.pago !== "Pendiente" && (
+              <button className="p-2 w-32 font-semibold transition-all text-custom-red bg-zinc-400  rounded-md hover:bg-custom-white hover:text-red-700">
+                Opinar
+              </button>
+            )}
           </div>
         </div>
       </div>

@@ -6,6 +6,7 @@ const OpinionCardUser: React.FC<{ opinion: IOpinionUser; index: number }> = ({
   index,
   opinion,
 }) => {
+ 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     const day = String(date.getDate()).padStart(2, "0");
@@ -15,8 +16,7 @@ const OpinionCardUser: React.FC<{ opinion: IOpinionUser; index: number }> = ({
   };
   return (
     <div
-  
-      className={`rounded-xl p-6 shadow-md w-full md:w-1/3 max-w-xs max-h-[600px] min-h-[500px] ${
+      className={`rounded-xl p-6 shadow-md w-full  max-w-xs max-h-[600px] min-h-[500px] ${
         index === 1 ? "bg-red-700" : "bg-custom-grey"
       }`}
     >
