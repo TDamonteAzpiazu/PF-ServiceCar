@@ -15,6 +15,8 @@ import { AppService } from './app.service';
 import { MercadopagoModule } from './mercadopago/mercadopago.module';
 import { SucursalesModule } from './sucursales/sucursales.module';
 import { AdmindashModule } from './admindash/admindash.module';
+import { MailService } from './mail/mail.service';
+import { ScheduleModule } from '@nestjs/schedule';
 
 dotenvConfig({ path: '.env.development' });
 @Module({
@@ -43,8 +45,9 @@ dotenvConfig({ path: '.env.development' });
       signOptions: { expiresIn: '1h' },
       secret: process.env.JWT_SECRET,
     }),
+    ScheduleModule.forRoot(),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, MailService],
 })
 export class AppModule {}
