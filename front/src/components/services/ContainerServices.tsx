@@ -31,9 +31,10 @@ const ContainerServices: React.FC = () => {
 
         setVehiculos(vehiculosUnicos);
 
-        // Fetch sucursales y actualizar el estado
         const fetchedSucursales = await FetchSucursales();
-        setUbicaciones(fetchedSucursales);
+        // Filtrar sucursales activas
+        const sucursalesActivas = fetchedSucursales.filter(sucursal => sucursal.status === "active");
+        setUbicaciones(sucursalesActivas);
       } catch (error) {
         console.error("Error fetching servicios:", error);
       }
