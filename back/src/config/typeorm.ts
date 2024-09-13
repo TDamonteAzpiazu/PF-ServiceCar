@@ -1,19 +1,16 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { join } from 'path';
-import { config as dotenvConfig } from 'dotenv';
 import { registerAs } from '@nestjs/config';
-
-// Cargar variables de entorno
-dotenvConfig({ path: '.env.development' });
+import { db } from './envs';
 
 // Configuración de TypeORM
 const config: DataSourceOptions = {
   type: 'postgres',
-  host: process.env.DB_HOST,
-  port: parseInt(process.env.DB_PORT, 10),
-  username: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
+  host: db.host,
+  port: parseInt(db.port, 10),
+  username: db.username,
+  password: db.password,
+  database: db.name,
   synchronize: true,
   // dropSchema: true,
   logging: ['error'],

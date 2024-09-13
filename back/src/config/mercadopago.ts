@@ -1,10 +1,8 @@
 import { MercadoPagoConfig, Payment, Preference } from 'mercadopago';
-import { config as dotenvconfig } from 'dotenv';
-
-dotenvconfig({ path: '.env.development' });
+import { mercadopagoAccessToken } from './envs';
 
 const client = new MercadoPagoConfig({
-    accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN
+    accessToken: mercadopagoAccessToken,
 });
 const preference = new Preference(client);
 const payment = new Payment(client);

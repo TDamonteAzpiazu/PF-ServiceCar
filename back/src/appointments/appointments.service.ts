@@ -257,7 +257,6 @@ export class AppointmentsService {
   }
 
   async updatePayment(id: string): Promise<Appointment> {
-    console.log('segunda funcion:', id);
     const appointment = await this.appointmentRepository.findOne({
       where: { id },
     });
