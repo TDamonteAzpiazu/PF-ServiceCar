@@ -44,7 +44,7 @@ const ImageModal: React.FC<ImageModalProps> = ({ imageUrl, isOpen, onClose, serv
             confirmButtonText: "OK",
           });
           setSelectedFile(null);
-          handleUpdate(); // Actualizar la vista cuando se suba la imagen
+          handleUpdate(); 
           onClose(); // Cerrar el modal
         }
       } catch (error) {

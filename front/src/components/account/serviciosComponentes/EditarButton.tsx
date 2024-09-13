@@ -20,7 +20,7 @@ const EditarButton: React.FC<{ service: IService; handleUpdate: () => void }> = 
           setViewEditService={setViewEditService}
           viewEditService={viewEditService}
           service={service}
-          handleUpdate={handleUpdate} // Pasar la función de actualización
+          handleUpdate={handleUpdate} 
         />
       )}
     </>

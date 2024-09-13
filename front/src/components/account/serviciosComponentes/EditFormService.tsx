@@ -33,14 +33,14 @@ const EditFormService: React.FC<{
     const response = await updateService(token!, setError, values, service.id);
     if (response) {
       setViewEditService(false);
-      handleUpdate(); // Llamar a la función de actualización
+      handleUpdate(); 
     }
   };
 
   const handleSucursalToggle = (sucursal: string) => {
     setSelectedSucursales((prev) => {
       if (prev.includes(sucursal)) {
-        return prev.filter(item => item !== sucursal); // Eliminar sucursal
+        return prev.filter(item => item !== sucursal); 
       } else {
         return [...prev, sucursal]; // Agregar sucursal
       }
@@ -66,7 +66,6 @@ const EditFormService: React.FC<{
       }}
     >
       {({ dirty, values, errors, touched }) => {
-        // Check if form should be dirty (changed) based on field values or selectedSucursales
         const isFormDirty = dirty || selectedSucursales.join(", ") !== service.sucursales.join(", ");
 
         return (
@@ -122,7 +121,7 @@ const EditFormService: React.FC<{
                     value={selectedSucursales.join(", ")}
                     className="border-[1.8px] border-neutral-700 bg-transparent outline-none py-2 px-3 rounded w-full"
                   />
-                  {/* Botón para desplegar opciones */}
+                  {/* desplegar opciones */}
                   <button
                     type="button"
                     onClick={() => setShowSucursalesDropdown(!showSucursalesDropdown)}
@@ -169,7 +168,7 @@ const EditFormService: React.FC<{
                 className={`bg-custom-red text-custom-white rounded text-base py-2 sm:px-3 w-full font-semibold hover:bg-custom-white hover:text-custom-red ${
                   !isFormDirty ? "opacity-50 cursor-not-allowed" : ""
                 }`}
-                disabled={!isFormDirty} // Habilitar el botón solo si hay cambios
+                disabled={!isFormDirty} 
               >
                 Guardar Cambios
               </button>

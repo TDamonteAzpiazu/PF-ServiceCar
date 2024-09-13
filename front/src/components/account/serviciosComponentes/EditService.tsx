@@ -8,7 +8,7 @@ interface EditServiceProps {
   setViewEditService: React.Dispatch<React.SetStateAction<boolean>>;
   viewEditService: boolean;
   service: IService;
-  handleUpdate: () => void; // Añadir prop para manejar la actualización
+  handleUpdate: () => void; 
 }
 
 const EditService: React.FC<EditServiceProps> = ({

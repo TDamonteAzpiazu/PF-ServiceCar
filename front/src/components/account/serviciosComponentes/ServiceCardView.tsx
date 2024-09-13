@@ -69,7 +69,7 @@ const ServiceCardView: React.FC<IService & { handleUpdate: () => void }> = ({
         isOpen={isModalOpen}
         onClose={closeModal}
         serviceId={id}
-        handleUpdate={handleUpdate} // Pasa handleUpdate aquí
+        handleUpdate={handleUpdate} // Pasa handleUpdate aquii
       />
     </div>
   );

@@ -8,14 +8,12 @@ const ServiceFormModal: React.FC<{
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isModalOpen: boolean;
 }> = ({ setIsModalOpen, isModalOpen }) => {
-  // Manejador de clics para cerrar el modal
   const handleOverlayClick = () => {
     setIsModalOpen(false);
   };
 
-  // Manejador de clics dentro del contenido del modal para prevenir el cierre
   const handleContentClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    event.stopPropagation(); // Evita que el clic se propague al overlay
+    event.stopPropagation(); 
   };
 
   return (
@@ -27,11 +25,11 @@ const ServiceFormModal: React.FC<{
     >
       <div
         className="modal-overlay z-50"
-        onClick={handleOverlayClick} // Cierra el modal si se hace clic en el overlay
+        onClick={handleOverlayClick} 
       >
         <div
           className="modal-content-sucursal"
-          onClick={handleContentClick} // Evita el cierre al hacer clic en el contenido
+          onClick={handleContentClick} 
         >
           <div className="flex items-center mb-5 pb-5 border-b border-custom-grey w-full">
             <h3 className="font-semibold text-2xl">Crear Servicio</h3>

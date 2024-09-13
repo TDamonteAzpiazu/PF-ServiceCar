@@ -229,7 +229,7 @@ export const updateService = async (
       });
       return data;
     } else {
-      // Manejo de errores basados en el estado de respuesta
+    
       setError(data.message || 'Error al actualizar el servicio. Inténtalo de nuevo.');
       return null;
     }
@@ -239,6 +239,7 @@ export const updateService = async (
     return null;
   }
 };
+
 
 export const createService = async (
   token: string,
@@ -250,7 +251,7 @@ export const createService = async (
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, // Asegúrate de que el token sea enviado
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(values),
     });

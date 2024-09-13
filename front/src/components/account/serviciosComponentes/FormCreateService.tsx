@@ -119,7 +119,6 @@ const FormCreateService: React.FC<{
                 value={selectedSucursales.join(", ")}
                 className="border-[1.8px] border-neutral-700 bg-transparent outline-none py-2 px-3 rounded w-full"
               />
-              {/* Botón para desplegar opciones */}
               <button
                 type="button"
                 onClick={() => setShowSucursalesDropdown(!showSucursalesDropdown)}
@@ -147,7 +146,6 @@ const FormCreateService: React.FC<{
             )}
           </div>
 
-          {/* Vehículo */}
           <div className="w-full flex flex-col">
             <span className="text-custom-white text-sm">Vehículo</span>
             <Field
