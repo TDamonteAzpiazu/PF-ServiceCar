@@ -1,18 +1,20 @@
+"use client";
 import React from "react";
 import { IoMdClose } from "react-icons/io";
 import { CSSTransition } from "react-transition-group";
-// import ServiceForm from "./ServiceForm";
+import FormCreateService from "./FormCreateService";
 
-interface ServiceFormModalProps {
-  isModalOpen: boolean;
+const ServiceFormModal: React.FC<{
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
+  isModalOpen: boolean;
+}> = ({ setIsModalOpen, isModalOpen }) => {
+  const handleOverlayClick = () => {
+    setIsModalOpen(false);
+  };
 
-const ServiceFormModal: React.FC<ServiceFormModalProps> = ({
-  isModalOpen,
-  setIsModalOpen,
-}) => {
-  const handleClose = () => setIsModalOpen(false);
+  const handleContentClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation(); 
+  };
 
   return (
     <CSSTransition
@@ -21,15 +23,25 @@ const ServiceFormModal: React.FC<ServiceFormModalProps> = ({
       classNames="modal"
       unmountOnExit
     >
-      <div className="modal-overlay z-50 flex justify-center items-center">
-        <div className="modal-content max-w-2xl mx-auto p-8 bg-white rounded-lg shadow-lg relative">
+      <div
+        className="modal-overlay z-50"
+        onClick={handleOverlayClick} 
+      >
+        <div
+          className="modal-content-sucursal"
+          onClick={handleContentClick} 
+        >
+          <div className="flex items-center mb-5 pb-5 border-b border-custom-grey w-full">
+            <h3 className="font-semibold text-2xl">Crear Servicio</h3>
+          </div>
           <button
-            onClick={handleClose}
-            className="absolute top-5 right-5 p-1 text-red-500"
+            onClick={() => setIsModalOpen(false)}
+            className="absolute top-5 right-5 py-1 px-1.5 transition-all border-2 border-custom-red bg-transparent rounded-md hover:bg-custom-red text-custom-white hover:cursor-pointer"
           >
-            <IoMdClose size={24} />
+            <IoMdClose />
           </button>
-          {/* <ServiceForm setIsModalOpen={setIsModalOpen} /> */}
+
+          <FormCreateService setIsModalOpen={setIsModalOpen} />
         </div>
       </div>
     </CSSTransition>

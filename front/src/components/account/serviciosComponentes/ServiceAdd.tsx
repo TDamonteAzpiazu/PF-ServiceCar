@@ -13,7 +13,8 @@ const ServiceAdd: React.FC = () => {
     <div className="flex flex-col gap-4 p-4">
       <button
         onClick={handleModalToggle}
-        className="rounded py-2 px-3 bg-custom-red hover:text-custom-red hover:bg-custom-white"
+        className="bg-custom-red text-white py-2 px-4 rounded hover:bg-white hover:text-custom-red transition duration-300"
+       
       >
         Agregar Servicios
       </button>
