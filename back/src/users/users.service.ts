@@ -15,12 +15,14 @@ export class UsersService implements OnModuleInit{
     async onModuleInit() {
         const user = await this.userRepository.findOne({ where : { email: 'admin@example.com' }});
         if(!user) {
+            const date = new Date();
             const newUser = this.userRepository.create({
                 name: 'Admin',
                 email: 'admin@example.com',
                 password: await bcrypt.hash('Password1!', 10),
                 address: 'Calle falsa 123',
                 role: Role.Admin,
+                registerDate: date,
             });
             await this.userRepository.save(newUser);
         }

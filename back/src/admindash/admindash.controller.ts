@@ -16,4 +16,8 @@ export class AdmindashController {
     // Cantidad de turnos por servicio por mes (configurado para que sea 0 no se vea en el grafico)
 
     // Usuarios registrados por mes (agregar date: new Date() a la entidad user)
+    @Get('newUsers')
+    async getNewUsers() {
+        return await this.admindashService.getNewUsers();
+    }
 }

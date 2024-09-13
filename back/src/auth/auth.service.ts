@@ -52,12 +52,14 @@ export class AuthService {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
+        const date = new Date();
 
         const user = this.usersRepository.create({
             name,
             email,
             password: hashedPassword,
-            address
+            address,
+            registerDate: date
         });
 
         const savedUser = await this.usersRepository.save(user);
@@ -91,11 +93,13 @@ export class AuthService {
             // Si el usuario no existe, creamos un nuevo usuario
             const passwordDefault = "Nearvet@" + Math.floor(1000 + Math.random() * 9000).toString();
             const hashedPassword = await bcrypt.hash(passwordDefault, 10);
+            const date = new Date();
 
             userGoogle = this.usersRepository.create({
                 name,
                 email,
                 password: hashedPassword, // Guardamos la contraseña encriptada
+                registerDate: date
             });
 
             // Guardar el nuevo usuario en la base de datos

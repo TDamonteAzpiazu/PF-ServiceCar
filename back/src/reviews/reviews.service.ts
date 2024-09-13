@@ -50,4 +50,16 @@ export class ReviewsService {
 
     return review;
   }
+
+  async getReviewsByUser(userId: string) {
+    const user = await this.usersRepository.findOneBy({ id: userId });
+
+    if (!user) throw new NotFoundException('User not found');
+    const reviews = await this.reviewsRepository.find({
+      where: { name: user.name },
+    });
+
+    if (!reviews) throw new NotFoundException('User has no reviews.');
+    return reviews;
+  }
 }
