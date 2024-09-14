@@ -6,16 +6,14 @@ import { User } from "../users/users.entity";
 import { CreateUserDto } from "../dto/create-user.dto";
 import { JwtService } from "@nestjs/jwt";
 import * as jwt from 'jsonwebtoken';
-import axios from 'axios';
-import { config as dotenvConfig } from 'dotenv';
-dotenvConfig({ path: '.env.development' });
+import { auth0, jwtSecret } from 'src/config/envs';
 
 @Injectable()
 export class AuthService {
-    private readonly auth0BaseUrl = process.env.AUTH0_BASE_URL;
-    private readonly auth0ClientId = process.env.AUTH0_CLIENT_ID;
-    private readonly auth0Audience = process.env.AUTH0_AUDIENCE;
-    private readonly auth0Secret = process.env.AUTH0_SECRET;
+    private readonly auth0BaseUrl = auth0.baseUrl;
+    private readonly auth0ClientId = auth0.clientId;
+    private readonly auth0Audience = auth0.audience;
+    private readonly auth0Secret = auth0.secret;
 
     constructor(
         @InjectRepository(User)
@@ -37,7 +35,7 @@ export class AuthService {
             roles: [user.role],
         };
 
-        const token = this.jwtService.sign(userPayload, {secret: process.env.JWT_SECRET});
+        const token = this.jwtService.sign(userPayload, {secret: jwtSecret});
 
         return { success: 'Autenticación exitosa', token };
     }
@@ -108,7 +106,7 @@ export class AuthService {
 
         // Crear el payload para el token JWT
         const payload = { id: userGoogle.id, email: userGoogle.email };
-        const jwtToken = this.jwtService.sign(payload, {secret: process.env.JWT_SECRET}); // Generar el token JWT
+        const jwtToken = this.jwtService.sign(payload, {secret: jwtSecret}); // Generar el token JWT
 
         // Retornar el usuario junto con el token
         return {

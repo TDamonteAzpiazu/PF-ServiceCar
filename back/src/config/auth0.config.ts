@@ -1,11 +1,10 @@
-import {config as dotenvConfig} from "dotenv";
-dotenvConfig({path:".env.development"});
+import { auth0 } from './envs';
 
 export const config = {
     authRequired: false,
     auth0Logout: true,
-    secret: process.env.AUTH0_SECRET,
-    baseURL: process.env.AUTH0_AUDIENCE,
-    clientID: process.env.AUTH0_CLIENT_ID,
-    issuerBaseURL: process.env.AUTH0_BASE_URL
+    secret: auth0.secret,
+    baseURL: auth0.audience,
+    clientID: auth0.clientId,
+    issuerBaseURL: auth0.baseUrl,
 };

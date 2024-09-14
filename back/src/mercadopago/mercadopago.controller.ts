@@ -20,8 +20,6 @@ export class MercadoPagoController {
     @Get('success')
     @ApiOperation({ summary: 'Redirecciona a MercadoPago para pagar' })
     async success(@Query('external_reference') idAppointment: string, @Res() res) {
-        console.log('success');
-        console.log("Primera funcion: ",idAppointment);
         await this.appointmentsService.updatePayment(idAppointment);
         res.redirect('http://localhost:3000/account/reservations');
     }
@@ -29,7 +27,6 @@ export class MercadoPagoController {
     @Get('failure')
     @ApiOperation({ summary: 'Redirige al usuario a la página de servicios en caso de fallo en el pago' })
     failure(@Res() res) {
-        console.log('failure');
         res.redirect('http://localhost:3000/servicios');
     }
 }
