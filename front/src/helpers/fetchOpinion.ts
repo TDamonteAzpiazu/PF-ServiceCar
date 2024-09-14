@@ -5,8 +5,9 @@ export const createOpinion = async (
   values: any
 ) => {
   try {
-   
-   
+    
+    console.log(values);
+
     const response = await fetch(`${url}/reviews`, {
       method: "POST",
       headers: {
@@ -24,7 +25,7 @@ export const createOpinion = async (
       });
     }
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    console.log(error.message);
   }
 };

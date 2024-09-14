@@ -1,14 +1,20 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { ISucursales, IServiceDto } from "@/helpers/types/types";
-import { createService, FetchSucursales } from "@/helpers/serviciosFetch";
+import { ISucursales, IServiceDto, IService } from "@/helpers/types/types";
+import {
+  createService,
+  FetchServicio,
+  FetchSucursales,
+} from "@/helpers/serviciosFetch";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
+import { validateFormService } from "@/helpers/validateForms";
 
 const FormCreateService: React.FC<{
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({ setIsModalOpen }) => {
+  setServicios: React.Dispatch<React.SetStateAction<IService[]>>;
+}> = ({ setIsModalOpen, setServicios }) => {
   const [error, setError] = useState<string | null>(null);
   const [allSucursales, setAllSucursales] = useState<ISucursales[]>([]);
   const [selectedSucursales, setSelectedSucursales] = useState<string[]>([]);
@@ -30,6 +36,8 @@ const FormCreateService: React.FC<{
   const handleCreateService = async (values: IServiceDto) => {
     const response = await createService(token!, setError, values);
     if (response) {
+      const data = await FetchServicio();
+      setServicios(data);
       setIsModalOpen(false);
       Swal.fire({
         title: "Servicio creado exitosamente",
@@ -38,15 +46,14 @@ const FormCreateService: React.FC<{
       });
     }
   };
-
   const handleSucursalToggle = (sucursal: string) => {
     setSelectedSucursales((prev) => {
-      if (prev.includes(sucursal)) {
-        return prev.filter((item) => item !== sucursal);
-      } else {
-        return [...prev, sucursal];
-      }
+      const updated = prev.includes(sucursal)
+        ? prev.filter((item) => item !== sucursal)
+        : [...prev, sucursal];
+      return updated;
     });
+    setShowSucursalesDropdown(false); // Cierra el desplegable después de seleccionar una sucursal
   };
 
   return (
@@ -55,19 +62,24 @@ const FormCreateService: React.FC<{
         type: "",
         price: "",
         description: "",
-        sucursales: "",
+        sucursales: selectedSucursales,
         vehiculo: "",
       }}
-      onSubmit={async (values) => {
+      validate={validateFormService(selectedSucursales)}
+      onSubmit={async (values, { setErrors }) => {
+        if (selectedSucursales.length === 0) {
+          setErrors({ sucursales: "La sucursal es requerida" });
+          return;
+        }
         const updatedValues: IServiceDto = {
           ...values,
-          price: parseFloat(values.price), // Convertir el precio a número
+          price: parseFloat(values.price),
           sucursales: selectedSucursales,
         };
         await handleCreateService(updatedValues);
       }}
     >
-      {({ values }) => (
+      {({ values, errors, touched }) => (
         <Form className="flex w-full gap-3 h-full flex-col">
           {/* Tipo */}
           <div className="w-full flex flex-col">
@@ -75,7 +87,9 @@ const FormCreateService: React.FC<{
             <Field
               type="text"
               name="type"
-              className="border-[1.8px] border-neutral-700 bg-transparent outline-none py-2 px-3 rounded w-full"
+              className={`border-[1.8px] border-neutral-700 bg-transparent outline-none py-2 px-3 rounded w-full
+                ${(errors.type && touched.type) || error ? "error" : ""}
+              `}
             />
             <span style={{ color: "red" }}>
               <ErrorMessage name="type" />
@@ -88,7 +102,9 @@ const FormCreateService: React.FC<{
             <Field
               type="number"
               name="price"
-              className="border-[1.8px] border-neutral-700 bg-transparent outline-none py-2 px-3 rounded w-full"
+              className={`border-[1.8px] border-neutral-700 bg-transparent outline-none py-2 px-3 rounded w-full
+                ${(errors.price && touched.price) || error ? "error" : ""}
+              `}
             />
             <span style={{ color: "red" }}>
               <ErrorMessage name="price" />
@@ -101,7 +117,13 @@ const FormCreateService: React.FC<{
             <Field
               as="textarea"
               name="description"
-              className="resize-none border-[1.8px] h-[140px] border-neutral-700 bg-transparent outline-none py-2 px-3 rounded w-full"
+              className={`resize-none border-[1.8px] border-neutral-700 bg-transparent outline-none py-2 px-3 rounded w-full
+                ${
+                  (errors.description && touched.description) || error
+                    ? "error"
+                    : ""
+                }
+              `}
             />
             <span style={{ color: "red" }}>
               <ErrorMessage name="description" />
@@ -117,25 +139,38 @@ const FormCreateService: React.FC<{
                 name="sucursales"
                 disabled
                 value={selectedSucursales.join(", ")}
-                className="border-[1.8px] border-neutral-700 bg-transparent outline-none py-2 px-3 rounded w-full"
+                className={`border-[1.8px] border-neutral-700 bg-transparent outline-none py-2 px-3 rounded w-full
+                  ${
+                    (errors.sucursales && touched.sucursales) || error
+                      ? "error"
+                      : ""
+                  }
+                `}
               />
               <button
                 type="button"
-                onClick={() => setShowSucursalesDropdown(!showSucursalesDropdown)}
+                onClick={() =>
+                  setShowSucursalesDropdown(!showSucursalesDropdown)
+                }
                 className="ml-2 bg-custom-red text-white p-2 rounded"
               >
                 {showSucursalesDropdown ? "▲" : "▼"}
               </button>
             </div>
+            <span style={{ color: "red" }}>
+              <ErrorMessage name="sucursales" />
+            </span>
 
             {/* Desplegable de opciones */}
             {showSucursalesDropdown && (
-              <div className="absolute top-full mt-2 w-full max-h-40 overflow-y-auto bg-black border border-neutral-700 rounded z-10">
+              <div className="absolute top-full mt-2 w-full max-h-40 overflow-y-auto bg-[#2b2b2b] border border-neutral-700 rounded z-10">
                 {allSucursales.map((sucursal) => (
                   <div
                     key={sucursal.id}
                     className={`p-2 cursor-pointer ${
-                      selectedSucursales.includes(sucursal.name) ? "bg-gray-600" : ""
+                      selectedSucursales.includes(sucursal.name)
+                        ? "bg-gray-600"
+                        : ""
                     }`}
                     onClick={() => handleSucursalToggle(sucursal.name)}
                   >
@@ -151,12 +186,30 @@ const FormCreateService: React.FC<{
             <Field
               as="select"
               name="vehiculo"
-              className="border-[1.8px] border-neutral-700 bg-transparent outline-none py-2 px-3 rounded w-full"
+              className={`border-[1.8px] border-neutral-700 bg-transparent outline-none py-2 px-3 rounded w-full
+                ${(errors.vehiculo && touched.vehiculo) || error ? "error" : ""}
+              `}
             >
-              <option value="" label="Selecciona un vehículo" className="text-black" />
-              <option value="Auto" label="Auto" className="text-black" />
-              <option value="Moto" label="Moto" className="text-black" />
-              <option value="Camion" label="Camion" className="text-black"/>
+              <option
+                value=""
+                label="Selecciona un vehículo"
+                className="bg-[#2b2b2b] text-custom-grey"
+              />
+              <option
+                value="Auto"
+                label="Auto"
+                className="bg-[#2b2b2b] text-custom-white"
+              />
+              <option
+                value="Moto"
+                label="Moto"
+                className="bg-[#2b2b2b] text-custom-white"
+              />
+              <option
+                value="Camion"
+                label="Camion"
+                className="bg-[#2b2b2b] text-custom-white"
+              />
             </Field>
             <span style={{ color: "red" }}>
               <ErrorMessage name="vehiculo" />

@@ -15,12 +15,12 @@ const FormOpinion: React.FC<{
   const url = process.env.NEXT_PUBLIC_URL;
   const handleCreateOpinion = async (values: any) => {
     const dataSend = {
-      rating: values.rating,
+      rating: Number(values.rating),
       occupation: values.occupation,
       comment: values.comment,
       idService: service.id,
     };
-
+    console.log(service);
     try {
       const data = await createOpinion(url!, token!, dataSend);
       if (data) {

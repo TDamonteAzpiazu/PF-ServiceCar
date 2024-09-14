@@ -36,13 +36,13 @@ const ServiceCardView: React.FC<IService & { handleUpdate: () => void }> = ({
   const serviceData = { id, type, description, price, status, sucursales, image, vehiculo };
 
   return (
-    <div className={`bg-neutral-800 bg-opacity-75 py-3 px-2 rounded-md flex flex-col justify-between gap-1 ${serviceStatus === "inactive" ? "opacity-50" : ""}`}>
+    <div className={`bg-neutral-800  py-3 px-2 rounded-md flex flex-col justify-between min-h-40 ${serviceStatus === "inactive" ? "bg-opacity-50" : "bg-opacity-85"}`}>
       <Link href={`/services/${id}`} className="flex flex-col px-4 py-2 w-full">
         <div className="flex justify-between w-full items-center">
-          <div className="flex flex-col gap-2">
-            <h2 className="lg:text-base sm:text-sm text-base">{type}</h2>
+          <div className="flex flex-col gap-4">
+            <h2 className={`lg:text-base sm:text-sm text-base ${serviceStatus === "inactive" ? "text-" : ""}`}>{type}</h2>
             <p className="text-custom-grey lg:text-sm sm:text-xs text-sm">
-              {description.split(" ").slice(0, 10).join(" ") + " ..."}
+              {description.split(" ").slice(0, 10).join(" ") + ".."}
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -53,7 +53,7 @@ const ServiceCardView: React.FC<IService & { handleUpdate: () => void }> = ({
       <div className="flex items-end justify-between px-4">
         <EditarButton service={serviceData} handleUpdate={handleUpdate} />
         
-        <button onClick={openModal} className="border rounded-md border-custom-grey text-white py-1 px-3 hover:bg-gray-700">
+        <button onClick={openModal} className="border rounded-md border-custom-grey text-white py-2 px-3 hover:bg-gray-700">
           <FaImage />
         </button>
         

@@ -1,9 +1,10 @@
 "use client";
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
+import PATHROUTES from "@/helpers/PathRoutes";
 
 const GarageHome = () => {
-  
   return (
     <section className="flex flex-col md:gap-4 md:flex-row items-center justify-between text-white pb-8">
       <div className="flex flex-col mx-10 md:flex-row w-full items-center mt-[69px] md:space-x-10 ">
@@ -22,10 +23,13 @@ const GarageHome = () => {
           <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 mt-4">
             <input
               type="text"
-              placeholder="Ingresa tu ubicación"
-              className="p-3 text-black rounded-lg border-2 outline-none bg-transparent border-red-600 w-64"
+              placeholder="Conoce nuestras sucursales"
+              disabled
+              className="p-3 text-custom-white rounded-lg border-2 outline-none bg-transparent border-red-600 w-64"
             />
-            <button className="custom-button">Buscar</button>
+            <Link href={PATHROUTES.SUCURSALES} className="custom-button min-w-[110px]">
+              Ver más
+            </Link>
           </div>
         </div>
 

@@ -81,7 +81,7 @@ const Reservations: React.FC = () => {
   return (
     <section className="py-3 w-full text-custom-white">
       <h1 className="text-3xl ">Mis reservas</h1>
-      <div className="flex flex-col sm:flex-row w-2/3 min-w-56 text-center border-2 mt-5 mb-3 border-custom-white rounded justify-between">
+      <div className="flex flex-col sm:flex-row md:w-2/3 w-full min-w-56 text-center border-2 mt-5 mb-3 border-custom-white rounded justify-between">
         <div
           className={`sm:w-1/2 w-full text-center py-3 font-semibold ${
             viewHistory ? "bg-custom-white text-custom-red" : ""
