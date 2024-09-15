@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, IsOptional } from 'class-validator';
+import { IsNotEmpty, IsString, IsOptional, ArrayNotEmpty, IsArray } from 'class-validator';
 
 export class CreateSucursalDto {
   @ApiProperty({
@@ -41,6 +41,15 @@ export class CreateSucursalDto {
   @IsString()
   @IsNotEmpty()
   details: string;
+
+  @ApiProperty({
+    description: 'Tipos de servicios que ofrece la sucursal',
+    example: ['Alineación y Balanceo - Auto', 'Cambio de Bujías - Camion'],
+  })
+  @IsArray()
+  @ArrayNotEmpty()
+  @IsString({ each: true })
+  services: string[];
 }
 
 export class UpdateSucursalDto {
@@ -83,4 +92,14 @@ export class UpdateSucursalDto {
   @IsString()
   @IsOptional()
   details?: string;
+
+  @ApiProperty({
+    description: 'Tipos de servicios que ofrece la sucursal',
+    example: ['Alineación y Balanceo - Auto', 'Cambio de Bujías - Camion'],
+  })
+  @IsOptional()
+  @IsArray()
+  @ArrayNotEmpty()
+  @IsString({ each: true })
+  services?: string[];
 }
