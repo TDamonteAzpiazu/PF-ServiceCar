@@ -9,6 +9,7 @@ import { CSSTransition } from "react-transition-group";
 import "../../styles/modalReservations.css";
 import WalletMP from "../WalletMP";
 import { fetchMp } from "@/helpers/fetchMp";
+import NavbarOpinion from "./NavbarOpinion";
 
 const ReservationModal: React.FC<{
   viewIappointmentDetail: boolean;
@@ -19,6 +20,12 @@ const ReservationModal: React.FC<{
   const now = new Date();
   const url = process.env.NEXT_PUBLIC_URL;
   const [preferenceId, setPreferenceId] = useState<string | null>(null);
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+   
+  };
+
   useEffect(() => {
     if (appointment.pago === "Pendiente") {
       fetchMp(url, appointment.service[0], appointment.id).then((res) => {
@@ -125,15 +132,35 @@ const ReservationModal: React.FC<{
             </div>
           </div>
           {preferenceId && <WalletMP preferenceId={preferenceId} />}
-          <div className="flex justify-center pt-3">
+          <div className="flex justify-around gap-2 pt-3">
             <button
               onClick={() => setViewIappointmentDetail(false)}
               className="p-2 w-32 transition-all text-custom-white bg-custom-red rounded-md hover:bg-red-700"
             >
               Aceptar
             </button>
+            {appointment.pago !== "Pendiente" && (
+              <button
+                onClick={toggleMenu}
+                className="p-2 w-32 font-semibold transition-all text-custom-red bg-zinc-400  rounded-md hover:bg-custom-white hover:text-red-700"
+              >
+                Opinar
+              </button>
+            )}
           </div>
         </div>
+        {isMenuOpen && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-55 z-40"
+            onClick={toggleMenu}
+          ></div>
+        )}
+        <NavbarOpinion
+          isMenuOpen={isMenuOpen}
+          setIsMenuOpen={setIsMenuOpen}
+          service={appointment.service[0]}
+          sucursal={appointment.sucursal}
+        />
       </div>
     </CSSTransition>
   );

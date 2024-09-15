@@ -1,20 +1,46 @@
-import React from 'react';
-import ServiceCall from './serviciosComponentes/ServiceCall';
-import ServiceAddDelete from './serviciosComponentes/ServiceAdd';
+"use client";
+import React, { useEffect, useState } from "react";
+import ServiceCall from "./serviciosComponentes/ServiceCall";
+import { useSelector } from "react-redux";
+import ServiceAddDelete from "./serviciosComponentes/ServiceAdd";
+import { IService, IUser } from "@/helpers/types/types";
+import { FetchServicio } from "@/helpers/serviciosFetch";
 
 const Services: React.FC = () => {
+  const dataUser: IUser = useSelector((state: any) => state.user.user);
+  const [servicios, setServicios] = useState<IService[]>([]);
+  const [updateFlag, setUpdateFlag] = useState<boolean>(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const fetchServicios = await FetchServicio();
+        setServicios(fetchServicios);
+      } catch (error) {
+        console.error("Error fetching servicios:", error);
+      }
+    };
+
+    fetchData();
+  }, [updateFlag]);
+
+  const handleUpdate = () => {
+    setUpdateFlag((prev) => !prev); // Alternar el estado para desencadenar la actualización
+  };
+
   return (
-    <section className="py-3 w-full text-custom-white">
-      <h1 className="text-3xl mb-4">Servicios Disponibles</h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="col-span-2">
-          <ServiceCall />
+    dataUser &&
+    dataUser.role === "admin" && (
+      <section className=" w-full text-custom-white ">
+        <div className="flex justify-between pt-3 pb-5 items-center">
+          <h1 className="font-semibold text-2xl">Servicios Disponibles</h1>
+          <ServiceAddDelete setServicios={setServicios}/>
         </div>
-        <div className="col-span-1">
-          <ServiceAddDelete /> 
+        <div className="w-full">
+          <ServiceCall servicios={servicios} handleUpdate={handleUpdate}/>
         </div>
-      </div>
-    </section>
+      </section>
+    )
   );
 };
 

@@ -39,14 +39,14 @@ const CardSucursalesAdmin: React.FC<{
             sucursal.status === "active"
               ? "border-red-600 text-red-600 hover:bg-red-600"
               : "border-green-600 text-green-600 hover:bg-green-600"
-          } border rounded-lg py-1 px-2 text-base font-medium  hover:text-custom-white`}
+          } border rounded-lg py-1 px-2 text-base font-medium  hover:text-custom-white transition duration-300`}
         >
           {sucursal.status === "active" ? "Deshabilitar" : "Habilitar"}
         </button>
 
         <button
           onClick={() => setViewEditSucursal(!viewEditSucursal)}
-          className="border border-blue-600 text-blue-600 rounded-lg p-2 text-base  hover:bg-blue-600 hover:text-custom-white"
+          className="transition duration-300 border border-blue-600 text-blue-600 rounded-lg p-2 text-base  hover:bg-blue-600 hover:text-custom-white"
         >
           <MdEdit />
         </button>

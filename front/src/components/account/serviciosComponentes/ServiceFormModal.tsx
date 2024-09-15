@@ -3,11 +3,13 @@ import React from "react";
 import { IoMdClose } from "react-icons/io";
 import { CSSTransition } from "react-transition-group";
 import FormCreateService from "./FormCreateService";
+import { IService } from "@/helpers/types/types";
 
 const ServiceFormModal: React.FC<{
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isModalOpen: boolean;
-}> = ({ setIsModalOpen, isModalOpen }) => {
+  setServicios: React.Dispatch<React.SetStateAction<IService[]>>
+}> = ({ setIsModalOpen, isModalOpen,setServicios }) => {
   const handleOverlayClick = () => {
     setIsModalOpen(false);
   };
@@ -41,7 +43,7 @@ const ServiceFormModal: React.FC<{
             <IoMdClose />
           </button>
 
-          <FormCreateService setIsModalOpen={setIsModalOpen} />
+          <FormCreateService setIsModalOpen={setIsModalOpen} setServicios={setServicios}/>
         </div>
       </div>
     </CSSTransition>

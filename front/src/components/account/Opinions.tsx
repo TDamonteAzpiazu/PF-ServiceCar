@@ -5,10 +5,10 @@ import OpinionCardUser from "./OpinionCardUser";
 
 const Opinions: React.FC = () => {
   return (
-    <div>
-      {/* {opiniones.map((opinion: IOpinionUser, index: number) => (
+    <div className="grid gap-6 w-full grid-cols-1 md:grid-cols-3 mb-5">
+      {opiniones.map((opinion: any, index: number) => (
         <OpinionCardUser key={index} index={index} opinion={opinion} />
-      ))} */}
+      ))}
     </div>
   );
 };

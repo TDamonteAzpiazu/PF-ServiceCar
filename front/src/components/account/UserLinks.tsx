@@ -13,6 +13,7 @@ import { signOut } from "next-auth/react";
 import { RxPencil2 } from "react-icons/rx";
 import { GoGitBranch } from "react-icons/go";
 import { IUser } from "@/helpers/types/types";
+import { BsFillClipboardDataFill } from "react-icons/bs";
 
 const UserLinks: React.FC = () => {
   const router = useRouter();
@@ -47,7 +48,7 @@ const UserLinks: React.FC = () => {
     });
   };
   return (
-    <section className="flex md:flex-col mr-1 flex-row md:w-1/4 w-full justify-between md:items-start items-end h-full md:min-h-96 py-3">
+    <section className="flex md:flex-col mr-1 flex-row md:w-1/4 w-full justify-between md:items-start items-end h-full md:min-h-[480px] py-3">
       <div className="flex flex-col gap-4 text-custom-grey">
         <div className="flex gap-2 items-center">
           <span className="text-xl">
@@ -108,7 +109,7 @@ const UserLinks: React.FC = () => {
                     : ""
                 }`}
               >
-                Mis servicios
+                Servicios
               </Link>
             </div>
             <div className="flex gap-2 items-center">
@@ -123,7 +124,22 @@ const UserLinks: React.FC = () => {
                     : ""
                 }`}
               >
-                Mis sucursales
+                Sucursales
+              </Link>
+            </div>
+            <div className="flex gap-2 items-center">
+              <span className="text-xl">
+              <BsFillClipboardDataFill />
+              </span>
+              <Link
+                href={`${PATHROUTES.DASHBOARD}/estadisticas`}
+                className={`hover:text-custom-white ${
+                  pathName === `${PATHROUTES.DASHBOARD}/estadisticas`
+                    ? "text-custom-white"
+                    : ""
+                }`}
+              >
+                Estadísticas
               </Link>
             </div>
           </>

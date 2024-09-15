@@ -32,13 +32,14 @@ const EditService: React.FC<EditServiceProps> = ({
       classNames="modal"
       unmountOnExit
     >
-      <div className="modal-overlay z-50" onClick={handleOverlayClick}>
+      <div className="modal-overlay z-50 flex justify-center items-center" onClick={handleOverlayClick}>
         <div
           className="modal-content-sucursal"
           style={{
             boxShadow: "rgba(100,100,111,0.2) 0px 7px 29px 0px",
             maxHeight: "85vh",
           }}
+          
           ref={modalContentRef}
         >
           <div className="flex items-center mb-5 pb-5 border-b border-custom-grey w-full">

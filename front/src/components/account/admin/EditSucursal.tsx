@@ -16,7 +16,7 @@ const EditSucursal: React.FC<{
       classNames="modal"
       unmountOnExit
     >
-      <div className="modal-overlay z-50" onClick={()=>setViewEditSucursal(false)}>
+      <div className="modal-overlay z-50" >
         <div
           className="modal-content-sucursal"
           style={{
