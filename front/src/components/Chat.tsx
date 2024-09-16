@@ -5,14 +5,15 @@ import React from "react";
 const Chat = () => {
   return (
     <Script
-      src="https://cdn.voiceflow.com/widget/bundle.mjs"
+      id="voiceflow-chat"
       type="text/javascript"
+      src="https://cdn.voiceflow.com/widget/bundle.mjs"
       strategy="lazyOnload"
       onLoad={() => {
         window.voiceflow.chat.load({
-          verify: { projectID: "66c0c50b64ddc55ee73d0c4e" },
+          verify: { projectID: "66e44b5303dc1207729d6f0b" },  // Nuevo Project ID
           url: "https://general-runtime.voiceflow.com",
-          versionID: "production",
+          versionID: "production",  // Nuevo Version ID
         });
       }}
     />

@@ -26,6 +26,11 @@ export class ReviewsController {
     return this.reviewsService.getReviews();
   }
 
+  @Get('user/:id')
+  async getByUser(@Param('id', ParseUUIDPipe) id: string) {
+    return this.reviewsService.getReviewsByUser(id);
+  }
+
   @Get(':id')
   async getById(@Param('id', ParseUUIDPipe) id: string) {
     return this.reviewsService.getReviewById(id);
@@ -34,12 +39,13 @@ export class ReviewsController {
   @UseGuards(AuthGuard)
   @Post()
   async post(@Body() body: CreateReviewDto, @Req() request) {
-    const { rating, occupation, comment } = body;
+    const { rating, occupation, comment, idService } = body;
 
     return this.reviewsService.postReview({
       rating,
       occupation,
       comment,
+      idService,
       userId: request.user.id,
     });
   }

@@ -103,7 +103,7 @@ export interface IServiceDto{
   description: string;
   price: number;
   vehiculo: string,
-  sucursales: string[]
+  sucursales: string[] | null
 }
 
 export interface IOpinion {

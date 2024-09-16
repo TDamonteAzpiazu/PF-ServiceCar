@@ -8,15 +8,16 @@ import dbConfig from './config/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { AppointmentsModule } from './appointments/appointments.module';
-import { config as dotenvConfig } from 'dotenv';
 import { ReviewsModule } from './reviews/reviews.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MercadopagoModule } from './mercadopago/mercadopago.module';
 import { SucursalesModule } from './sucursales/sucursales.module';
 import { AdmindashModule } from './admindash/admindash.module';
+import { MailService } from './mail/mail.service';
+import { ScheduleModule } from '@nestjs/schedule';
+import { jwtSecret } from './config/envs';
 
-dotenvConfig({ path: '.env.development' });
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -41,10 +42,11 @@ dotenvConfig({ path: '.env.development' });
     JwtModule.register({
       global: true,
       signOptions: { expiresIn: '1h' },
-      secret: process.env.JWT_SECRET,
+      secret: jwtSecret,
     }),
+    ScheduleModule.forRoot(),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, MailService],
 })
 export class AppModule {}
