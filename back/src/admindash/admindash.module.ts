@@ -6,9 +6,10 @@ import { Sucursal } from "../sucursales/sucursales.entity";
 import { Appointment } from "../appointments/appointments.entity";
 import { User } from "../users/users.entity";
 import { Service } from "../services/services.entity";
+import { Review } from "src/reviews/reviews.entity";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Sucursal, Appointment, User, Service])],
+    imports: [TypeOrmModule.forFeature([Sucursal, Appointment, User, Service,Review])],
     controllers: [AdmindashController],
     providers: [AdmindashService],
 })

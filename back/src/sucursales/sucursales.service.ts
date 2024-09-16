@@ -1,15 +1,18 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Sucursal } from './sucursales.entity';
 import { CreateSucursalDto, UpdateSucursalDto } from '../dto/sucursales.dto'
 import { Status } from '../enum/status.enum';
+import { Service } from 'src/services/services.entity';
 
 @Injectable()
 export class SucursalesService {
   constructor(
     @InjectRepository(Sucursal)
     private readonly sucursalRepository: Repository<Sucursal>,
+    @InjectRepository(Service)
+    private readonly servicesRepository: Repository<Service>,
   ) {}
 
   async findAll(): Promise<Sucursal[]> {
@@ -21,8 +24,23 @@ export class SucursalesService {
   }
 
   async create(createSucursalDto: CreateSucursalDto): Promise<Sucursal> {
+    const services = [];
+
+    for await (const serviceType of createSucursalDto.services) {
+      const service = await this.servicesRepository.findOneBy({
+        type: serviceType,
+      });
+
+      if (!service) {
+        throw new BadRequestException('Servicio no encontrado');
+      }
+
+      services.push(service);
+    }
+
     const sucursal = this.sucursalRepository.create({
       ...createSucursalDto,
+      services,
       status: Status.Active,
     });
     return await this.sucursalRepository.save(sucursal);
@@ -32,6 +50,24 @@ export class SucursalesService {
     const sucursal = await this.findById(id);
     if (!sucursal) {
       throw new NotFoundException('Sucursal no encontrada');
+    }
+
+    if (updateSucursalDto.services) {
+      const services = [];
+
+      for await (const serviceType of updateSucursalDto.services) {
+        const service = await this.servicesRepository.findOneBy({
+          type: serviceType,
+        });
+
+        if (!service) {
+          throw new BadRequestException('Servicio no encontrado');
+        }
+
+        services.push(service);
+      }
+
+      sucursal.services = services;
     }
 
     Object.assign(sucursal, updateSucursalDto);
