@@ -193,4 +193,29 @@ export class ServicesService implements OnModuleInit {
     serviceFound.image = url;
     return await this.servicesRepository.save(serviceFound);
 }
+
+//agragar un servicio a una sucursal 
+async addServiceToSucursal(serviceId: string, sucursalId: string): Promise<Sucursal> {
+  const sucursal = await this.sucursalRepository.findOne({
+    where: { id: sucursalId },
+    relations: ['services'],
+  });
+
+  if (!sucursal) {
+    throw new NotFoundException('Sucursal no encontrada');
+  }
+
+  const service = await this.servicesRepository.findOne({
+    where: { id: serviceId },
+  });
+
+  if (!service) {
+    throw new NotFoundException('Service no encontrado');
+  }
+
+  // Agregar el servicio a la sucursal
+  sucursal.services.push(service);
+  
+  return await this.sucursalRepository.save(sucursal);
+}
 }
