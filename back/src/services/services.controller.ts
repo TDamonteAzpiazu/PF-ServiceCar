@@ -84,4 +84,18 @@ import { SucursalesService } from '../sucursales/sucursales.service';
       service: updatedService,
     };
   }
+  // agregar un servicio a una sucursal  
+  @Put(':serviceId/sucursales/:sucursalId')
+@ApiOperation({ summary: 'Agregar un servicio a una sucursal' })
+async addServiceToSucursal(
+  @Param('serviceId', ParseUUIDPipe) serviceId: string,
+  @Param('sucursalId', ParseUUIDPipe) sucursalId: string,
+) {
+  const sucursalActualizada = await this.servicesService.addServiceToSucursal(serviceId, sucursalId);
+
+  return {
+    message: 'Service added to sucursal successfully',
+    sucursal: sucursalActualizada,
+  };
+}
   }
