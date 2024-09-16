@@ -5,6 +5,7 @@ import {
   Param,
   ParseUUIDPipe,
   Post,
+  Put,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -19,9 +20,8 @@ import { Role } from 'src/auth/roles.enum';
 export class ReviewsController {
   constructor(private readonly reviewsService: ReviewsService) {}
 
-  @UseGuards(AuthGuard, RolesGuard)
-  @Roles(Role.Admin)
   @Get()
+  @UseGuards(AuthGuard)
   async get() {
     return this.reviewsService.getReviews();
   }
@@ -36,8 +36,8 @@ export class ReviewsController {
     return this.reviewsService.getReviewById(id);
   }
 
-  @UseGuards(AuthGuard)
   @Post()
+  @UseGuards(AuthGuard)
   async post(@Body() body: CreateReviewDto, @Req() request) {
     const { rating, occupation, comment, idService } = body;
     console.log(request.user);
@@ -48,5 +48,12 @@ export class ReviewsController {
       idService,
       userId: request.user.id,
     });
+  }
+
+  @Put('disable/:id')
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles(Role.Admin)
+  async disable(@Param('id', ParseUUIDPipe) id: string) {
+    return this.reviewsService.disableReview(id);
   }
 }
