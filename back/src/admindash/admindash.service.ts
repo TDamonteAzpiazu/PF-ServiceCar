@@ -1,10 +1,11 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { Sucursal } from "../sucursales/sucursales.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Between, Repository } from "typeorm";
 import { Appointment } from "../appointments/appointments.entity";
 import { User } from "../users/users.entity";
 import { Service } from "../services/services.entity";
+import { Review } from "src/reviews/reviews.entity";
 
 @Injectable()
 export class AdmindashService {
@@ -13,6 +14,7 @@ export class AdmindashService {
         @InjectRepository(Appointment) private readonly appointmentsRepository: Repository<Appointment>,
         @InjectRepository(User) private readonly userRepository: Repository<User>,
         @InjectRepository(Service) private readonly servicesRepository: Repository<Service>,
+        @InjectRepository(Review) private readonly reviewsRepository: Repository<Review>
     ) {}
 
     async getGananciaSucursales() {
@@ -88,5 +90,22 @@ export class AdmindashService {
             label: 'Nuevos usuarios',
             data: usersPerMonth
         };
+    }
+    
+    async getReviewsByService(idService: string) {
+        const service = await this.servicesRepository.findOne({
+            where: { id: idService },
+            relations: ['reviews'],  
+        });
+
+        if (!service) {
+            throw new NotFoundException('Service not found');
+        }
+
+        if (!service.reviews || service.reviews.length === 0) {
+            throw new NotFoundException('No reviews found for this service.');
+        }
+
+        return service.reviews;
     }
 }
