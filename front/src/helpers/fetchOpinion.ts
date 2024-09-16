@@ -61,20 +61,22 @@ export const getOpinions = async (url: string, token: string) => {
   }
 };
 
-
 export const getOpinionsAdmin = async (
   url: string,
   token: string,
   id: string
 ) => {
   try {
-    const response = await fetch(`${url}/reviews/${id}`, {
+    const response = await fetch(`${url}/admindash/reviewsByService/${id}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     });
     const data = await response.json();
+    if (data.message === "No reviews found for this service.") {
+      return [];
+    }
     return data;
   } catch (error) {
     console.log(error);
