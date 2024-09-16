@@ -49,7 +49,7 @@ const CardReservations: React.FC<{
         )}
 
         <p className="text-custom-grey lg:text-base sm:text-sm text-base">
-          US ${appointment.service[0].price}
+          AR$ {appointment.service[0].price}
         </p>
         <Link href="" className="hover:text-custom-red">
           <FaLocationDot />

@@ -115,10 +115,14 @@ export interface IOpinion {
 }
 
 export interface IOpinionUser {
-  estrellas: number;
-  opinion: string;
-  date: string;
-  service: string;
+  id: string;
+  rating: number;
+  name: string;
+  occupation: string;
+  comment: string;
+  iconUrl: string;
+  createdAt: string;
+  service: IService;
 }
 
 export interface ISucursales {

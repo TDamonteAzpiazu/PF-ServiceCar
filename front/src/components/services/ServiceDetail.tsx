@@ -7,6 +7,7 @@ import { FaCheckSquare, FaCoffee } from "react-icons/fa";
 import { MdLocalCarWash } from "react-icons/md";
 import NavbarService from "./NavbarService";
 import SucursalesDetail from "./SucursalesDetail";
+import CarruselOpinions from "./CarruselOpinions";
 
 const ServiceDetail: React.FC<{ id: string }> = ({ id }) => {
   const url = process.env.NEXT_PUBLIC_URL;
@@ -41,17 +42,17 @@ const ServiceDetail: React.FC<{ id: string }> = ({ id }) => {
               className="bg-custom-red rounded py-3 px-4 hover:bg-red-600"
               onClick={toggleMenu}
             >
-              Reservar | ARS${service.price} 
+              Reservar | ARS${service.price}
             </button>
           </div>
 
           <Image
-          alt={service.type}
-          src={service.image}
-          width={800} // Ajustar el ancho real deseado
-          height={500} // Ajustar la altura real deseada
-          className="w-11/12 mx-auto h-[300px] md:h-[500px] rounded-bl-3xl rounded-tr-3xl"
-          quality={100} // Establecer la calidad de la imagen
+            alt={service.type}
+            src={service.image}
+            width={800} // Ajustar el ancho real deseado
+            height={500} // Ajustar la altura real deseada
+            className="w-11/12 mx-auto h-[300px] md:h-[500px] rounded-bl-3xl rounded-tr-3xl"
+            quality={100} // Establecer la calidad de la imagen
           />
 
           <div className="border-2 mt-10 mb-6 border-custom-red py-3 px-3 rounded flex flex-col gap-3">
@@ -71,7 +72,7 @@ const ServiceDetail: React.FC<{ id: string }> = ({ id }) => {
                   className="bg-custom-red rounded py-3 px-4 hover:bg-red-600"
                   onClick={toggleMenu}
                 >
-                  Reservar | US${service.price} 
+                  Reservar | US${service.price}
                 </button>
               </div>
             </div>
@@ -97,6 +98,7 @@ const ServiceDetail: React.FC<{ id: string }> = ({ id }) => {
               </p>
             </div>
           </div>
+          <CarruselOpinions id={service.id} />
           <SucursalesDetail service={service} />
           {isMenuOpen && (
             <div

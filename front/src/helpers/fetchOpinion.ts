@@ -5,9 +5,6 @@ export const createOpinion = async (
   values: any
 ) => {
   try {
-    
-    console.log(values);
-
     const response = await fetch(`${url}/reviews`, {
       method: "POST",
       headers: {
@@ -27,5 +24,59 @@ export const createOpinion = async (
     return data;
   } catch (error: any) {
     console.log(error.message);
+  }
+};
+
+export const getOpinionsUser = async (
+  url: string,
+  token: string,
+  id: string
+) => {
+  try {
+    const response = await fetch(`${url}/reviews/user/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getOpinions = async (url: string, token: string) => {
+  try {
+    const response = await fetch(`${url}/reviews`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+export const getOpinionsAdmin = async (
+  url: string,
+  token: string,
+  id: string
+) => {
+  try {
+    const response = await fetch(`${url}/reviews/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
   }
 };
