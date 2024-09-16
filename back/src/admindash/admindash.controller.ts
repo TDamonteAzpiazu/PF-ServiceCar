@@ -1,4 +1,4 @@
-import { Body, Controller, Get } from "@nestjs/common";
+import { Body, Controller, Get, Param } from "@nestjs/common";
 import { AdmindashService } from "./admindash.service";
 
 @Controller('admindash')
@@ -19,5 +19,10 @@ export class AdmindashController {
     @Get('newUsers')
     async getNewUsers() {
         return await this.admindashService.getNewUsers();
+    }
+    // obtener opiniones por id de servicios
+    @Get('reviewsByService/:idService')
+    async getReviewsByService(@Param('idService') idService: string) {
+        return await this.admindashService.getReviewsByService(idService);
     }
 }
