@@ -47,8 +47,8 @@ const OpinionCardAdmin: React.FC<{
             }  left-0 flex  w-full justify-center`}
           >
             <Image
-              alt={opinion.name}
-              src={opinion.iconUrl}
+              alt={opinion.user.name}
+              src={opinion.user.image}
               width={70}
               height={70}
               className="rounded-full"
@@ -79,7 +79,7 @@ const OpinionCardAdmin: React.FC<{
           >
             {formatDate(opinion.createdAt)}
           </p>
-          <p className="font-normal text-lg">{opinion.name}</p>
+          <p className="font-normal text-lg">{opinion.user.name}</p>
           <p className="font-extralight">{opinion.occupation}</p>
         </div>
       )}

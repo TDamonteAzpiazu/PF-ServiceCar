@@ -98,12 +98,12 @@ export interface IService {
   vehiculo: string;
 }
 
-export interface IServiceDto{
+export interface IServiceDto {
   type: string;
   description: string;
   price: number;
-  vehiculo: string,
-  sucursales: string[] | null
+  vehiculo: string;
+  sucursales: string[] | null;
 }
 
 export interface IOpinion {
@@ -117,10 +117,10 @@ export interface IOpinion {
 export interface IOpinionUser {
   id: string;
   rating: number;
-  name: string;
+  user: any;
   occupation: string;
   comment: string;
-  iconUrl: string;
+  status: string;
   createdAt: string;
   service: IService;
 }
@@ -137,11 +137,9 @@ export interface ISucursales {
 }
 
 export interface ISucursalesDto {
-
   name: string;
   address: string;
   latitud: string;
   longitud: string;
   details: string;
-  
 }

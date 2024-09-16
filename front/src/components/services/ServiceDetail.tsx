@@ -26,10 +26,10 @@ const ServiceDetail: React.FC<{ id: string }> = ({ id }) => {
         console.log(error);
       });
   }, [url, id]);
-
+  
   return (
     <section>
-      {service && (
+      {service && service.status === "active" && (
         <div className="text-custom-white flex flex-col w-11/12 mx-auto">
           <div className="flex sm:flex-row flex-col sm:justify-between sm:items-center items-start mb-5">
             <div className="flex flex-col sm:mb-0 mb-4">

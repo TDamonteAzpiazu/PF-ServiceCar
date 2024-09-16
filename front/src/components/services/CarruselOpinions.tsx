@@ -52,14 +52,17 @@ const CarruselOpinions: React.FC<{ id: string }> = ({ id }) => {
             >
               <div className="container-proyect  flex flex-nowrap w-full md:gap-[5px] gap-1 ">
                 {Array.isArray(opinions) && opinions.length > 0
-                  ? opinions.map((opinion: IOpinionUser, index: number) => (
-                      <OpinionCardAdmin
-                        key={index}
-                        index={index}
-                        opinion={opinion}
-                        carrusel={true}
-                      />
-                    ))
+                  ? opinions.map(
+                      (opinion: IOpinionUser, index: number) =>
+                        opinion.status === "Active" && (
+                          <OpinionCardAdmin
+                            key={index}
+                            index={index}
+                            opinion={opinion}
+                            carrusel={true}
+                          />
+                        )
+                    )
                   : ""}
               </div>
             </div>

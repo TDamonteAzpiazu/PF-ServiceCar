@@ -147,6 +147,7 @@ const FormReservations: React.FC<{
                   className=" bg-[#2b2b2b]"
                 />
                 {service.sucursales.map((option) => (
+                  
                   <option
                     key={option}
                     value={option}
