@@ -45,7 +45,7 @@ export class ReviewsService {
   async postReview({ userId, idService, ...reviewData }) {
     const user = await this.usersRepository.findOneBy({ id: userId });
     const service = await this.servicesRepository.findOneBy({ id: idService });
-
+    
     if (!user) throw new BadRequestException('User invalid');
     if (!service) throw new BadRequestException('Service invalid');
 
