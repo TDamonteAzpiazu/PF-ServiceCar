@@ -1,6 +1,8 @@
 import { Service } from 'src/services/services.entity';
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { v4 as uuid } from 'uuid';
+import { User } from '../users/users.entity';
+import { Status } from '../enum/status.enum';
 
 @Entity({
   name: 'reviews',
@@ -12,10 +14,8 @@ export class Review {
   @Column('integer')
   rating: number;
 
-  @Column({
-    length: 50,
-  })
-  name: string;
+  @ManyToOne(() => User, (user) => user.reviews)
+  user: User;
 
   @Column({
     length: 50,
@@ -28,13 +28,13 @@ export class Review {
   })
   comment: string;
 
-  @Column()
-  iconUrl: string;
-
   @Column('timestamp')
   createdAt: Date;
 
   @ManyToOne(() => Service, (service) => service.reviews)
   @JoinColumn({ name: 'idService' })
   service: Service;
+
+  @Column({ default: Status.Active})
+  status: Status;
 }

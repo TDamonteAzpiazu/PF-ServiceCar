@@ -12,7 +12,7 @@ const config: DataSourceOptions = {
   password: db.password,
   database: db.name,
   synchronize: true,
-  //dropSchema: true,
+  // dropSchema: true,
   logging: ['error'],
   entities: [join(__dirname, '/../**/*.entity.{js,ts}')],
   migrations: [join(__dirname, '/../migrations/*.{js,ts}')],
