@@ -8,6 +8,7 @@ import { Review } from './reviews.entity';
 import { Repository } from 'typeorm';
 import { User } from 'src/users/users.entity';
 import { Service } from 'src/services/services.entity';
+import { Status } from '../enum/status.enum';
 
 @Injectable()
 export class ReviewsService {
@@ -22,7 +23,7 @@ export class ReviewsService {
 
   async getReviews() {
     const reviews = await this.reviewsRepository.find({
-      relations: ['service'],
+      relations: ['service', 'user'],
       order: {
         createdAt: 'DESC',
       },
@@ -34,7 +35,7 @@ export class ReviewsService {
   async getReviewById(id: string) {
     const review = await this.reviewsRepository.findOne({
       where: { id },
-      relations: ['service'],
+      relations: ['service', 'user'],
     });
 
     if (!review) throw new NotFoundException('Review not found');
@@ -51,8 +52,7 @@ export class ReviewsService {
 
     const review = this.reviewsRepository.create({
       ...reviewData,
-      name: user.name,
-      iconUrl: user.image,
+      user,
       createdAt: new Date(),
       service,
     });
@@ -66,11 +66,24 @@ export class ReviewsService {
 
     if (!user) throw new NotFoundException('User not found');
     const reviews = await this.reviewsRepository.find({
-      where: { name: user.name },
-      relations: ['service'],
+      where: { user: { id: userId } },
+      relations: ['service', 'user'],
     });
 
     if (!reviews) throw new NotFoundException('User has no reviews.');
     return reviews;
+  }
+
+  async disableReview(id: string) {
+    const review = await this.reviewsRepository.findOne({ where: { id } , relations: ['service', 'user']});
+    if (!review) throw new NotFoundException('Review not found');
+    
+    if(review.status === Status.Inactive) {
+      review.status = Status.Active;
+    } else {
+      review.status = Status.Inactive;
+    }
+    await this.reviewsRepository.save(review);
+    return review;
   }
 }
