@@ -77,6 +77,7 @@ const Filters: React.FC<FiltersProps> = ({
             mostrarFiltros={mostrarFiltros}
             vehiculos={vehiculos}
             onFilterChange={handleFilterChange}
+            setMostrarFiltros={setMostrarFiltros}
           />
         </div>
         <div className="relative">

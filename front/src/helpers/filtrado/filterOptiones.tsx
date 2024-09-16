@@ -4,12 +4,14 @@ import { FetchSucursales } from "../serviciosFetch";
 
 interface FilterOptionsProps {
   mostrarFiltros: boolean;
+  setMostrarFiltros: (value: boolean) => void; // Nuevo prop para cerrar los filtros
   vehiculos: string[];
   onFilterChange: (ubicaciones: ISucursales[], vehiculos: string[]) => void;
 }
 
 const FilterOptions: React.FC<FilterOptionsProps> = ({
   mostrarFiltros,
+  setMostrarFiltros, // Recibe el nuevo prop
   vehiculos,
   onFilterChange,
 }) => {
@@ -37,15 +39,6 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
     fetchAndSetSucursales();
   }, []);
 
-  useEffect(() => {
-    onFilterChange(
-      sucursalesData.filter((sucursal) =>
-        ubicacionesSeleccionadas.has(sucursal.name)
-      ),
-      Array.from(vehiculosSeleccionados)
-    );
-  }, [ubicacionesSeleccionadas, vehiculosSeleccionados]);
-
   const handleSucursalChange = (sucursal: string) => {
     setUbicacionesSeleccionadas((prev) => {
       const updated = new Set(prev);
@@ -70,37 +63,43 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
     });
   };
 
+  const aplicarFiltros = () => {
+    // Convierte los Sets a arrays y aplica los filtros
+    onFilterChange(
+      sucursalesData.filter((sucursal) =>
+        ubicacionesSeleccionadas.has(sucursal.name)
+      ),
+      Array.from(vehiculosSeleccionados)
+    );
+    // Cierra el panel de filtros
+    setMostrarFiltros(false);
+  };
+
   return (
     <div
       className={`absolute top-16 mt-1 sm:right-0 right-20 z-10 bg-black text-white rounded-lg border border-custom-red ${
         mostrarFiltros ? "flex" : "hidden"
       }`}
     >
-      <div className="p-3 " style={{ minWidth: "220px" }}>
+      <div className="p-3" style={{ minWidth: "220px" }}>
         <h3 className="font-semibold text-lg mb-2">Filtros</h3>
         <div className="mb-4">
           <h4 className="font-semibold">Sucursales</h4>
           {sucursalesData.map((sucursal: ISucursales) => (
-            <>
-              {sucursal.status === "active" ? (
-                <div key={sucursal.name} className="flex items-center gap-1">
-                  <input
-                    type="checkbox"
-                    id={`sucursal-${sucursal.name}`}
-                    value={sucursal.name}
-                    onChange={() => handleSucursalChange(sucursal.name)}
-                  />
-                  <label
-                    htmlFor={`sucursal-${sucursal.name}`}
-                    className="ml-2 md:text-base text-sm"
-                  >
-                    {sucursal.name}
-                  </label>
-                </div>
-              ) : (
-                ""
-              )}
-            </>
+            <div key={sucursal.name} className="flex items-center gap-1">
+              <input
+                type="checkbox"
+                id={`sucursal-${sucursal.name}`}
+                value={sucursal.name}
+                onChange={() => handleSucursalChange(sucursal.name)}
+              />
+              <label
+                htmlFor={`sucursal-${sucursal.name}`}
+                className="ml-2 md:text-base text-sm"
+              >
+                {sucursal.name}
+              </label>
+            </div>
           ))}
         </div>
         <div>
@@ -121,6 +120,15 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
               </label>
             </div>
           ))}
+        </div>
+        {/* Botón para aplicar los filtros */}
+        <div className="mt-4">
+          <button
+            className="bg-custom-red text-white py-2 px-4 rounded hover:bg-red-600"
+            onClick={aplicarFiltros}
+          >
+            Aplicar filtros
+          </button>
         </div>
       </div>
     </div>
