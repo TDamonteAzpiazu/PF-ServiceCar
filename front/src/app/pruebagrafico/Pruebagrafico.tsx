@@ -1,8 +1,6 @@
-import GraficoTurnos from "../../components/pruebagrafico/GraficoTurnos"
 import GraficoTurnosServicios from "../../components/pruebagrafico/GraficoTurnosServicios"
 import GraficoUsuarios from "../../components/pruebagrafico/GraficoUsuarios"
-import PruebaGrafico from "../../components/pruebagrafico/PruebaGrafico"
-
+import { valoresGrafico, valoresGraficoTurnoServicio, valoresGraficoTurnos, valoresGraficoUsuarios } from "../../helpers/pruebaGrafico"
 
 const Pruebagrafico = () => {
 
@@ -15,7 +13,7 @@ const Pruebagrafico = () => {
             <br />
             <h1 className="text-white font-bold">Grafico Ganancias por Sucursal</h1>
             <div>
-                <PruebaGrafico />
+                <GraficoTurnosServicios data={valoresGrafico}/>
             </div>
             <h1 className="text-white font-bold">Grafico Usuarios Nuevos</h1>
             <div>
@@ -23,11 +21,11 @@ const Pruebagrafico = () => {
             </div>
             <h1 className="text-white font-bold">Grafico turnos por sucursal</h1>
             <div>
-                <GraficoTurnos />
+                <GraficoTurnosServicios data={valoresGraficoTurnos}/>
             </div>
             <h1 className="text-white font-bold">Grafico Turnos por Servicio</h1>
             <div>
-                <GraficoTurnosServicios />
+                <GraficoTurnosServicios data={valoresGraficoTurnoServicio}/>
             </div>
         </div>
     )

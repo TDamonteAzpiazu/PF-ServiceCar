@@ -23,7 +23,7 @@ export class AdmindashService {
         
         const labels = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre', 'Anual'];
         
-        const dataSucursales = [];
+        const data = [];
         const totalMensual = Array(12).fill(0); 
         let totalAnual = 0;
     
@@ -54,7 +54,7 @@ export class AdmindashService {
             gananciasMensuales.push(totalSucursal);
             totalAnual += totalSucursal;
     
-            dataSucursales.push({
+            data.push({
                 label: sucursal.name,
                 data: gananciasMensuales
             });
@@ -64,8 +64,7 @@ export class AdmindashService {
     
         return {
             labels,
-            dataSucursales,
-            total: totalMensual
+            data,
         };
     }
 
@@ -171,8 +170,7 @@ export class AdmindashService {
         // Devolvemos el formato esperado con labels, datos de sucursales, y los totales
         return {
             labels,
-            dataSucursales,
-            total: totalMensual // Array con los totales mensuales y el total anual
+            data: dataSucursales,
         };
     }
     
@@ -231,7 +229,7 @@ export class AdmindashService {
         // Devolvemos el formato esperado con las etiquetas de los meses y los datos por servicio
         return {
             labels,
-            dataServicios
+            data: dataServicios
         };
     }    
 }

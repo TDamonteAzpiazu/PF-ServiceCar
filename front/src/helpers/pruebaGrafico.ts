@@ -14,7 +14,7 @@ export const valoresGrafico = {
       "Diciembre",
       "Anual"
     ],
-    "dataSucursales": [
+    "data": [
       {
         "label": "Córdoba Centro",
         "data": [
@@ -135,7 +135,7 @@ export const valoresGraficoTurnos = {
     "Diciembre",
     "Anual"
   ],
-  "dataSucursales": [
+  "data": [
     {
       "label": "Córdoba Centro",
       "data": [
@@ -214,7 +214,7 @@ export const valoresGraficoTurnoServicio = {
     "septiembre",
     "octubre"
   ],
-  "dataServicios": [
+  "data": [
     {
       "label": "Cambio de Aceite - Auto",
       "data": [

@@ -1,11 +1,10 @@
 "use client";
 import { useRef, useEffect } from "react";
 import { Chart } from "chart.js/auto";
-import { valoresGraficoTurnoServicio } from "../../helpers/pruebaGrafico";
 
-export default function GraficoTurnosServicios() {
+export default function GraficoTurnosServicios({data}: any) {
     const chartRef = useRef<HTMLCanvasElement>(null);
-
+console.log(data)
     useEffect(() => {
         if (chartRef.current) {
             // Destruimos el gráfico anterior si existe
@@ -17,7 +16,7 @@ export default function GraficoTurnosServicios() {
 
             if (context) {
                 // Generamos los datasets dinámicamente a partir de dataServicios
-                const datasets = valoresGraficoTurnoServicio.dataServicios.map((servicio, index) => {
+                const datasets = data.data.map((servicio: any, index: any) => {
                     // Creamos colores aleatorios o puedes establecer una paleta de colores predefinida
                     const backgroundColor = `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.2)`;
                     const borderColor = `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`;
@@ -31,11 +30,20 @@ export default function GraficoTurnosServicios() {
                     };
                 });
 
+                if(data.data.length === 3) {
+                    datasets[0].backgroundColor = "rgba(251, 161, 77, 0.2)";
+                    datasets[0].borderColor = "rgba(251, 161, 77, 1)";
+                    datasets[1].backgroundColor = "rgba(211, 211, 211, 0.2)";
+                    datasets[1].borderColor = "rgba(211, 211, 211, 1)";
+                    datasets[2].backgroundColor = "rgba(255, 215, 0, 0.2)";
+                    datasets[2].borderColor = "rgba(255, 215, 0, 1)";
+                }
+
                 // Creamos una instancia del nuevo gráfico
                 const chartInstance = new Chart(context, {
                     type: "bar",
                     data: {
-                        labels: valoresGraficoTurnoServicio.labels,
+                        labels: data.labels,
                         datasets
                     },
                     options: {
