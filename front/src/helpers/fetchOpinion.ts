@@ -82,3 +82,45 @@ export const getOpinionsAdmin = async (
     console.log(error);
   }
 };
+
+export const deleteOpinion = async (url: string, token: string, id: string) => {
+  try {
+    const result = await Swal.fire({
+      title: "¿Está seguro/a de deshabilitar la opinion?",
+      text: "Los usuarios no podrán visualizarla.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, deshabilitar.",
+      cancelButtonText: "Cancelar",
+    });
+
+    if (result.isConfirmed) {
+      const response = await fetch(`${url}/disable/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await response.json();
+return data
+      if (response.ok) {
+        Swal.fire({
+          title: "Deshabilitada",
+          text: "La opinion ha sido deshabilitada.",
+          icon: "success",
+        });
+      } else {
+        Swal.fire({
+          title: "Error",
+          text: data.message || "No se pudo deshabilitar la opinion.",
+          icon: "error",
+        });
+      }
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

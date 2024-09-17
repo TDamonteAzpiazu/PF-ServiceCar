@@ -1,7 +1,7 @@
 "use client";
-import { IService } from "@/helpers/types/types";
+import { IService, ISucursales } from "@/helpers/types/types";
 import React, { useEffect, useState } from "react";
-import { fetchDataService } from "@/helpers/serviciosFetch";
+import { fetchDataService, FetchSucursales } from "@/helpers/serviciosFetch";
 import Image from "next/image";
 import { FaCheckSquare, FaCoffee } from "react-icons/fa";
 import { MdLocalCarWash } from "react-icons/md";
@@ -13,9 +13,20 @@ const ServiceDetail: React.FC<{ id: string }> = ({ id }) => {
   const url = process.env.NEXT_PUBLIC_URL;
   const [service, setService] = useState<IService>();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const [sucursales, setSucursales] = useState<ISucursales[]>([]);
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  useEffect(() => {
+    FetchSucursales()
+      .then((res) => {
+        setSucursales(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   useEffect(() => {
     fetchDataService(url, id)
@@ -26,7 +37,7 @@ const ServiceDetail: React.FC<{ id: string }> = ({ id }) => {
         console.log(error);
       });
   }, [url, id]);
-  
+
   return (
     <section>
       {service && service.status === "active" && (
@@ -110,6 +121,7 @@ const ServiceDetail: React.FC<{ id: string }> = ({ id }) => {
             isMenuOpen={isMenuOpen}
             setIsMenuOpen={setIsMenuOpen}
             service={service}
+            sucursales={sucursales}
           />
         </div>
       )}
