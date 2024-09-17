@@ -14,16 +14,36 @@ const CardSucursalesAdmin: React.FC<{
   const [viewEditSucursal, setViewEditSucursal] = useState<boolean>(false);
 
   return (
-    <div className="bg-neutral-800 bg-opacity-75 p-3 rounded-md flex flex-col gap-1">
-      <h2 className="text-lg">{sucursal.name}</h2>
+    <div
+      className={`bg-neutral-800 ${
+        sucursal.status === "inactive" ? "bg-opacity-50" : "bg-opacity-80"
+      }  p-3 rounded-md flex flex-col gap-1`}
+    >
+      <h2
+        className={`text-lg ${
+          sucursal.status === "inactive" ? "text-zinc-400" : "text-custom-white"
+        }`}
+      >
+        {sucursal.name}
+      </h2>
       <p className="text-custom-grey flex text-sm">
         <span className="text-2xl pr-1">
           <FaLocationDot />
         </span>
         {sucursal.address}
       </p>
-      <p className="font-extralight text-sm">{sucursal.details}</p>
-      <div className="flex justify-between py-2 text-base font-light">
+      <p
+        className={`font-extralight text-sm ${
+          sucursal.status === "inactive" ? "text-zinc-400" : "text-custom-white"
+        }`}
+      >
+        {sucursal.details}
+      </p>
+      <div
+        className={`flex justify-between py-2 text-base font-light ${
+          sucursal.status === "inactive" ? "text-zinc-400" : "text-custom-white"
+        }`}
+      >
         <p className="flex">
           <span className="text-2xl pr-1">
             <IoEarthSharp />

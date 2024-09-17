@@ -6,7 +6,12 @@ import {
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useState } from "react";
 import "../../styles/forms.css";
-import { IAppointment, IService, IUser } from "@/helpers/types/types";
+import {
+  IAppointment,
+  IService,
+  ISucursales,
+  IUser,
+} from "@/helpers/types/types";
 import Cookies from "js-cookie";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
@@ -17,7 +22,8 @@ import Spinner from "../spinner/Spinner";
 
 const FormReservations: React.FC<{
   service: IService;
-}> = ({ service }) => {
+  sucursales: ISucursales[];
+}> = ({ service, sucursales }) => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [preferenceId, setPreferenceId] = useState<string | null>(null);
@@ -50,7 +56,7 @@ const FormReservations: React.FC<{
           service: [service.id],
           time: values.time,
           user: dataUser.id,
-          sucursal: values.sucursal
+          sucursal: values.sucursal,
         };
 
         const preference = await createPreference(
@@ -146,14 +152,17 @@ const FormReservations: React.FC<{
                   label={"Seleccione una sucursal"}
                   className=" bg-[#2b2b2b]"
                 />
-                {service.sucursales.map((option) => (
-                  <option
-                    key={option}
-                    value={option}
-                    label={option}
-                    className=" bg-[#2b2b2b] "
-                  />
-                ))}
+                {sucursales.map(
+                  (option) =>
+                    option.status === "active" && (
+                      <option
+                        key={option.id}
+                        value={option.name}
+                        label={option.name}
+                        className=" bg-[#2b2b2b] "
+                      />
+                    )
+                )}
               </Field>
               <span style={{ color: "red" }}>
                 <ErrorMessage name="sucursal" />

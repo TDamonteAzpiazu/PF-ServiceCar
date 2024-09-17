@@ -1,7 +1,11 @@
 "use client";
 import React from "react";
 import Cookies from "js-cookie";
-import { FaCalendarCheck, FaRegCircleUser } from "react-icons/fa6";
+import {
+  FaCalendarCheck,
+  FaRegCircleUser,
+  FaTableCellsColumnLock,
+} from "react-icons/fa6";
 import { MdLogout, MdMiscellaneousServices } from "react-icons/md";
 import { usePathname, useRouter } from "next/navigation";
 import PATHROUTES from "@/helpers/PathRoutes";
@@ -129,7 +133,22 @@ const UserLinks: React.FC = () => {
             </div>
             <div className="flex gap-2 items-center">
               <span className="text-xl">
-              <BsFillClipboardDataFill />
+                <FaTableCellsColumnLock />
+              </span>
+              <Link
+                href={`${PATHROUTES.DASHBOARD}/opinionsAdmin`}
+                className={`hover:text-custom-white ${
+                  pathName === `${PATHROUTES.DASHBOARD}/opinionsAdmin`
+                    ? "text-custom-white"
+                    : ""
+                }`}
+              >
+                Opiniones
+              </Link>
+            </div>
+            <div className="flex gap-2 items-center">
+              <span className="text-xl">
+                <BsFillClipboardDataFill />
               </span>
               <Link
                 href={`${PATHROUTES.DASHBOARD}/estadisticas`}

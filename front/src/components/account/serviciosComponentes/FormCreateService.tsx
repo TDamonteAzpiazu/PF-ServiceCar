@@ -164,19 +164,22 @@ const FormCreateService: React.FC<{
             {/* Desplegable de opciones */}
             {showSucursalesDropdown && (
               <div className="absolute top-full mt-2 w-full max-h-40 overflow-y-auto bg-[#2b2b2b] border border-neutral-700 rounded z-10">
-                {allSucursales.map((sucursal) => (
-                  <div
-                    key={sucursal.id}
-                    className={`p-2 cursor-pointer ${
-                      selectedSucursales.includes(sucursal.name)
-                        ? "bg-gray-600"
-                        : ""
-                    }`}
-                    onClick={() => handleSucursalToggle(sucursal.name)}
-                  >
-                    {sucursal.name}
-                  </div>
-                ))}
+                {allSucursales.map(
+                  (sucursal) =>
+                    sucursal.status === "active" && (
+                      <div
+                        key={sucursal.id}
+                        className={`p-2 cursor-pointer ${
+                          selectedSucursales.includes(sucursal.name)
+                            ? "bg-gray-600"
+                            : ""
+                        }`}
+                        onClick={() => handleSucursalToggle(sucursal.name)}
+                      >
+                        {sucursal.name}
+                      </div>
+                    )
+                )}
               </div>
             )}
           </div>

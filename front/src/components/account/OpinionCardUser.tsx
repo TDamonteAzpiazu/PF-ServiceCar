@@ -6,7 +6,6 @@ const OpinionCardUser: React.FC<{ opinion: IOpinionUser; index: number }> = ({
   index,
   opinion,
 }) => {
- 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     const day = String(date.getDate()).padStart(2, "0");
@@ -14,25 +13,35 @@ const OpinionCardUser: React.FC<{ opinion: IOpinionUser; index: number }> = ({
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   };
+  const truncateComment = (comment: string, maxLength: number) => {
+    if (!comment.includes(" ") && comment.length > maxLength) {
+      return `${comment.substring(0, maxLength)}...`;
+    }
+    return comment;
+  };
   return (
     <div
-      className={`rounded-xl p-6 shadow-md w-full  max-w-xs max-h-[600px] min-h-[500px] ${
-        index === 1 ? "bg-red-700" : "bg-custom-grey"
+      className={`rounded-xl py-6 px-3 shadow-md md:w-full w-11/12 mx-auto max-h-[600px] text-custom-white  ${
+        index % 2 !== 0 ? "bg-red-700" : "bg-[#2b2b2b]"
       }`}
     >
       <div className="flex justify-center mb-2">
-        {Array.from({ length: opinion.estrellas }).map((_, starIndex) => (
+        {Array.from({ length: opinion.rating }).map((_, starIndex) => (
           <FaStar key={starIndex} className="text-yellow-500 mr-1" />
         ))}
       </div>
-      <h3 className="text-xl font-bold text-center">{opinion.service}</h3>
-
+      <h3 className="text-lg font-bold ">{opinion.service.type}</h3>
+      <p className="text-neutral-500">AR$ {opinion.service.price}</p>
       <div className="flex justify-center mb-4">
         <FaQuoteLeft className="text-white text-3xl" />
       </div>
-      <p className="text-center">{opinion.opinion}</p>
-      <p className="text-gray-400 text-center mb-4">
-        {formatDate(opinion.date)}
+
+      <p className="font-extralight pb-2">{truncateComment(opinion.comment, 20)}</p>
+      <p
+        className="text-gray-400 text-center mb-3 underline underline-offset-2 "
+        style={{ textDecorationColor: "#840000" }}
+      >
+        {formatDate(opinion.createdAt)}
       </p>
     </div>
   );
