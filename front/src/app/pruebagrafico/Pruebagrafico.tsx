@@ -17,7 +17,7 @@ const Pruebagrafico = () => {
             </div>
             <h1 className="text-white font-bold">Grafico Usuarios Nuevos</h1>
             <div>
-                <GraficoUsuarios />
+                <GraficoUsuarios data={valoresGraficoUsuarios}/>
             </div>
             <h1 className="text-white font-bold">Grafico turnos por sucursal</h1>
             <div>

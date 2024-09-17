@@ -1,9 +1,8 @@
 "use client"
 import { useRef, useEffect } from "react";
 import { Chart } from "chart.js/auto";
-import { valoresGraficoUsuarios } from "../../helpers/pruebaGrafico";
 
-export default function GraficoUsuarios() {
+export default function GraficoUsuarios({data}: any) {
     const chartRef = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
@@ -20,11 +19,11 @@ export default function GraficoUsuarios() {
                 const chartInstance = new Chart(context, {
                     type: "bar",
                     data: {
-                        labels: valoresGraficoUsuarios.labels,
+                        labels: data.labels,
                         datasets: [
                             {
-                                label: valoresGraficoUsuarios.label,
-                                data: valoresGraficoUsuarios.data,
+                                label: data.label,
+                                data: data.data,
                                 backgroundColor: 'rgba(255, 215, 0, 0.2)',
                                 borderColor: 'rgba(255, 215, 0, 1)',
                                 borderWidth: 1,
