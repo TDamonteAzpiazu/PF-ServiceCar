@@ -16,7 +16,10 @@ const CarruselOpinions: React.FC<{ id: string }> = ({ id }) => {
     getOpinionsAdmin(url!, token!, id)
       .then((res) => {
         if (Array.isArray(res)) {
-          setOpinions(res);
+          const filteredOpinions = res.filter(
+            (opinion) => opinion.status === "active"
+          );
+          setOpinions(filteredOpinions);
         } else {
           console.error("Unexpected response format:", res);
           setOpinions([]);
@@ -28,7 +31,6 @@ const CarruselOpinions: React.FC<{ id: string }> = ({ id }) => {
       });
   }, [url, token]);
   const { containerRef, scrollRight, scrollLeft } = useHorizontalScroll();
-  console.log(opinions);
   return (
     <>
       {opinions.length > 0 && (
@@ -56,6 +58,7 @@ const CarruselOpinions: React.FC<{ id: string }> = ({ id }) => {
                       (opinion: IOpinionUser, index: number) =>
                         opinion.status === "Active" && (
                           <OpinionCardAdmin
+                            setOpinions={setOpinions}
                             key={index}
                             index={index}
                             opinion={opinion}

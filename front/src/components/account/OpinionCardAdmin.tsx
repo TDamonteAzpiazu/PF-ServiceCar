@@ -19,10 +19,9 @@ const OpinionCardAdmin: React.FC<{
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   };
-  console.log(opinion);
+
   const token = Cookies.get("token");
   const url = process.env.NEXT_PUBLIC_URL;
-
   const truncateComment = (comment: string, maxLength: number) => {
     if (!comment.includes(" ") && comment.length > maxLength) {
       return `${comment.substring(0, maxLength)}...`;
@@ -31,7 +30,7 @@ const OpinionCardAdmin: React.FC<{
   };
 
   const handleDelete = async () => {
-    const res = await deleteOpinion(url!, token!, opinion.id);
+    const res = await deleteOpinion(url!, token!, opinion);
     if (res) {
       getOpinions(url!, token!).then((res) => {
         if (Array.isArray(res)) {
@@ -54,14 +53,18 @@ const OpinionCardAdmin: React.FC<{
               : "md:w-full w-11/12 mx-auto py-6"
           } md:w-full w-11/12 mx-auto max-h-[600px] text-custom-white rounded-xl ${
             index % 2 !== 0 ? "bg-red-700" : "bg-[#2b2b2b]"
-          }`}
+          } ${
+            opinion.status === "inactive" ? "bg-opacity-50" : "bg-opacity-95"
+          } `}
         >
           {carrusel ? (
             " "
           ) : (
             <button
               onClick={handleDelete}
-              className="absolute top-[-15px] right-[-15px] bg-red-800 rounded-full p-2 hover:bg-red-500"
+              className={`${
+                opinion.status === "inactive" ? "hidden" : "block"
+              } absolute top-[-15px] right-[-15px] bg-red-800 rounded-full p-2 hover:bg-red-500`}
             >
               <RxCross2 className="hover:bg-red-500  cursor-pointer" />
             </button>
@@ -71,31 +74,54 @@ const OpinionCardAdmin: React.FC<{
               carrusel ? "top-1" : "top-[-40px]"
             }  left-0 flex  w-full justify-center`}
           >
-            {/* <Image
+            <Image
               alt={opinion.user.name}
               src={opinion.user.image}
               width={70}
               height={70}
               className="rounded-full"
-            /> */}
+            />
           </div>
           <div className="flex justify-center gap-1 mt-4 mb-2">
             {Array.from({ length: opinion.rating }).map((_, starIndex) => (
-              <FaStar key={starIndex} className="text-yellow-500 " />
+              <FaStar
+                key={starIndex}
+                className={` ${
+                  opinion.status === "inactive"
+                    ? "text-yellow-800"
+                    : "text-yellow-500"
+                }`}
+              />
             ))}
           </div>
           {!carrusel && (
             <>
-              <h3 className="text-lg font-bold ">{opinion.service.type}</h3>
+              <h3
+                className={`text-lg font-bold ${
+                  opinion.status === "inactive"
+                    ? "text-zinc-400"
+                    : "text-custom-white"
+                }`}
+              >
+                {opinion.service.type}
+              </h3>
               <p className="text-neutral-500">AR$ {opinion.service.price}</p>
             </>
           )}
 
           <div className="flex justify-center mb-4">
-            <FaQuoteLeft className="text-white text-3xl" />
+            <FaQuoteLeft
+              className={`${
+                opinion.status === "inactive" ? "text-zinc-400" : "text-white"
+              } text-3xl`}
+            />
           </div>
 
-          <p className="font-extralight pb-2">
+          <p
+            className={`font-extralight pb-2 ${
+              opinion.status === "inactive" ? "text-zinc-400" : "text-white"
+            }`}
+          >
             {truncateComment(opinion.comment, 20)}
           </p>
           <p
@@ -104,8 +130,30 @@ const OpinionCardAdmin: React.FC<{
           >
             {formatDate(opinion.createdAt)}
           </p>
-          <p className="font-normal text-lg">{opinion.user.name}</p>
-          <p className="font-extralight">{opinion.occupation}</p>
+          <p
+            className={`font-normal text-lg ${
+              opinion.status === "inactive" ? "text-zinc-400" : "text-white"
+            }`}
+          >
+            {opinion.user.name}
+          </p>
+          <p
+            className={`font-extralight ${
+              opinion.status === "inactive" ? "text-zinc-400" : "text-white"
+            }`}
+          >
+            {opinion.occupation}
+          </p>
+          {opinion.status === "inactive" && (
+            <div className="flex w-full justify-center">
+              <button
+                onClick={handleDelete}
+                className="border rounded-lg py-1 px-2 text-base font-medium  hover:text-custom-white transition duration-300 border-green-600 text-green-600 hover:bg-green-600"
+              >
+                Habilitar
+              </button>
+            </div>
+          )}
         </div>
       )}
     </>
