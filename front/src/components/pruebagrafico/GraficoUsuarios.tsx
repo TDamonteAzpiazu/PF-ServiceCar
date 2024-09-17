@@ -25,8 +25,8 @@ export default function GraficoUsuarios() {
                             {
                                 label: valoresGraficoUsuarios.label,
                                 data: valoresGraficoUsuarios.data,
-                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                borderColor: 'rgba(75, 192, 192, 1)',
+                                backgroundColor: 'rgba(255, 215, 0, 0.2)',
+                                borderColor: 'rgba(255, 215, 0, 1)',
                                 borderWidth: 1,
                             },
                         ]

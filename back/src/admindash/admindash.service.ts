@@ -23,7 +23,7 @@ export class AdmindashService {
         
         const labels = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre', 'Anual'];
         
-        const dataSucursales = [];
+        const data = [];
         const totalMensual = Array(12).fill(0); 
         let totalAnual = 0;
     
@@ -54,7 +54,7 @@ export class AdmindashService {
             gananciasMensuales.push(totalSucursal);
             totalAnual += totalSucursal;
     
-            dataSucursales.push({
+            data.push({
                 label: sucursal.name,
                 data: gananciasMensuales
             });
@@ -64,8 +64,7 @@ export class AdmindashService {
     
         return {
             labels,
-            dataSucursales,
-            total: totalMensual
+            data,
         };
     }
 
@@ -108,4 +107,129 @@ export class AdmindashService {
 
         return service.reviews;
     }
+
+    async getAppointmentsBySucursal() {
+        // Obtenemos todas las sucursales desde el repositorio
+        const sucursales = await this.sucursalesRepository.find();
+        
+        // Obtenemos el año actual
+        const year = new Date().getFullYear();
+        
+        // Definimos las etiquetas que serán los meses del año más un valor "Anual" para el total anual
+        const labels = [
+            'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 
+            'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 
+            'Diciembre', 'Anual'
+        ];
+    
+        // Arreglos para almacenar los datos de turnos por sucursal y los totales mensuales y anuales
+        const dataSucursales = [];
+        const totalMensual = Array(12).fill(0); // Inicializamos el total mensual en 0 para cada mes
+        let totalAnual = 0; // Variable para el total anual de turnos
+    
+        // Iteramos por cada sucursal
+        for (const sucursal of sucursales) {
+            const turnosMensuales = Array(12).fill(0); // Inicializamos el conteo de turnos por mes para la sucursal actual
+            let totalSucursal = 0; // Variable para el total de turnos de la sucursal actual
+    
+            // Obtenemos los turnos (appointments) de la sucursal dentro del año actual
+            const appointments = await this.appointmentsRepository.find({
+                where: {
+                    sucursal: { id: sucursal.id },
+                    date: Between(
+                        new Date(`${year}-01-01`), // Fecha inicio del año
+                        new Date(`${year}-12-31`)  // Fecha fin del año
+                    )
+                }
+            });
+    
+            // Iteramos sobre cada turno de la sucursal
+            appointments.forEach(appointment => {
+                const month = new Date(appointment.date).getMonth(); // Obtenemos el mes del turno (0 para Enero, 11 para Diciembre)
+    
+                // Incrementamos el conteo de turnos para el mes correspondiente
+                turnosMensuales[month] += 1; 
+                totalSucursal += 1; // Sumamos al total de la sucursal
+                totalMensual[month] += 1; // Sumamos al total mensual general
+            });
+    
+            // Agregamos el total anual de la sucursal al arreglo de turnos mensuales
+            turnosMensuales.push(totalSucursal); 
+            totalAnual += totalSucursal; // Sumamos el total de la sucursal al total anual
+    
+            // Añadimos los datos de la sucursal actual al arreglo de `dataSucursales`
+            dataSucursales.push({
+                label: sucursal.name, // Nombre de la sucursal
+                data: turnosMensuales // Array con los turnos mensuales y el total de la sucursal
+            });
+        }
+    
+        // Al final, agregamos el total anual a los datos mensuales
+        totalMensual.push(totalAnual);
+    
+        // Devolvemos el formato esperado con labels, datos de sucursales, y los totales
+        return {
+            labels,
+            data: dataSucursales,
+        };
+    }
+    
+    async getAppointmentsByService() {
+        // Obtenemos todos los servicios y la fecha actual
+        const servicios = await this.servicesRepository.find();
+        const currentDate = new Date();
+        
+        // Obtenemos el mes y el año actual
+        const currentMonth = currentDate.getMonth();
+        const currentYear = currentDate.getFullYear();
+    
+        // Definimos las etiquetas para el mes anterior, el actual y el siguiente
+        const labels = [
+            new Date(currentYear, currentMonth - 1).toLocaleString('es-ES', { month: 'long' }),
+            new Date(currentYear, currentMonth).toLocaleString('es-ES', { month: 'long' }),
+            new Date(currentYear, currentMonth + 1).toLocaleString('es-ES', { month: 'long' })
+        ];
+    
+        // Inicializamos la estructura para almacenar la cantidad de turnos por servicio
+        const dataServicios = [];
+    
+        // Iteramos sobre cada servicio
+        for (const servicio of servicios) {
+            const turnosMensuales = Array(3).fill(0); // Array para el mes anterior, actual y siguiente
+        
+            // Obtenemos los turnos relacionados con el servicio actual dentro del rango de fechas
+            const appointments = await this.appointmentsRepository.find({
+                where: {
+                    service: { id: servicio.id },
+                    date: Between(
+                        new Date(currentYear, currentMonth - 1, 1), // Inicio del mes anterior
+                        new Date(currentYear, currentMonth + 2, 0)   // Fin del mes siguiente
+                    )
+                }
+            });
+    
+            // Iteramos sobre los turnos obtenidos para calcular la cantidad por mes
+            appointments.forEach(appointment => {
+                const appointmentMonth = new Date(appointment.date).getMonth();
+    
+                // Calculamos el índice correcto basado en el mes (mes anterior, actual y siguiente)
+                const monthDifference = appointmentMonth - (currentMonth - 1);
+                if (monthDifference >= 0 && monthDifference < 3) {
+                    turnosMensuales[monthDifference] += 1; // Ajustamos el índice para los tres meses
+                }
+            });
+    
+            // Añadimos los datos del servicio actual al arreglo de `dataServicios`
+            dataServicios.push({
+                label: servicio.type, // Nombre del servicio
+                data: turnosMensuales // Cantidad de turnos por mes
+            });
+        }
+    
+        // Devolvemos el formato esperado con las etiquetas de los meses y los datos por servicio
+        return {
+            labels,
+            data: dataServicios
+        };
+    }    
 }
