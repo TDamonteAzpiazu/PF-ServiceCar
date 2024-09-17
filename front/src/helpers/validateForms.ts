@@ -223,8 +223,36 @@ export const validateAppointmentUpdate = async (input: FormikValues) => {
   return errors;
 };
 
-export const validateCreateSucursal = async (input: FormikValues) => {
+export const validateCreateSucursal = (selectedServicios: string[]) => {
+  return async (input: FormikValues) => {
+    const errors: Partial<FormikValues> = {};
+
+    if (!input.name) {
+      errors.name = "El nombre es requerido";
+    }
+    if (!input.address) {
+      errors.address = "La dirección es requerida";
+    }
+    if (!input.latitud) {
+      errors.latitud = "La latitud es requerida";
+    }
+    if (!input.longitud) {
+      errors.longitud = "La longitud es requerida";
+    }
+    if (!input.details) {
+      errors.details = "El detalle es requerido";
+    }
+    if (selectedServicios.length === 0) {
+      errors.servicios = "Los servicios son requeridos";
+    }
+
+    return errors;
+  };
+};
+
+export const validateUpdateSucursal = async (input: FormikValues) => {
   const errors: Partial<FormikValues> = {};
+
   if (!input.name) {
     errors.name = "El nombre es requerido";
   }
@@ -240,6 +268,7 @@ export const validateCreateSucursal = async (input: FormikValues) => {
   if (!input.details) {
     errors.details = "El detalle es requerido";
   }
+
   return errors;
 };
 
@@ -258,7 +287,7 @@ export const validateCreateOpinion = async (input: FormikValues) => {
 export const validateFormService = (selectedSucursales: string[]) => {
   return async (input: FormikValues) => {
     const errors: Partial<FormikValues> = {};
-    
+
     if (!input.type) {
       errors.type = "El tipo es requerido";
     }
@@ -279,26 +308,24 @@ export const validateFormService = (selectedSucursales: string[]) => {
   };
 };
 
-export const validateFormServiceEdit =async(input: FormikValues) => {
-  
-    const errors: Partial<FormikValues> = {};
-    
-    if (!input.type) {
-      errors.type = "El tipo es requerido";
-    }
-    if (!input.price) {
-      errors.price = "El precio es requerido";
-    }
-    if (!input.description) {
-      errors.description = "La descripción es requerida";
-    }
-    if (!input.sucursales) {
-      errors.sucursales = "La sucursal es requerida";
-    }
-    if (!input.vehiculo) {
-      errors.vehiculo = "El vehiculo es requerido";
-    }
-  
+export const validateFormServiceEdit = async (input: FormikValues) => {
+  const errors: Partial<FormikValues> = {};
 
-    return errors;
+  if (!input.type) {
+    errors.type = "El tipo es requerido";
+  }
+  if (!input.price) {
+    errors.price = "El precio es requerido";
+  }
+  if (!input.description) {
+    errors.description = "La descripción es requerida";
+  }
+  if (!input.sucursales) {
+    errors.sucursales = "La sucursal es requerida";
+  }
+  if (!input.vehiculo) {
+    errors.vehiculo = "El vehiculo es requerido";
+  }
+
+  return errors;
 };
