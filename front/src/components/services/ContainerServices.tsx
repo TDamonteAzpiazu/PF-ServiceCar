@@ -17,7 +17,8 @@ const ContainerServices: React.FC = () => {
   const [serviciosOrdenados, setServiciosOrdenados] = useState<IService[]>([]);
   const [vehiculos, setVehiculos] = useState<string[]>([]);
   const [ubicaciones, setUbicaciones] = useState<ISucursales[]>([]);
-  const [mostrarFiltros, setMostrarFiltros] = useState(false); 
+  const [mostrarFiltros, setMostrarFiltros] = useState(false);
+  const [sinCoincidencias, setSinCoincidencias] = useState(false);
   const [sinResultados, setSinResultados] = useState(false); // Estado para controlar resultados vacíos
   const [ordenamiento, setOrdenamiento] = useState<string | null>(null); // Nuevo estado para ordenamiento
 
@@ -93,8 +94,9 @@ const ContainerServices: React.FC = () => {
           setServiciosFiltrados={setServiciosOrdenados}
           ordenPrecioAsc={handleOrdenarPrecioAsc}
           ordenPrecioDesc={handleOrdenarPrecioDesc}
-          setOrdenamiento={setOrdenamiento} // Añadido
-
+          setOrdenamiento={setOrdenamiento}
+          setSinCoincidencias={setSinCoincidencias}
+          sinCoincidencias={sinCoincidencias}
         />
       </div>
 
@@ -109,9 +111,9 @@ const ContainerServices: React.FC = () => {
 
       <section className="mx-6">
         {sinResultados ? (
-          <NoResultados /> 
+          <NoResultados />
         ) : (
-          <Cards servicios={serviciosOrdenados} />
+          <Cards servicios={serviciosOrdenados} sinCoincidencias={sinCoincidencias}/>
         )}
       </section>
     </>

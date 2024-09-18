@@ -21,12 +21,12 @@ export class MercadoPagoController {
     @ApiOperation({ summary: 'Redirecciona a MercadoPago para pagar' })
     async success(@Query('external_reference') idAppointment: string, @Res() res) {
         await this.appointmentsService.updatePayment(idAppointment);
-        res.redirect('http://localhost:3000/account/reservations');
+        res.redirect('https://pf-service-car-git-main-agustinhaags-projects.vercel.app/account/reservations');
     }
 
     @Get('failure')
     @ApiOperation({ summary: 'Redirige al usuario a la página de servicios en caso de fallo en el pago' })
     failure(@Res() res) {
-        res.redirect('http://localhost:3000/servicios');
+        res.redirect('https://pf-service-car-git-main-agustinhaags-projects.vercel.app/servicios');
     }
 }
