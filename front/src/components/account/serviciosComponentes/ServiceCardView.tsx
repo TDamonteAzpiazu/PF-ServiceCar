@@ -33,33 +33,64 @@ const ServiceCardView: React.FC<IService & { handleUpdate: () => void }> = ({
     setIsModalOpen(false);
   };
 
-  const serviceData = { id, type, description, price, status, sucursales, image, vehiculo };
+  const serviceData = {
+    id,
+    type,
+    description,
+    price,
+    status,
+    sucursales,
+    image,
+    vehiculo,
+  };
 
   return (
-    <div className={`bg-neutral-800  py-3 px-2 rounded-md flex flex-col justify-between min-h-40 ${serviceStatus === "inactive" ? "bg-opacity-50" : "bg-opacity-85"}`}>
-      <Link href={`/services/${id}`} className="flex flex-col px-4 py-2 w-full">
+    <div
+      className={`bg-neutral-800  py-3 px-2 rounded-md flex flex-col justify-between min-h-40 ${
+        serviceStatus === "inactive" ? "bg-opacity-50" : "bg-opacity-85"
+      }`}
+    >
+      <Link
+        href={`/servicios/${id}`}
+        className="flex flex-col px-4 py-2 w-full"
+      >
         <div className="flex justify-between w-full items-center">
           <div className="flex flex-col gap-4">
-            <h2 className={`lg:text-base sm:text-sm text-base ${serviceStatus === "inactive" ? "text-" : ""}`}>{type}</h2>
+            <h2
+              className={`lg:text-base sm:text-sm text-base ${
+                serviceStatus === "inactive" ? "text-" : ""
+              }`}
+            >
+              {type}
+            </h2>
             <p className="text-custom-grey lg:text-sm sm:text-xs text-sm">
               {description.split(" ").slice(0, 10).join(" ") + ".."}
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <p className="text-custom-grey lg:text-base sm:text-sm text-base">${price}</p>
+            <p className="text-custom-grey lg:text-base sm:text-sm text-base">
+              ${price}
+            </p>
           </div>
         </div>
       </Link>
       <div className="flex items-end justify-between px-4">
         <EditarButton service={serviceData} handleUpdate={handleUpdate} />
-        
-        <button onClick={openModal} className="border rounded-md border-custom-grey text-white py-2 px-3 hover:bg-gray-700">
+
+        <button
+          onClick={openModal}
+          className="border rounded-md border-custom-grey text-white py-2 px-3 hover:bg-gray-700"
+        >
           <FaImage />
         </button>
-        
-        <InhabilitarButton id={id} status={serviceStatus} onStatusChange={handleStatusChange} />
+
+        <InhabilitarButton
+          id={id}
+          status={serviceStatus}
+          onStatusChange={handleStatusChange}
+        />
       </div>
-      
+
       <ImageModal
         imageUrl={image}
         isOpen={isModalOpen}
