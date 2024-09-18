@@ -1,4 +1,5 @@
-"use client"
+"use client";
+
 import React, { useState, useEffect } from "react";
 import Cards from "@/components/services/cardsServicios";
 import { FetchServicio, FetchSucursales } from "@/helpers/serviciosFetch";
@@ -9,15 +10,16 @@ import {
 } from "@/helpers/filtrado/ordenamientoService";
 import { filtrarServiciosPorSucursal } from "@/helpers/filtrado/filtrarServicios";
 import Filters from "./Filters";
-import { FaExclamationTriangle } from "react-icons/fa"; // Nuevo ícono
+import NoResultados from "./NoResultado";
 
 const ContainerServices: React.FC = () => {
   const [servicios, setServicios] = useState<IService[]>([]);
   const [serviciosOrdenados, setServiciosOrdenados] = useState<IService[]>([]);
   const [vehiculos, setVehiculos] = useState<string[]>([]);
   const [ubicaciones, setUbicaciones] = useState<ISucursales[]>([]);
-  const [mostrarFiltros, setMostrarFiltros] = useState(false); // Estado para filtros
-  const [sinResultados, setSinResultados] = useState(false); // Nuevo estado para controlar resultados vacíos
+  const [mostrarFiltros, setMostrarFiltros] = useState(false); 
+  const [sinResultados, setSinResultados] = useState(false); // Estado para controlar resultados vacíos
+  const [ordenamiento, setOrdenamiento] = useState<string | null>(null); // Nuevo estado para ordenamiento
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,10 +52,17 @@ const ContainerServices: React.FC = () => {
 
   const handleOrdenarPrecioAsc = () => {
     setServiciosOrdenados(ordenarPrecioAsc(serviciosOrdenados));
+    setOrdenamiento("Ascendente");
   };
 
   const handleOrdenarPrecioDesc = () => {
     setServiciosOrdenados(ordernarPrecioDesc(serviciosOrdenados));
+    setOrdenamiento("Descendente");
+  };
+
+  const handleEliminarOrdenamiento = () => {
+    setServiciosOrdenados(servicios); // Restablece la lista sin orden
+    setOrdenamiento(null); // Elimina el estado de ordenamiento
   };
 
   const handleFilterChange = (
@@ -62,13 +71,12 @@ const ContainerServices: React.FC = () => {
   ) => {
     const serviciosFiltrados = filtrarServiciosPorSucursal(
       servicios,
-      ubicacionesSeleccionadas.map((ubicacion) => ubicacion.name).join(","),
+      ubicacionesSeleccionadas.map((ubicacion) => ubicacion.name), // Ahora es un array
       "",
       vehiculosSeleccionados
     );
     setServiciosOrdenados(serviciosFiltrados);
 
-    // Verifica si hay resultados o no
     setSinResultados(serviciosFiltrados.length === 0);
   };
 
@@ -85,17 +93,23 @@ const ContainerServices: React.FC = () => {
           setServiciosFiltrados={setServiciosOrdenados}
           ordenPrecioAsc={handleOrdenarPrecioAsc}
           ordenPrecioDesc={handleOrdenarPrecioDesc}
+          setOrdenamiento={setOrdenamiento} // Añadido
+
         />
       </div>
 
+      {ordenamiento && (
+        <div className="flex justify-start mx-6 my-2">
+          <div className="bg-red-500 text-white py-1 px-3 rounded flex items-center gap-2">
+            <span>Ordenado por precio {ordenamiento}</span>
+            <button onClick={handleEliminarOrdenamiento}>✕</button>
+          </div>
+        </div>
+      )}
+
       <section className="mx-6">
         {sinResultados ? (
-          <div className="flex flex-col items-center justify-center">
-            <FaExclamationTriangle className="text-4xl text-red-600" />
-            <p className="text-white text-xl mt-4">
-              No hemos encontrado resultados
-            </p>
-          </div>
+          <NoResultados /> 
         ) : (
           <Cards servicios={serviciosOrdenados} />
         )}

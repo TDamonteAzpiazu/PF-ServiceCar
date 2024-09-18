@@ -7,6 +7,8 @@ interface FilterOptionsProps {
   setMostrarFiltros: (value: boolean) => void; // Nuevo prop para cerrar los filtros
   vehiculos: string[];
   onFilterChange: (ubicaciones: ISucursales[], vehiculos: string[]) => void;
+  setOrdenamiento: (ordenamiento: string | null) => void; // Añadido
+
 }
 
 const FilterOptions: React.FC<FilterOptionsProps> = ({
@@ -14,6 +16,7 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
   setMostrarFiltros, // Recibe el nuevo prop
   vehiculos,
   onFilterChange,
+  setOrdenamiento 
 }) => {
   const [sucursalesData, setSucursalesData] = useState<ISucursales[]>([]);
   const [vehiculosSeleccionados, setVehiculosSeleccionados] = useState<
@@ -64,7 +67,6 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
   };
 
   const aplicarFiltros = () => {
-    // Convierte los Sets a arrays y aplica los filtros
     onFilterChange(
       sucursalesData.filter((sucursal) =>
         ubicacionesSeleccionadas.has(sucursal.name)
@@ -72,8 +74,19 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
       Array.from(vehiculosSeleccionados)
     );
     // Cierra el panel de filtros
+    setOrdenamiento(null); // Limpia el ordenamiento
     setMostrarFiltros(false);
   };
+
+  const limpiarFiltros = () => {
+  setUbicacionesSeleccionadas(new Set());
+  setVehiculosSeleccionados(new Set());
+  onFilterChange([], []); 
+  setOrdenamiento(null);
+  setMostrarFiltros(false);
+};
+
+  
 
   return (
     <div
@@ -124,10 +137,16 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
         {/* Botón para aplicar los filtros */}
         <div className="mt-4">
           <button
-            className="bg-custom-red text-white py-2 px-4 rounded hover:bg-red-600"
+            className="bg-custom-white text-black py-2 px-4 rounded hover:bg-custom-red hover:text-white"
             onClick={aplicarFiltros}
           >
             Aplicar filtros
+          </button>
+          <button
+          className="bg-custom-red text-white py-2 px-4 rounded hover:bg-red-600 mt-2"
+          onClick={limpiarFiltros}
+          >
+            Limpiar filtros
           </button>
         </div>
       </div>
