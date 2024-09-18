@@ -7,9 +7,12 @@
   padding: 0;
   box-sizing: border-box;
 }
+canvas {
+  width: 100% !important;
+}
 
 @layer utilities {
   .custom-button {
-    @apply bg-custom-red text-white px-6 py-3 rounded-lg hover:bg-red-600
+    @apply bg-custom-red text-white px-6 py-3 rounded-lg hover:bg-red-600;
   }
 }
