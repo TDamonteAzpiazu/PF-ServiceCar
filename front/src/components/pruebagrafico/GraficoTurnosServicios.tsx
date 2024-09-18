@@ -4,7 +4,7 @@ import { Chart } from "chart.js/auto";
 
 export default function GraficoTurnosServicios({data}: any) {
     const chartRef = useRef<HTMLCanvasElement>(null);
-console.log(data)
+
     useEffect(() => {
         if (chartRef.current) {
             // Destruimos el gráfico anterior si existe

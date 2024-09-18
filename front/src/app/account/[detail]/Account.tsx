@@ -1,3 +1,4 @@
+import StatisticsAdmin from "@/components/account/admin/Statistics";
 import SucursalesAdmin from "@/components/account/admin/SucursalesAdmin";
 import InfoAccount from "@/components/account/InfoAccount";
 import Opinions from "@/components/account/Opinions";
@@ -16,7 +17,8 @@ const Account: React.FC<{ params: { detail: string } }> = ({ params }) => {
     detail !== "opinions" &&
     detail !== "servicios" &&
     detail !== "sucursales" &&
-    detail !== "opinionsAdmin"
+    detail !== "opinionsAdmin" &&
+    detail !== "estadisticas"
   ) {
     return <div>Invalid detail parameter.</div>;
   }
@@ -26,9 +28,10 @@ const Account: React.FC<{ params: { detail: string } }> = ({ params }) => {
       {detail === "user" && <InfoAccount />}
       {detail === "reservations" && <Reservations />}
       {detail === "opinions" && <Opinions />}
-      {detail == "servicios" && <Services/>}
+      {detail == "servicios" && <Services />}
       {detail === "sucursales" && <SucursalesAdmin />}
       {detail === "opinionsAdmin" && <OpinionsAdmin />}
+      {detail === "estadisticas" && <StatisticsAdmin />}
     </main>
   );
 };

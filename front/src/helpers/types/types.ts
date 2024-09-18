@@ -143,3 +143,14 @@ export interface ISucursalesDto {
   longitud: string;
   details: string;
 }
+
+export interface IGraphicGral {
+  data: any[];
+  labels: string[];
+}
+
+export interface IGraphicUsers {
+  data: any[];
+  labels: string[];
+  label: string;
+}

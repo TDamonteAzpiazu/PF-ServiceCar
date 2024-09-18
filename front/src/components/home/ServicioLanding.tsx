@@ -24,7 +24,7 @@ const ServiciosLanding: React.FC = () => {
         Algunos de nuestros Servicios
       </h2>
       <section className="w-full flex justify-center">
-        <Cards servicios={servicios} />
+        <Cards servicios={servicios} sinCoincidencias={false} />
       </section>
       <div className="mt-4">
         <Link href={PATHROUTES.SERVICES} className="custom-button">

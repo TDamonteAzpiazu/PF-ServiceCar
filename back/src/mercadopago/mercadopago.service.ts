@@ -14,8 +14,8 @@ export class MercadoPagoService {
             unit_price: item.price,
         })),
         back_urls: {
-            success: "http://localhost:3001/mercadopago/success",
-            failure: "http://localhost:3001/mercadopago/failure",
+            success: "https://garagejs.onrender.com/mercadopago/success",
+            failure: "https://garagejs.onrender.com/mercadopago/failure",
         },
         auto_return: 'approved',
         external_reference: body.idAppointment,
