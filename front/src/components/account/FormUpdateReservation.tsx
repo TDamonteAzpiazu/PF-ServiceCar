@@ -13,7 +13,7 @@ import React, { useState } from "react";
 import Cookies from "js-cookie";
 import PATHROUTES from "@/helpers/PathRoutes";
 import { updateAppointment } from "@/helpers/fetchReservations";
-import "../../styles/forms.css"
+import "../../styles/forms.css";
 
 const FormUpdateReservation: React.FC<{
   appointment: IAppointmentUser;
@@ -132,14 +132,17 @@ const FormUpdateReservation: React.FC<{
                 label="Seleccione nuevos servicios"
                 className="bg-[#2b2b2b]"
               />
-              {servicios.map((option) => (
-                <option
-                  key={option.id}
-                  value={option.id}
-                  label={option.type}
-                  className="bg-[#2b2b2b]"
-                />
-              ))}
+              {servicios.map(
+                (option) =>
+                  option.status === "active" && (
+                    <option
+                      key={option.id}
+                      value={option.id}
+                      label={option.type}
+                      className="bg-[#2b2b2b]"
+                    />
+                  )
+              )}
             </Field>
             {selectedService && (
               <div className="w-full flex flex-col mt-4">
@@ -180,8 +183,8 @@ const FormUpdateReservation: React.FC<{
                 </h4>
                 <p className="font-extralight pb-1 text-base">{option.type}</p>
                 <p className="font-normal pb-2 text-base text-custom-grey">
-              {appointment.sucursal.name}
-            </p>
+                  {appointment.sucursal.name}
+                </p>
                 <Link href={`${PATHROUTES.SERVICES}/${option.id}`}>
                   <Image
                     alt={option.type}
@@ -192,7 +195,6 @@ const FormUpdateReservation: React.FC<{
                 </Link>
               </div>
             ))}
-           
           </div>
           {error ? <p className="text-red-600">¡{error}!</p> : ""}
           <div className="flex h-10 mt-4 justify-center w-full">

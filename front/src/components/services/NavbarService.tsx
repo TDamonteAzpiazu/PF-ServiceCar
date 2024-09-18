@@ -1,4 +1,4 @@
-import { IService } from "@/helpers/types/types";
+import { IService, ISucursales } from "@/helpers/types/types";
 import React from "react";
 import { IoCloseSharp } from "react-icons/io5";
 import FormReservations from "./FormReservations";
@@ -7,7 +7,8 @@ const NavbarService: React.FC<{
   isMenuOpen: boolean;
   setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
   service: IService;
-}> = ({ isMenuOpen, setIsMenuOpen, service }) => {
+  sucursales:ISucursales[]
+}> = ({ isMenuOpen, setIsMenuOpen, service,sucursales }) => {
   return (
     <div
       className={`fixed top-0 right-0 h-full bg-[#2b2b2b] px-3 shadow-lg z-50 w-1/3 md:min-w-[400px] min-w-[300px] transition-transform transform ${
@@ -35,7 +36,7 @@ const NavbarService: React.FC<{
         <h3 className="text-xl">{service.type}</h3>
         <p className="text-neutral-400">Valor: US$ {service.price}.</p>
       </div>
-      <FormReservations service={service}/>
+      <FormReservations service={service} sucursales={sucursales}/>
     </div>
   );
 };

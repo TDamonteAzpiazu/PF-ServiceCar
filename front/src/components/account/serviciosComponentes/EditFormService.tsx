@@ -162,19 +162,22 @@ const EditFormService: React.FC<{
                 {/* Desplegable de opciones */}
                 {showSucursalesDropdown && (
                   <div className="absolute mt-16 w-full max-h-40 overflow-y-auto bg-[#2b2b2b]  border border-neutral-700 rounded">
-                    {allSucursales.map((sucursal) => (
-                      <div
-                        key={sucursal.id}
-                        className={`p-2 cursor-pointer ${
-                          selectedSucursales.includes(sucursal.name)
-                            ? "bg-gray-600"
-                            : ""
-                        }`}
-                        onClick={() => handleSucursalToggle(sucursal.name)}
-                      >
-                        {sucursal.name}
-                      </div>
-                    ))}
+                    {allSucursales.map(
+                      (sucursal) =>
+                        sucursal.status === "active" && (
+                          <div
+                            key={sucursal.id}
+                            className={`p-2 cursor-pointer ${
+                              selectedSucursales.includes(sucursal.name)
+                                ? "bg-gray-600"
+                                : ""
+                            }`}
+                            onClick={() => handleSucursalToggle(sucursal.name)}
+                          >
+                            {sucursal.name}
+                          </div>
+                        )
+                    )}
                   </div>
                 )}
               </div>
