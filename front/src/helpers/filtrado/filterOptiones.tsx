@@ -4,16 +4,16 @@ import { FetchSucursales } from "../serviciosFetch";
 
 interface FilterOptionsProps {
   mostrarFiltros: boolean;
-  setMostrarFiltros: (value: boolean) => void; // Nuevo prop para cerrar los filtros
+  setMostrarFiltros: (value: boolean) => void; 
   vehiculos: string[];
   onFilterChange: (ubicaciones: ISucursales[], vehiculos: string[]) => void;
-  setOrdenamiento: (ordenamiento: string | null) => void; // Añadido
+  setOrdenamiento: (ordenamiento: string | null) => void; 
 
 }
 
 const FilterOptions: React.FC<FilterOptionsProps> = ({
   mostrarFiltros,
-  setMostrarFiltros, // Recibe el nuevo prop
+  setMostrarFiltros, 
   vehiculos,
   onFilterChange,
   setOrdenamiento 
@@ -73,8 +73,7 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
       ),
       Array.from(vehiculosSeleccionados)
     );
-    // Cierra el panel de filtros
-    setOrdenamiento(null); // Limpia el ordenamiento
+    setOrdenamiento(null); 
     setMostrarFiltros(false);
   };
 

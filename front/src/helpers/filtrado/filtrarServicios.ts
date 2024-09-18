@@ -2,14 +2,13 @@ import { IService, ISucursales } from "@/helpers/types/types";
 
 export const filtrarServiciosPorSucursal = (
   servicios: IService[],
-  sucursalesSeleccionadas: string[], // Cambia a un array de sucursales
+  sucursalesSeleccionadas: string[], 
   palabraClave: string,
   vehiculosSeleccionados: string[]
 ): IService[] => {
   const palabraClaveNormalizada = palabraClave.toLowerCase();
 
   return servicios.filter((servicio) => {
-    // Verifica si el servicio incluye todas las sucursales seleccionadas
     const tieneTodasLasSucursales = sucursalesSeleccionadas.length === 0 || 
       sucursalesSeleccionadas.every((sucursal) =>
         servicio.sucursales.includes(sucursal)
