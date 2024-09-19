@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { ISucursales } from "@/helpers/types/types";
 import React, { useEffect, useState } from "react";
 import Map from "../services/Map";
@@ -26,10 +26,10 @@ const CardSucursales: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto bg-black rounded-lg overflow-hidden">
       <div className="flex justify-around bg-black rounded">
-        {sucursales.map((sucursal) => (
+        {sucursales.map((sucursal) =>
           sucursal.status === "active" ? (
             <button
-              key={sucursal.id} 
+              key={sucursal.id}
               onClick={() => setSelectedSucursal(sucursal)}
               className={`py-2 px-4 w-full ${
                 selectedSucursal?.id === sucursal.id
@@ -40,15 +40,14 @@ const CardSucursales: React.FC = () => {
               {sucursal.name}
             </button>
           ) : null
-        ))}
+        )}
       </div>
       {selectedSucursal && selectedSucursal.status === "active" ? (
         <div className="p-6">
           <h3 className="text-2xl font-bold mb-4">{selectedSucursal.name}</h3>
           <p className="text-gray-400 mb-2">{selectedSucursal.address}</p>
           <p className="pb-4">{selectedSucursal.details}</p>
-          {/* Uncomment and configure the Map component as needed */}
-          {/* 
+
           <Map
             apiKey={apiKey!}
             center={{
@@ -64,7 +63,6 @@ const CardSucursales: React.FC = () => {
               },
             ]}
           />
-          */}
         </div>
       ) : null}
     </div>
