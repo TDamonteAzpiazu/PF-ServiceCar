@@ -11,8 +11,7 @@ const CardReservations: React.FC<{
   appointment: IAppointmentUser;
   onDelete: () => void;
   fetchAppointments: () => Promise<void>;
-  cardPay: boolean;
-}> = ({ appointment, onDelete, fetchAppointments, cardPay }) => {
+}> = ({ appointment, onDelete, fetchAppointments }) => {
   const [viewIappointmentDetail, setViewIappointmentDetail] =
     useState<boolean>(false);
   const [viewIappointmentUpdate, setViewIappointmentUpdate] =
@@ -32,9 +31,7 @@ const CardReservations: React.FC<{
   return (
     <div className="flex items-center px-3 py-6 bg-black bg-opacity-40 rounded justify-between">
       <div className=" flex sm:flex-row flex-col lg:gap-4 gap-1 items-center">
-        <h2 className=" sm:text-sm text-base">
-          {appointment.service[0].type}
-        </h2>
+        <h2 className=" sm:text-sm text-base">{appointment.service[0].type}</h2>
         <p className="text-custom-grey lg:text-base sm:text-sm text-base">
           {formatDate(appointment.date)}
         </p>
@@ -51,7 +48,6 @@ const CardReservations: React.FC<{
         <p className="text-custom-grey lg:text-base sm:text-sm text-base">
           AR$ {appointment.service[0].price}
         </p>
-      
       </div>
 
       <div className="flex lg:flex-row flex-col items-center gap-4 sm:justify-center justify-between sm:min-h-0 min-h-44">
@@ -64,7 +60,7 @@ const CardReservations: React.FC<{
           Ver más
         </button>
         <div className="flex lg:flex-col flex-row items-center gap-2">
-          {!cardPay && (
+          {appointment.pago !== "Realizado" && (
             <button
               onClick={() => {
                 setViewIappointmentUpdate(!viewIappointmentUpdate);
