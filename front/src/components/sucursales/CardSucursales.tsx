@@ -3,6 +3,7 @@ import { ISucursales } from "@/helpers/types/types";
 import React, { useEffect, useState } from "react";
 import Map from "../services/Map";
 import { FetchSucursales } from "@/helpers/serviciosFetch";
+import Spinner from "../spinner/Spinner";
 
 const CardSucursales: React.FC = () => {
   const [sucursales, setSucursales] = useState<ISucursales[]>([]);
@@ -26,20 +27,24 @@ const CardSucursales: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto bg-black rounded-lg overflow-hidden">
       <div className="flex justify-around bg-black rounded">
-        {sucursales.map((sucursal) =>
-          sucursal.status === "active" ? (
-            <button
-              key={sucursal.id}
-              onClick={() => setSelectedSucursal(sucursal)}
-              className={`py-2 px-4 w-full ${
-                selectedSucursal?.id === sucursal.id
-                  ? "bg-custom-red text-white"
-                  : "bg-custom-grey"
-              }`}
-            >
-              {sucursal.name}
-            </button>
-          ) : null
+        {!sucursales || sucursales.length < 1 ? (
+          <Spinner title="Cargando sucursales..." />
+        ) : (
+          sucursales.map((sucursal) =>
+            sucursal.status === "active" ? (
+              <button
+                key={sucursal.id}
+                onClick={() => setSelectedSucursal(sucursal)}
+                className={`py-2 px-4 w-full ${
+                  selectedSucursal?.id === sucursal.id
+                    ? "bg-custom-red text-white"
+                    : "bg-custom-grey"
+                }`}
+              >
+                {sucursal.name}
+              </button>
+            ) : null
+          )
         )}
       </div>
       {selectedSucursal && selectedSucursal.status === "active" ? (
