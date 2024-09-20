@@ -23,7 +23,6 @@ const ReservationModal: React.FC<{
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
-   
   };
 
   useEffect(() => {
@@ -32,7 +31,7 @@ const ReservationModal: React.FC<{
         setPreferenceId(res.preferenceId);
       });
     }
-  }, []);
+  }, [appointment, appointment.service[0]]);
 
   return (
     <CSSTransition

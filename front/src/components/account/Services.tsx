@@ -5,10 +5,13 @@ import { useSelector } from "react-redux";
 import ServiceAddDelete from "./serviciosComponentes/ServiceAdd";
 import { IService, IUser } from "@/helpers/types/types";
 import { FetchServicio } from "@/helpers/serviciosFetch";
+import { useRouter } from "next/navigation";
+import PATHROUTES from "@/helpers/PathRoutes";
 
 const Services: React.FC = () => {
   const dataUser: IUser = useSelector((state: any) => state.user.user);
   const [servicios, setServicios] = useState<IService[]>([]);
+  const router = useRouter();
   const [updateFlag, setUpdateFlag] = useState<boolean>(false);
 
   useEffect(() => {
@@ -27,7 +30,9 @@ const Services: React.FC = () => {
   const handleUpdate = () => {
     setUpdateFlag((prev) => !prev); // Alternar el estado para desencadenar la actualización
   };
-
+  if(dataUser && dataUser.role === "user"){
+    router.push(`${PATHROUTES.DASHBOARD}/user`)
+  }
   return (
     dataUser &&
     dataUser.role === "admin" && (

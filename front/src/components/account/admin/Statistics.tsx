@@ -9,7 +9,10 @@ import {
 } from "@/helpers/fetchGraph";
 import GraphicGral from "./GraphicGral";
 import NewUsers from "./NewUsers";
-import { IGraphicGral, IGraphicUsers } from "@/helpers/types/types";
+import { IGraphicGral, IGraphicUsers, IUser } from "@/helpers/types/types";
+import PATHROUTES from "@/helpers/PathRoutes";
+import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
 
 const StatisticsAdmin: React.FC = () => {
   const token = Cookies.get("token");
@@ -19,6 +22,8 @@ const StatisticsAdmin: React.FC = () => {
     useState<IGraphicGral>();
   const [ganancias, setGanancias] = useState<IGraphicGral>();
   const [users, setUsers] = useState<IGraphicUsers>();
+  const router = useRouter();
+  const dataUser: IUser = useSelector((state: any) => state.user.user);
 
   useEffect(() => {
     fetchAppointmentsService(url!, token!)
@@ -53,7 +58,9 @@ const StatisticsAdmin: React.FC = () => {
         console.log(error);
       });
   }, []);
-
+  if(dataUser && dataUser.role === "user"){
+    router.push(`${PATHROUTES.DASHBOARD}/user`)
+  }
   return (
     <div className="w-full flex flex-col gap-5 my-2 text-center">
       <div className="w-full flex flex-col gap-1">
