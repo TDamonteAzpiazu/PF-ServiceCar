@@ -50,5 +50,7 @@ export const config = {
     "/account/servicios",
     "/account/sucursales",
     "/account/opinions",
+    "/account/opinionsAdmin",
+    "/account/estadisticas",
   ], //rutas protegidas
 };

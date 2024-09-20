@@ -14,7 +14,7 @@ const CardBanner: React.FC<BannerProps> = ({ img, text, title }) => {
         <p className="text-custom-white text-lg font-light mb-5">{text}</p>
         <div>
           <Link
-            href={PATHROUTES.SERVICES}
+            href={PATHROUTES.SUCURSALES}
             className=" transition duration-500 ease-in-out  font-bold py-3 rounded px-7 bg-custom-red text-custom-white text-xs sm:text-base hover:bg-custom-white hover:text-custom-red"
           >
             Ver más
