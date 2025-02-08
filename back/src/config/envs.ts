@@ -15,6 +15,7 @@ export const db = {
   port: process.env.DB_PORT,
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
+  url: process.env.DB_URL
 };
 
 export const cloud = {

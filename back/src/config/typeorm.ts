@@ -6,11 +6,12 @@ import { db } from './envs';
 // Configuración de TypeORM
 const config: DataSourceOptions = {
   type: 'postgres',
-  host: db.host,
-  port: parseInt(db.port, 10),
-  username: db.username,
-  password: db.password,
-  database: db.name,
+  // host: db.host,
+  // port: parseInt(db.port, 10),
+  // username: db.username,
+  // password: db.password,
+  // database: db.name,
+  url: db.url,
   synchronize: true,
   // dropSchema: true,
   logging: ['error'],
